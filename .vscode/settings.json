@@ -1,0 +1,8 @@
+{
+    "yaml.schemas": {
+        "mtrgen-template-schema": [
+            "https://files.matronator.com/public/mtrgen/latest/mtrgen-template-schema.json",
+            "file:///Users/matejbystricky/Documents/Work.nosync/Matronator%20Brand/projects/mtrgen-registry/storage/app/templates/matronator/test.template.yaml"
+        ]
+    }
+}

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ab6590e6392de57f2a9f8274f8927430",
+    "content-hash": "b36f8e247c771cd57f8cde4897e83b7e",
     "packages": [
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -1048,16 +1048,16 @@
         },
         {
             "name": "illuminate/auth",
-            "version": "v9.28.0",
+            "version": "v9.29.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/auth.git",
-                "reference": "acbb5c44ee0563ffd70bcdda5d4d4e48ad367d27"
+                "reference": "4a46b32cfb71d71174e838116c39d98554d4fdde"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/auth/zipball/acbb5c44ee0563ffd70bcdda5d4d4e48ad367d27",
-                "reference": "acbb5c44ee0563ffd70bcdda5d4d4e48ad367d27",
+                "url": "https://api.github.com/repos/illuminate/auth/zipball/4a46b32cfb71d71174e838116c39d98554d4fdde",
+                "reference": "4a46b32cfb71d71174e838116c39d98554d4fdde",
                 "shasum": ""
             },
             "require": {
@@ -1101,11 +1101,11 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-07-22T14:16:44+00:00"
+            "time": "2022-09-06T15:18:13+00:00"
         },
         {
             "name": "illuminate/broadcasting",
-            "version": "v9.28.0",
+            "version": "v9.29.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/broadcasting.git",
@@ -1163,7 +1163,7 @@
         },
         {
             "name": "illuminate/bus",
-            "version": "v9.28.0",
+            "version": "v9.29.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/bus.git",
@@ -1216,7 +1216,7 @@
         },
         {
             "name": "illuminate/cache",
-            "version": "v9.28.0",
+            "version": "v9.29.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/cache.git",
@@ -1276,16 +1276,16 @@
         },
         {
             "name": "illuminate/collections",
-            "version": "v9.28.0",
+            "version": "v9.29.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/collections.git",
-                "reference": "3bda212d2c245b3261cd9af690dfd47d9878cebf"
+                "reference": "f2d62ebe609b7c7ff40685ec15db9c48b585910b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/collections/zipball/3bda212d2c245b3261cd9af690dfd47d9878cebf",
-                "reference": "3bda212d2c245b3261cd9af690dfd47d9878cebf",
+                "url": "https://api.github.com/repos/illuminate/collections/zipball/f2d62ebe609b7c7ff40685ec15db9c48b585910b",
+                "reference": "f2d62ebe609b7c7ff40685ec15db9c48b585910b",
                 "shasum": ""
             },
             "require": {
@@ -1327,11 +1327,11 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-08-22T14:29:59+00:00"
+            "time": "2022-09-07T13:10:58+00:00"
         },
         {
             "name": "illuminate/conditionable",
-            "version": "v9.28.0",
+            "version": "v9.29.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/conditionable.git",
@@ -1377,7 +1377,7 @@
         },
         {
             "name": "illuminate/config",
-            "version": "v9.28.0",
+            "version": "v9.29.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/config.git",
@@ -1425,16 +1425,16 @@
         },
         {
             "name": "illuminate/console",
-            "version": "v9.28.0",
+            "version": "v9.29.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/console.git",
-                "reference": "9b9ba75f6abda3b476806773f03620c280a34ef8"
+                "reference": "1459f231ba8733ae1334e3b16371a4f321348a6e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/console/zipball/9b9ba75f6abda3b476806773f03620c280a34ef8",
-                "reference": "9b9ba75f6abda3b476806773f03620c280a34ef8",
+                "url": "https://api.github.com/repos/illuminate/console/zipball/1459f231ba8733ae1334e3b16371a4f321348a6e",
+                "reference": "1459f231ba8733ae1334e3b16371a4f321348a6e",
                 "shasum": ""
             },
             "require": {
@@ -1483,11 +1483,11 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-09-05T14:38:37+00:00"
+            "time": "2022-09-08T20:26:04+00:00"
         },
         {
             "name": "illuminate/container",
-            "version": "v9.28.0",
+            "version": "v9.29.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/container.git",
@@ -1538,7 +1538,7 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "v9.28.0",
+            "version": "v9.29.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
@@ -1586,16 +1586,16 @@
         },
         {
             "name": "illuminate/database",
-            "version": "v9.28.0",
+            "version": "v9.29.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/database.git",
-                "reference": "b15bc569c14d7882dd52f14c4918f4a7114bb1ea"
+                "reference": "0fa89ac98042b3eb26d9d78ef0d408e0719246cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/database/zipball/b15bc569c14d7882dd52f14c4918f4a7114bb1ea",
-                "reference": "b15bc569c14d7882dd52f14c4918f4a7114bb1ea",
+                "url": "https://api.github.com/repos/illuminate/database/zipball/0fa89ac98042b3eb26d9d78ef0d408e0719246cb",
+                "reference": "0fa89ac98042b3eb26d9d78ef0d408e0719246cb",
                 "shasum": ""
             },
             "require": {
@@ -1650,11 +1650,11 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-09-01T18:45:39+00:00"
+            "time": "2022-09-08T14:12:13+00:00"
         },
         {
             "name": "illuminate/encryption",
-            "version": "v9.28.0",
+            "version": "v9.29.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/encryption.git",
@@ -1705,7 +1705,7 @@
         },
         {
             "name": "illuminate/events",
-            "version": "v9.28.0",
+            "version": "v9.29.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/events.git",
@@ -1760,7 +1760,7 @@
         },
         {
             "name": "illuminate/filesystem",
-            "version": "v9.28.0",
+            "version": "v9.29.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/filesystem.git",
@@ -1822,7 +1822,7 @@
         },
         {
             "name": "illuminate/hashing",
-            "version": "v9.28.0",
+            "version": "v9.29.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/hashing.git",
@@ -1870,16 +1870,16 @@
         },
         {
             "name": "illuminate/http",
-            "version": "v9.28.0",
+            "version": "v9.29.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/http.git",
-                "reference": "066e1f06416286083368800a7ac6f4b54a0ff869"
+                "reference": "74e8df08f71bdba3285fa7e1d959ca74722d8928"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/http/zipball/066e1f06416286083368800a7ac6f4b54a0ff869",
-                "reference": "066e1f06416286083368800a7ac6f4b54a0ff869",
+                "url": "https://api.github.com/repos/illuminate/http/zipball/74e8df08f71bdba3285fa7e1d959ca74722d8928",
+                "reference": "74e8df08f71bdba3285fa7e1d959ca74722d8928",
                 "shasum": ""
             },
             "require": {
@@ -1925,11 +1925,11 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-09-02T15:28:42+00:00"
+            "time": "2022-09-09T13:55:09+00:00"
         },
         {
             "name": "illuminate/log",
-            "version": "v9.28.0",
+            "version": "v9.29.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/log.git",
@@ -1978,7 +1978,7 @@
         },
         {
             "name": "illuminate/macroable",
-            "version": "v9.28.0",
+            "version": "v9.29.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/macroable.git",
@@ -2024,7 +2024,7 @@
         },
         {
             "name": "illuminate/pagination",
-            "version": "v9.28.0",
+            "version": "v9.29.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/pagination.git",
@@ -2074,7 +2074,7 @@
         },
         {
             "name": "illuminate/pipeline",
-            "version": "v9.28.0",
+            "version": "v9.29.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/pipeline.git",
@@ -2122,16 +2122,16 @@
         },
         {
             "name": "illuminate/queue",
-            "version": "v9.28.0",
+            "version": "v9.29.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/queue.git",
-                "reference": "6a8c59e7ae10f63af3230636cc46d65ec5c6d6cc"
+                "reference": "1aff9a7852a74b2df480af0f7eabef9468114a6b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/queue/zipball/6a8c59e7ae10f63af3230636cc46d65ec5c6d6cc",
-                "reference": "6a8c59e7ae10f63af3230636cc46d65ec5c6d6cc",
+                "url": "https://api.github.com/repos/illuminate/queue/zipball/1aff9a7852a74b2df480af0f7eabef9468114a6b",
+                "reference": "1aff9a7852a74b2df480af0f7eabef9468114a6b",
                 "shasum": ""
             },
             "require": {
@@ -2183,11 +2183,11 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-09-02T13:55:50+00:00"
+            "time": "2022-09-07T13:12:31+00:00"
         },
         {
             "name": "illuminate/session",
-            "version": "v9.28.0",
+            "version": "v9.29.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/session.git",
@@ -2243,16 +2243,16 @@
         },
         {
             "name": "illuminate/support",
-            "version": "v9.28.0",
+            "version": "v9.29.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "3e2458d9145fac9d73624013bdab0c4e247048dc"
+                "reference": "fff7e3659a137ff254d9930bb16c0559f49033af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/3e2458d9145fac9d73624013bdab0c4e247048dc",
-                "reference": "3e2458d9145fac9d73624013bdab0c4e247048dc",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/fff7e3659a137ff254d9930bb16c0559f49033af",
+                "reference": "fff7e3659a137ff254d9930bb16c0559f49033af",
                 "shasum": ""
             },
             "require": {
@@ -2308,11 +2308,11 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-09-06T14:51:22+00:00"
+            "time": "2022-09-09T13:56:49+00:00"
         },
         {
             "name": "illuminate/testing",
-            "version": "v9.28.0",
+            "version": "v9.29.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/testing.git",
@@ -2370,7 +2370,7 @@
         },
         {
             "name": "illuminate/translation",
-            "version": "v9.28.0",
+            "version": "v9.29.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/translation.git",
@@ -2422,16 +2422,16 @@
         },
         {
             "name": "illuminate/validation",
-            "version": "v9.28.0",
+            "version": "v9.29.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/validation.git",
-                "reference": "b52b87e6b612bab3a4b560e095259cbbaaa46cfa"
+                "reference": "c3ace72bbe1cfa31d0018cbf180867acc6728e19"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/validation/zipball/b52b87e6b612bab3a4b560e095259cbbaaa46cfa",
-                "reference": "b52b87e6b612bab3a4b560e095259cbbaaa46cfa",
+                "url": "https://api.github.com/repos/illuminate/validation/zipball/c3ace72bbe1cfa31d0018cbf180867acc6728e19",
+                "reference": "c3ace72bbe1cfa31d0018cbf180867acc6728e19",
                 "shasum": ""
             },
             "require": {
@@ -2478,11 +2478,11 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-09-05T16:00:50+00:00"
+            "time": "2022-09-07T16:49:04+00:00"
         },
         {
             "name": "illuminate/view",
-            "version": "v9.28.0",
+            "version": "v9.29.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/view.git",
@@ -2839,6 +2839,83 @@
             "time": "2022-04-17T13:12:02+00:00"
         },
         {
+            "name": "matronator/parsem",
+            "version": "v1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/matronator/parsem.git",
+                "reference": "3079590b34fba106666acf2b97e8c4888f3c2a1f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/matronator/parsem/zipball/3079590b34fba106666acf2b97e8c4888f3c2a1f",
+                "reference": "3079590b34fba106666acf2b97e8c4888f3c2a1f",
+                "shasum": ""
+            },
+            "require": {
+                "nette/neon": "^3.3",
+                "opis/json-schema": "^2.3",
+                "php": ">=7.4",
+                "symfony/yaml": "^5.4"
+            },
+            "require-dev": {
+                "nette/tester": "^2.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Matronator\\Parsem\\": [
+                        "src/Parsem/"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matronator",
+                    "email": "5470780+matronator@users.noreply.github.com",
+                    "homepage": "https://matronator.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Parse YAML, JSON and NEON templates.",
+            "keywords": [
+                "json",
+                "neon",
+                "parser",
+                "template engine",
+                "template parser",
+                "templates",
+                "yaml"
+            ],
+            "support": {
+                "issues": "https://github.com/matronator/parsem/issues",
+                "source": "https://github.com/matronator/parsem/tree/v1.0.3"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sponsors/matronator",
+                    "type": "github"
+                },
+                {
+                    "url": "https://ko-fi.com/matronator",
+                    "type": "ko-fi"
+                },
+                {
+                    "url": "https://www.patreon.com/bePatron?u=34136375",
+                    "type": "patreon"
+                },
+                {
+                    "url": "https://www.paypal.com/paypalme/matronator",
+                    "type": "paypal"
+                }
+            ],
+            "time": "2022-09-10T17:43:42+00:00"
+        },
+        {
             "name": "monolog/monolog",
             "version": "2.8.0",
             "source": {
@@ -3043,6 +3120,74 @@
             "time": "2022-09-02T07:48:13+00:00"
         },
         {
+            "name": "nette/neon",
+            "version": "v3.3.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nette/neon.git",
+                "reference": "22e384da162fab42961d48eb06c06d3ad0c11b95"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nette/neon/zipball/22e384da162fab42961d48eb06c06d3ad0c11b95",
+                "reference": "22e384da162fab42961d48eb06c06d3ad0c11b95",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "nette/tester": "^2.0",
+                "phpstan/phpstan": "^0.12",
+                "tracy/tracy": "^2.7"
+            },
+            "bin": [
+                "bin/neon-lint"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.3-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause",
+                "GPL-2.0-only",
+                "GPL-3.0-only"
+            ],
+            "authors": [
+                {
+                    "name": "David Grudl",
+                    "homepage": "https://davidgrudl.com"
+                },
+                {
+                    "name": "Nette Community",
+                    "homepage": "https://nette.org/contributors"
+                }
+            ],
+            "description": "🍸 Nette NEON: encodes and decodes NEON file format.",
+            "homepage": "https://ne-on.org",
+            "keywords": [
+                "export",
+                "import",
+                "neon",
+                "nette",
+                "yaml"
+            ],
+            "support": {
+                "issues": "https://github.com/nette/neon/issues",
+                "source": "https://github.com/nette/neon/tree/v3.3.3"
+            },
+            "time": "2022-03-10T02:04:26+00:00"
+        },
+        {
             "name": "nikic/fast-route",
             "version": "v1.3.0",
             "source": {
@@ -3233,6 +3378,196 @@
                 }
             ],
             "time": "2022-08-01T11:03:24+00:00"
+        },
+        {
+            "name": "opis/json-schema",
+            "version": "2.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/opis/json-schema.git",
+                "reference": "c48df6d7089a45f01e1c82432348f2d5976f9bfb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/opis/json-schema/zipball/c48df6d7089a45f01e1c82432348f2d5976f9bfb",
+                "reference": "c48df6d7089a45f01e1c82432348f2d5976f9bfb",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "opis/string": "^2.0",
+                "opis/uri": "^1.0",
+                "php": "^7.4 || ^8.0"
+            },
+            "require-dev": {
+                "ext-bcmath": "*",
+                "ext-intl": "*",
+                "phpunit/phpunit": "^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Opis\\JsonSchema\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Sorin Sarca",
+                    "email": "sarca_sorin@hotmail.com"
+                },
+                {
+                    "name": "Marius Sarca",
+                    "email": "marius.sarca@gmail.com"
+                }
+            ],
+            "description": "Json Schema Validator for PHP",
+            "homepage": "https://opis.io/json-schema",
+            "keywords": [
+                "json",
+                "json-schema",
+                "schema",
+                "validation",
+                "validator"
+            ],
+            "support": {
+                "issues": "https://github.com/opis/json-schema/issues",
+                "source": "https://github.com/opis/json-schema/tree/2.3.0"
+            },
+            "time": "2022-01-08T20:38:03+00:00"
+        },
+        {
+            "name": "opis/string",
+            "version": "2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/opis/string.git",
+                "reference": "9ebf1a1f873f502f6859d11210b25a4bf5d141e7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/opis/string/zipball/9ebf1a1f873f502f6859d11210b25a4bf5d141e7",
+                "reference": "9ebf1a1f873f502f6859d11210b25a4bf5d141e7",
+                "shasum": ""
+            },
+            "require": {
+                "ext-iconv": "*",
+                "ext-json": "*",
+                "php": "^7.4 || ^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Opis\\String\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Marius Sarca",
+                    "email": "marius.sarca@gmail.com"
+                },
+                {
+                    "name": "Sorin Sarca",
+                    "email": "sarca_sorin@hotmail.com"
+                }
+            ],
+            "description": "Multibyte strings as objects",
+            "homepage": "https://opis.io/string",
+            "keywords": [
+                "multi-byte",
+                "opis",
+                "string",
+                "string manipulation",
+                "utf-8"
+            ],
+            "support": {
+                "issues": "https://github.com/opis/string/issues",
+                "source": "https://github.com/opis/string/tree/2.0.1"
+            },
+            "time": "2022-01-14T15:42:23+00:00"
+        },
+        {
+            "name": "opis/uri",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/opis/uri.git",
+                "reference": "0f3ca49ab1a5e4a6681c286e0b2cc081b93a7d5a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/opis/uri/zipball/0f3ca49ab1a5e4a6681c286e0b2cc081b93a7d5a",
+                "reference": "0f3ca49ab1a5e4a6681c286e0b2cc081b93a7d5a",
+                "shasum": ""
+            },
+            "require": {
+                "opis/string": "^2.0",
+                "php": "^7.4 || ^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Opis\\Uri\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Marius Sarca",
+                    "email": "marius.sarca@gmail.com"
+                },
+                {
+                    "name": "Sorin Sarca",
+                    "email": "sarca_sorin@hotmail.com"
+                }
+            ],
+            "description": "Build, parse and validate URIs and URI-templates",
+            "homepage": "https://opis.io",
+            "keywords": [
+                "URI Template",
+                "parse url",
+                "punycode",
+                "uri",
+                "uri components",
+                "url",
+                "validate uri"
+            ],
+            "support": {
+                "issues": "https://github.com/opis/uri/issues",
+                "source": "https://github.com/opis/uri/tree/1.1.0"
+            },
+            "time": "2021-05-22T15:57:08+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -5713,6 +6048,81 @@
                 }
             ],
             "time": "2022-07-20T13:46:29+00:00"
+        },
+        {
+            "name": "symfony/yaml",
+            "version": "v5.4.12",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/yaml.git",
+                "reference": "7a3aa21ac8ab1a96cc6de5bbcab4bc9fc943b18c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/7a3aa21ac8ab1a96cc6de5bbcab4bc9fc943b18c",
+                "reference": "7a3aa21ac8ab1a96cc6de5bbcab4bc9fc943b18c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2.5",
+                "symfony/deprecation-contracts": "^2.1|^3",
+                "symfony/polyfill-ctype": "^1.8"
+            },
+            "conflict": {
+                "symfony/console": "<5.3"
+            },
+            "require-dev": {
+                "symfony/console": "^5.3|^6.0"
+            },
+            "suggest": {
+                "symfony/console": "For validating YAML files using the lint command"
+            },
+            "bin": [
+                "Resources/bin/yaml-lint"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Yaml\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Loads and dumps YAML files",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/yaml/tree/v5.4.12"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2022-08-02T15:52:22+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

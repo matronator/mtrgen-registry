@@ -24,5 +24,11 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->get('{vendor}', ['uses' => 'TemplateController@findByVendor']);
 
         $router->get('{vendor}/{name}', ['uses' => 'TemplateController@findByName']);
+
+        $router->get('{vendor}/{name}/get', ['uses' => 'TemplateController@get']);
+
+        $router->post('/', ['middleware' => 'verify', 'uses' => 'TemplateController@save']);
     });
+
+    $router->post('signup', ['uses' => 'UserController@create']);
 });
