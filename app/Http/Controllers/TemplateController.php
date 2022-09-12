@@ -48,7 +48,7 @@ class TemplateController extends Controller
     {
         $this->validate($request, [
             'username' => 'required|string|alpha_dash',
-            'password' => 'required|string',
+            'token' => 'required|string',
             'filename' => 'required|string',
             'name' => 'required|string|alpha_num',
             'contents' => 'required'
@@ -59,7 +59,7 @@ class TemplateController extends Controller
         $contents = request('contents');
 
         if (!Parser::isValid($filename, $contents))
-            return response()->json(['error' => 'Invalid template.'], 400);
+            return response()->json(['status' => 'error', 'message' => 'Invalid template.'], 400);
 
         $user = $request->attributes->get('user');
 
@@ -80,6 +80,6 @@ class TemplateController extends Controller
 
         Storage::put($path, $contents);
 
-        return response()->json(['success' => $user->name . '/' . $name]);
+        return response()->json(['status' => 'success', 'message' => 'Template ' . $user->name . '/' . $name . ' published.']);
     }
 }

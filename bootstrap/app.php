@@ -77,8 +77,8 @@ $app->configure('app');
 // ]);
 
 $app->routeMiddleware([
-    'auth' => App\Http\Middleware\Authenticate::class,
-    'verify' => App\Http\Middleware\VerifyUserMiddleware::class,
+    'auth' => App\Http\Middleware\AuthMiddleware::class,
+    'login' => App\Http\Middleware\LoginMiddleware::class,
 ]);
 
 /*

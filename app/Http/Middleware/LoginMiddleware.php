@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use App\Models\User;
 use Closure;
 
-class VerifyUserMiddleware
+class LoginMiddleware
 {
     /**
      * Handle an incoming request.
@@ -20,12 +20,12 @@ class VerifyUserMiddleware
         $password = $request->input('password');
 
         if (!$username || !$password)
-            return response()->json(['error' => 'Unauthorized access. Use credentials to login.'], 401);
+            return response()->json(['status' => 'error', 'message' => 'Unauthorized access. Use credentials to login.'], 401);
 
-        $user = User::query()->where(['name' => $username, 'password' => $password], '=', [$username, $password])->first();
+        $user = User::query()->firstWhere('name', '=', $username);
 
-        if (!$user)
-            return response()->json(['error' => 'Invalid credentials.'], 401);
+        if (!$user || !password_verify($password, $user->password))
+            return response()->json(['status' => 'error', 'message' => 'Invalid credentials.'], 401);
 
         $request->attributes->set('user', $user);
 
