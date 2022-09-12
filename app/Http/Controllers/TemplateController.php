@@ -29,7 +29,10 @@ class TemplateController extends Controller
 
     public function get(string $vendor, string $name)
     {
-        $template = Template::query()->where('vendor', '=', $vendor)->firstWhere('name', '=', $name)->first();
+        $template = Template::query()->where('vendor', '=', $vendor)->firstWhere('name', '=', $name);
+
+        if (!$template)
+            return response()->json(['error' => 'No template with this identifier.'], 404);
 
         $path = self::TEMPLATES_DIR . $template->vendor . DIRECTORY_SEPARATOR . $template->filename;
 
@@ -38,6 +41,13 @@ class TemplateController extends Controller
 
         $contents = Storage::get($path);
         $mime = Storage::mimeType($path);
+        if (!$mime) {
+            $matched = preg_match('/^.+?(?:\.template)?\.(json|yaml|yml|neon)$/', $template->filename, $matches);
+            if (!$matched) $mime = 'text/plain';
+
+            $ext = $matches[1] === 'yml' ? 'yaml' : $matches[1];
+            $mime = "text/$ext";
+        }
 
         return response($contents, 200, [
             'Content-Type' => $mime,
