@@ -23,7 +23,8 @@ class AuthMiddleware
 
         if (!$username || !$token)
             return response()->json(['status' => 'error', 'message' => 'Unauthorized access. Please login.'], 401);
-
+        
+        $username = strtolower($username);
         $token = AccessToken::query()->firstWhere('token', '=', $token);
 
         if (!$token)

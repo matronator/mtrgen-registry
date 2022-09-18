@@ -19,16 +19,21 @@ class TemplateController extends Controller
 
     public function findByVendor(string $vendor)
     {
+        $vendor = strtolower($vendor);
         return response()->json(Template::all()->where('vendor', '=', $vendor));
     }
 
     public function findByName(string $vendor, string $name)
     {
+        $vendor = strtolower($vendor);
+        $name = strtolower($name);
         return response()->json(Template::query()->where('vendor', '=', $vendor)->firstWhere('name', '=', $name));
     }
 
     public function get(string $vendor, string $name)
     {
+        $vendor = strtolower($vendor);
+        $name = strtolower($name);
         $template = Template::query()->where('vendor', '=', $vendor)->firstWhere('name', '=', $name);
 
         if (!$template)
@@ -47,6 +52,13 @@ class TemplateController extends Controller
 
             $ext = $matches[1] === 'yml' ? 'yaml' : $matches[1];
             $mime = "text/$ext";
+        }
+
+        if (request()->hasHeader('X-Requested-By')) {
+            if (request()->header('X-Requested-By') === 'cli') {
+                $template->downloads += 1;
+                $template->save();
+            }
         }
 
         return response($contents, 200, [
@@ -75,21 +87,21 @@ class TemplateController extends Controller
 
         $template = Template::query()->updateOrCreate([
             'user_id' => $user->id,
-            'name' => $name,
+            'name' => strtolower($name),
             'filename' => $filename,
-            'vendor' => $user->name,
-        ], ['user_id' => $user->id, 'name' => $name, 'filename' => $filename, 'vendor' => $user->name]);
+            'vendor' => strtolower($user->name),
+        ], ['user_id' => $user->id, 'name' => strtolower($name), 'filename' => $filename, 'vendor' => strtolower($user->name)]);
 
         $template->filename = $filename;
-        $template->name = $name;
+        $template->name = strtolower($name);
         $template->user_id = $user->id;
-        $template->vendor = $user->name;
+        $template->vendor = strtolower($user->name);
         $template->save();
 
         $path = self::TEMPLATES_DIR . $template->vendor . DIRECTORY_SEPARATOR . $template->filename;
 
         Storage::put($path, $contents);
 
-        return response()->json(['status' => 'success', 'message' => 'Template ' . $user->name . '/' . $name . ' published.']);
+        return response()->json(['status' => 'success', 'message' => 'Template ' . strtolower($user->name . '/' . $name) . ' published.']);
     }
 }

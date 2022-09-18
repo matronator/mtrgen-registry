@@ -22,6 +22,7 @@ class LoginMiddleware
         if (!$username || !$password)
             return response()->json(['status' => 'error', 'message' => 'Unauthorized access. Use credentials to login.'], 401);
 
+        $username = strtolower($username);
         $user = User::query()->firstWhere('name', '=', $username);
 
         if (!$user || !password_verify($password, $user->password))

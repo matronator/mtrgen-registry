@@ -29,6 +29,8 @@ class UserController extends Controller
         if (!$username || !$password)
             return response()->json(['error' => 'Credentials missing.'], 400);
 
+        $username = strtolower($username);
+        
         if (User::query()->firstWhere('name', '=', $username))
             return response()->json(['error' => 'User with this username already exists.'], 400);
 
