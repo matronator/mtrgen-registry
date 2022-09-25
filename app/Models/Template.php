@@ -15,7 +15,7 @@ class Template extends Model
      * @var string[]
      */
     protected $fillable = [
-        'name', 'filename', 'vendor', 'user_id'
+        'name', 'filename', 'vendor', 'user_id', 'downloads'
     ];
 
     /**
