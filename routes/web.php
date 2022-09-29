@@ -23,14 +23,26 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     });
     $router->group(['prefix' => 'templates'], function () use ($router) {
         $router->get('/', ['uses' => 'TemplateController@findAll']);
-    
+
         $router->get('{vendor}', ['uses' => 'TemplateController@findByVendor']);
     
         $router->get('{vendor}/{name}', ['uses' => 'TemplateController@findByName']);
     
         $router->get('{vendor}/{name}/get', ['uses' => 'TemplateController@get']);
+
+        $router->get('{vendor}/{name}/type', ['uses' => 'TemplateController@getType']);
     
         $router->post('/', ['middleware' => 'auth', 'uses' => 'TemplateController@save']);
+    });
+
+    $router->group(['prefix' => 'bundles'], function () use ($router) {
+        $router->post('/', ['middleware' => 'auth', 'uses' => 'TemplateController@saveBundle']);
+
+        $router->get('{vendor}/{name}/{templateName}/get', ['uses' => 'TemplateController@getFromBundle']);
+
+        $router->get('/', function() use ($router) {
+            return $router->app->version();
+        });
     });
     
     $router->post('signup', ['uses' => 'UserController@create']);
