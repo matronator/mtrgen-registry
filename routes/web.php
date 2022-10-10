@@ -17,7 +17,7 @@ $router->get('/', function () {
     return redirect('https://matronator.github.io/MTRGen/', '301');
 });
 
-$router->group(['prefix' => 'api'], function () use ($router) {
+$router->group(['middleware' => 'cors', 'prefix' => 'api'], function () use ($router) {
     $router->get('/', function () use ($router) {
         return $router->app->version();
     });

@@ -13,6 +13,11 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 {
     use Authenticatable, Authorizable, HasFactory;
 
+    public function templates()
+    {
+        return $this->hasMany(Template::class);
+    }
+
     /**
      * The attributes that are mass assignable.
      *

@@ -5,20 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Template extends Model
+class Tag extends Model
 {
     use HasFactory;
 
-    public const TYPE_TEMPLATE = 'template';
-    public const TYPE_BUNDLE = 'bundle';
-    public const TYPES = [
-        self::TYPE_TEMPLATE,
-        self::TYPE_BUNDLE,
-    ];
-
-    public function user()
+    public function template()
     {
-        return $this->belongsTo(User::class)->withDefault();
+        return $this->belongsToMany(Template::class)->withTimestamps();
     }
 
     /**
@@ -27,7 +20,7 @@ class Template extends Model
      * @var string[]
      */
     protected $fillable = [
-        'name', 'filename', 'vendor', 'user_id', 'type', 'downloads'
+        'name'
     ];
 
     /**
