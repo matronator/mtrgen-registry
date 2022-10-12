@@ -21,6 +21,11 @@ class Template extends Model
         return $this->belongsTo(User::class)->withDefault();
     }
 
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'tags_templates')->withTimestamps();
+    }
+
     /**
      * The attributes that are mass assignable.
      *

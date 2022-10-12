@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tag;
 use App\Models\Template;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -14,7 +15,7 @@ class TemplateController extends Controller
 
     public function findAll()
     {
-        return response()->json(Template::all());
+        return response()->json(Template::all()->load('tags')->all());
     }
 
     public function findByVendor(string $vendor)

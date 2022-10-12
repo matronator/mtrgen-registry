@@ -9,9 +9,9 @@ class Tag extends Model
 {
     use HasFactory;
 
-    public function template()
+    public function templates()
     {
-        return $this->belongsToMany(Template::class)->withTimestamps();
+        return $this->belongsToMany(Template::class, 'tags_templates')->withTimestamps();
     }
 
     /**
