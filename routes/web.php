@@ -27,6 +27,8 @@ $router->group(['middleware' => 'cors', 'prefix' => 'api'], function () use ($ro
         $router->get('{vendor}', ['uses' => 'TemplateController@findByVendor']);
     
         $router->get('{vendor}/{name}', ['uses' => 'TemplateController@findByName']);
+
+        $router->get('{vendor}/{name}/details', ['uses' => 'TemplateController@getTemplateDetails']);
     
         $router->get('{vendor}/{name}/get', ['uses' => 'TemplateController@get']);
 

@@ -7,7 +7,9 @@ use App\Models\Template;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Matronator\Mtrgen\Template\Generator;
 use Matronator\Parsem\Parser;
+use Nette\PhpGenerator\PsrPrinter;
 
 class TemplateController extends Controller
 {
@@ -29,6 +31,37 @@ class TemplateController extends Controller
         $vendor = strtolower($vendor);
         $name = strtolower($name);
         return response()->json(Template::query()->where('vendor', '=', $vendor)->firstWhere('name', '=', $name));
+    }
+
+    public function getTemplateDetails(string $vendor, string $name)
+    {
+        $vendor = strtolower($vendor);
+        $name = strtolower($name);
+
+        $template = Template::query()->where('vendor', '=', $vendor)->firstWhere('name', '=', $name);
+
+        if (!$template)
+            return response()->json(['status' => 'error', 'message' => 'No template with this identifier.'], 404);
+
+        $path = self::TEMPLATES_DIR . $template->vendor . DIRECTORY_SEPARATOR . $template->filename;
+
+        if (!Storage::exists($path))
+            return response()->json(['status' => 'error', 'message' => 'Template file not found.'], 404);
+
+        $contents = Storage::get($path);
+        $template->setAttribute('content', $contents);
+
+        $arguments = Parser::getArguments($contents);
+        $templateVars = [];
+        foreach ($arguments as $arg) {
+            $templateVars[$arg] = '__' . strtoupper($arg) . '__';
+        }
+        $parsed = Generator::parse($template->filename, $contents, $templateVars);
+        $printer = new PsrPrinter;
+        $generated = $printer->printFile($parsed->contents);
+        $template->setAttribute('preview', $generated);
+
+        return response()->json($template);
     }
 
     public function get(string $vendor, string $name)
@@ -132,6 +165,7 @@ class TemplateController extends Controller
             'token' => 'required|string',
             'filename' => 'required|string',
             'name' => 'required|string|alpha_num',
+            'description' => 'string',
             'contents' => 'required',
             'templates' => 'required|array',
             'templates.*.name' => 'required|string|alpha_num',
@@ -142,6 +176,7 @@ class TemplateController extends Controller
         $filename = request('filename');
         $name = strtolower(request('name'));
         $contents = request('contents');
+        $description = request('description') ?? null;
         if (!Parser::isValidBundle($filename, $contents))
             return response()->json(['status' => 'error', 'message' => 'Invalid bundle.'], 400);
 
@@ -165,12 +200,13 @@ class TemplateController extends Controller
             'filename' => $filename,
             'vendor' => strtolower($user->name),
             'type' => Template::TYPE_BUNDLE,
-        ], ['user_id' => $user->id, 'name' => $name, 'filename' => $filename, 'vendor' => strtolower($user->name), 'type' => Template::TYPE_BUNDLE]);
+        ], ['user_id' => $user->id, 'name' => $name, 'filename' => $filename, 'vendor' => strtolower($user->name), 'type' => Template::TYPE_BUNDLE, 'description' => $description]);
 
         $template->filename = $filename;
         $template->name = $name;
         $template->user_id = $user->id;
         $template->vendor = strtolower($user->name);
+        if ($description) $template->description = $description;
         $template->type = Template::TYPE_BUNDLE;
         $template->save();
 
@@ -187,12 +223,14 @@ class TemplateController extends Controller
             'token' => 'required|string',
             'filename' => 'required|string',
             'name' => 'required|string|alpha_num',
+            'description' => 'string',
             'contents' => 'required'
         ]);
 
         $filename = request('filename');
         $name = request('name');
         $contents = request('contents');
+        $description = request('description') ?? null;
 
         if (!Parser::isValid($filename, $contents))
             return response()->json(['status' => 'error', 'message' => 'Invalid template.'], 400);
@@ -205,12 +243,13 @@ class TemplateController extends Controller
             'filename' => $filename,
             'vendor' => strtolower($user->name),
             'type' => Template::TYPE_TEMPLATE,
-        ], ['user_id' => $user->id, 'name' => strtolower($name), 'filename' => $filename, 'vendor' => strtolower($user->name), 'type' => Template::TYPE_TEMPLATE]);
+        ], ['user_id' => $user->id, 'name' => strtolower($name), 'filename' => $filename, 'vendor' => strtolower($user->name), 'type' => Template::TYPE_TEMPLATE, 'description' => $description]);
 
         $template->filename = $filename;
         $template->name = strtolower($name);
         $template->user_id = $user->id;
         $template->vendor = strtolower($user->name);
+        if ($description) $template->description = $description;
         $template->type = Template::TYPE_TEMPLATE;
         $template->save();
 
