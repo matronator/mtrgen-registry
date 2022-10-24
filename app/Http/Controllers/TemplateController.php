@@ -60,6 +60,7 @@ class TemplateController extends Controller
         $printer = new PsrPrinter;
         $generated = $printer->printFile($parsed->contents);
         $template->setAttribute('preview', $generated);
+        $template->setAttribute('generatedFilename', $parsed->filename);
 
         return response()->json($template);
     }
@@ -190,7 +191,7 @@ class TemplateController extends Controller
             if (!Parser::isValid($item['filename'], $item['contents']))
                 return response()->json(['status' => 'error', 'message' => 'Bundle contains invalid template/s.'], 400);
             
-            $path = self::TEMPLATES_DIR . $user->name . DIRECTORY_SEPARATOR . $item['filename'];
+            $path = self::TEMPLATES_DIR . $user->username . DIRECTORY_SEPARATOR . $item['filename'];
             Storage::put($path, $item['contents']);
         }
 
@@ -198,14 +199,14 @@ class TemplateController extends Controller
             'user_id' => $user->id,
             'name' => $name,
             'filename' => $filename,
-            'vendor' => strtolower($user->name),
+            'vendor' => strtolower($user->username),
             'type' => Template::TYPE_BUNDLE,
-        ], ['user_id' => $user->id, 'name' => $name, 'filename' => $filename, 'vendor' => strtolower($user->name), 'type' => Template::TYPE_BUNDLE, 'description' => $description]);
+        ], ['user_id' => $user->id, 'name' => $name, 'filename' => $filename, 'vendor' => strtolower($user->username), 'type' => Template::TYPE_BUNDLE, 'description' => $description]);
 
         $template->filename = $filename;
         $template->name = $name;
         $template->user_id = $user->id;
-        $template->vendor = strtolower($user->name);
+        $template->vendor = strtolower($user->username);
         if ($description) $template->description = $description;
         $template->type = Template::TYPE_BUNDLE;
         $template->save();
@@ -213,7 +214,7 @@ class TemplateController extends Controller
         $path = self::TEMPLATES_DIR . $template->vendor . DIRECTORY_SEPARATOR . $template->filename;
         Storage::put($path, $contents);
 
-        return response()->json(['status' => 'success', 'message' => 'Bundle ' . strtolower($user->name . '/' . $name) . ' published.']);
+        return response()->json(['status' => 'success', 'message' => 'Bundle ' . strtolower($user->username . '/' . $name) . ' published.']);
     }
 
     public function save(Request $request)
@@ -241,14 +242,14 @@ class TemplateController extends Controller
             'user_id' => $user->id,
             'name' => strtolower($name),
             'filename' => $filename,
-            'vendor' => strtolower($user->name),
+            'vendor' => strtolower($user->username),
             'type' => Template::TYPE_TEMPLATE,
-        ], ['user_id' => $user->id, 'name' => strtolower($name), 'filename' => $filename, 'vendor' => strtolower($user->name), 'type' => Template::TYPE_TEMPLATE, 'description' => $description]);
+        ], ['user_id' => $user->id, 'name' => strtolower($name), 'filename' => $filename, 'vendor' => strtolower($user->username), 'type' => Template::TYPE_TEMPLATE, 'description' => $description]);
 
         $template->filename = $filename;
         $template->name = strtolower($name);
         $template->user_id = $user->id;
-        $template->vendor = strtolower($user->name);
+        $template->vendor = strtolower($user->username);
         if ($description) $template->description = $description;
         $template->type = Template::TYPE_TEMPLATE;
         $template->save();
@@ -257,6 +258,6 @@ class TemplateController extends Controller
 
         Storage::put($path, $contents);
 
-        return response()->json(['status' => 'success', 'message' => 'Template ' . strtolower($user->name . '/' . $name) . ' published.']);
+        return response()->json(['status' => 'success', 'message' => 'Template ' . strtolower($user->username . '/' . $name) . ' published.']);
     }
 }

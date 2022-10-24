@@ -37,7 +37,7 @@ class AuthMiddleware
 
         $user = User::query()->find($token->user_id);
         if (!$user)
-            return response()->json(['status' => 'error', 'message' => 'User with this acccess token not found.'], 401);
+            return response()->json(['status' => 'error', 'message' => 'User with this access token not found.'], 401);
 
         $request->attributes->set('user', $user);
 

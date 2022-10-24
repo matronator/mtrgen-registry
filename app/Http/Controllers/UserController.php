@@ -16,6 +16,24 @@ class UserController extends Controller
         return response()->json(User::all());
     }
 
+    public function findByName(string $username)
+    {
+        $username = strtolower($username);
+        return response()->json(User::query()->firstWhere('username', '=', $username));
+    }
+
+    public function getLoggedUser(Request $request)
+    {
+        $this->validate($request, [
+            'username' => 'required|string|alpha_dash',
+            'token' => 'required|string',
+        ]);
+
+        $user = $request->attributes->get('user');
+
+        return response()->json(User::query()->find($user->id));
+    }
+
     public function create(Request $request)
     {
         $this->validate($request, [
@@ -31,18 +49,18 @@ class UserController extends Controller
 
         $username = strtolower($username);
         
-        if (User::query()->firstWhere('name', '=', $username))
+        if (User::query()->firstWhere('username', '=', $username))
             return response()->json(['error' => 'User with this username already exists.'], 400);
 
         // $user = $request->attributes->get('user');
 
         $user = User::query()->create([
-            'name' => $username,
+            'username' => $username,
             'password' => password_hash($password, PASSWORD_DEFAULT),
         ]);
         $user->save();
 
-        return response()->json(['success' => 'User ' . $user->name . ' created. You can now login.']);
+        return response()->json(['success' => 'User ' . $user->username . ' created. You can now login.']);
     }
 
     public function login(Request $request)

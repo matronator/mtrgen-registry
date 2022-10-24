@@ -46,6 +46,18 @@ $router->group(['middleware' => 'cors', 'prefix' => 'api'], function () use ($ro
             return $router->app->version();
         });
     });
+
+    $router->group(['prefix' => 'users'], function () use ($router) {
+        $router->get('/', ['uses' => 'UserController@findAll']);
+
+        $router->get('{username}', ['uses' => 'UserController@findByName']);
+    });
+
+    $router->group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () use ($router) {
+        $router->post('/', ['uses' => 'UserController@findByName']);
+
+        $router->get('{username}', ['uses' => 'UserController@findByName']);
+    });
     
     $router->post('signup', ['uses' => 'UserController@create']);
     $router->post('login', ['middleware' => 'login', 'uses' => 'UserController@login']);
