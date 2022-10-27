@@ -54,11 +54,11 @@ $router->group(['middleware' => 'cors', 'prefix' => 'api'], function () use ($ro
     });
 
     $router->group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () use ($router) {
-        $router->post('/', ['uses' => 'UserController@findByName']);
-
-        $router->get('{username}', ['uses' => 'UserController@findByName']);
+        $router->post('/', ['uses' => 'UserController@getLoggedUser']);
+        $router->post('/check', ['uses' => 'UserController@isUserLoggedIn']);
     });
     
     $router->post('signup', ['uses' => 'UserController@create']);
-    $router->post('login', ['middleware' => 'login', 'uses' => 'UserController@login']);
+    $router->post('login', ['middleware' => ['login', 'cors'], 'uses' => 'UserController@login']);
+    $router->post('logout', ['middleware' => ['auth'], 'uses' => 'UserController@logout']);
 });

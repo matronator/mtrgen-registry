@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\BasicResponse;
 use App\Models\AccessToken;
 use App\Models\User;
-use DateInterval;
 use DateTime;
 use Faker\Factory;
 use Illuminate\Http\Request;
@@ -34,33 +34,74 @@ class UserController extends Controller
         return response()->json(User::query()->find($user->id));
     }
 
+    public function isUserLoggedIn(Request $request)
+    {
+        $this->validate($request, [
+            'username' => 'required|string|alpha_dash',
+            'token' => 'required|string',
+        ]);
+
+        $user = $request->attributes->get('user', null);
+        if ($user) {
+            return response()->json(['status' => 'success', 'message' => 'User is logged in.', 'loggedIn' => true]);
+        } else {
+            return response()->json(['status' => 'success', 'message' => 'User is not logged in.', 'loggedIn' => false]);
+        }
+    }
+
+    public function logout(Request $request)
+    {
+        $this->validate($request, [
+            'username' => 'required|string|alpha_dash',
+            'token' => 'required|string',
+        ]);
+
+        $token = $request->input('token');
+
+        $user = $request->attributes->get('user', null);
+
+        if ($user) {
+            $token = AccessToken::query()->firstWhere('token', '=', $token);
+            $token->delete();
+            return response()->json(['status' => 'success', 'message' => 'User logged out.']);
+        } else {
+            return response()->json(['status' => 'error', 'message' => 'User was not logged in.']);
+        }
+    }
+
     public function create(Request $request)
     {
         $this->validate($request, [
             'username' => 'required|string|alpha_dash',
             'password' => 'required|string',
+            'email' => 'sometimes|nullable|email',
         ]);
 
         $username = $request->input('username');
         $password = $request->input('password');
+        $email = $request->input('email');
 
         if (!$username || !$password)
-            return response()->json(['error' => 'Credentials missing.'], 400);
+            return BasicResponse::send('Credentials missing.', BasicResponse::STATUS_ERROR, 400);
 
         $username = strtolower($username);
         
         if (User::query()->firstWhere('username', '=', $username))
-            return response()->json(['error' => 'User with this username already exists.'], 400);
+            return BasicResponse::send('User with this username already exists.', BasicResponse::STATUS_ERROR, 400);
+        
+        if ($email && User::query()->firstWhere('email', '=', $email))
+            return BasicResponse::send('This email is already in use.', BasicResponse::STATUS_ERROR, 400);
 
         // $user = $request->attributes->get('user');
 
         $user = User::query()->create([
             'username' => $username,
             'password' => password_hash($password, PASSWORD_DEFAULT),
+            'email' => $email,
         ]);
         $user->save();
 
-        return response()->json(['success' => 'User ' . $user->username . ' created. You can now login.']);
+        return response()->json(['status' => 'success', 'message' => 'User ' . $user->username . ' created. You can now login.']);
     }
 
     public function login(Request $request)
