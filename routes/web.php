@@ -49,8 +49,12 @@ $router->group(['middleware' => 'cors', 'prefix' => 'api'], function () use ($ro
 
     $router->group(['prefix' => 'users'], function () use ($router) {
         $router->get('/', ['uses' => 'UserController@findAll']);
-
         $router->get('{username}', ['uses' => 'UserController@findByName']);
+
+        $router->put('/', ['middleware' => 'auth', 'uses' => 'UserController@update']);
+
+        $router->get('{username}/avatar', ['uses' => 'UserController@getAvatar']);
+        $router->post('/avatar', ['middleware' => 'auth', 'uses' => 'UserController@setAvatar']);
     });
 
     $router->group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () use ($router) {
@@ -59,6 +63,6 @@ $router->group(['middleware' => 'cors', 'prefix' => 'api'], function () use ($ro
     });
     
     $router->post('signup', ['uses' => 'UserController@create']);
-    $router->post('login', ['middleware' => ['login', 'cors'], 'uses' => 'UserController@login']);
-    $router->post('logout', ['middleware' => ['auth'], 'uses' => 'UserController@logout']);
+    $router->post('login', ['middleware' => 'login', 'uses' => 'UserController@login']);
+    $router->post('logout', ['middleware' => 'auth', 'uses' => 'UserController@logout']);
 });

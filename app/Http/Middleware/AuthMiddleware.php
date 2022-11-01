@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Helpers\BasicResponse;
 use App\Models\AccessToken;
 use App\Models\User;
 use Closure;
@@ -39,6 +40,9 @@ class AuthMiddleware
         if (!$user)
             return response()->json(['status' => 'error', 'message' => 'User with this access token not found.'], 401);
 
+        if (strtolower($user->username) !== $username)
+            return BasicResponse::send('Not authorized!', 'error', 401);
+        
         $request->attributes->set('user', $user);
 
         return $next($request);

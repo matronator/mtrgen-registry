@@ -8,9 +8,12 @@ use App\Models\User;
 use DateTime;
 use Faker\Factory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
+    const AVATAR_DIR = 'users/avatars/';
+
     public function findAll()
     {
         return response()->json(User::all());
@@ -102,6 +105,68 @@ class UserController extends Controller
         $user->save();
 
         return response()->json(['status' => 'success', 'message' => 'User ' . $user->username . ' created. You can now login.']);
+    }
+
+    public function setAvatar(Request $request)
+    {
+        $this->validate($request, [
+            'username' => 'required|string|alpha_dash',
+            'token' => 'required|string',
+            'avatar' => 'sometimes|nullable|image|mimes:png,jpg',
+        ]);
+
+        $avatar = $request->file('avatar');
+        $user = $request->attributes->get('user', null);
+
+        if (!$user) return BasicResponse::send('User not logged in.', 'error', 400);
+
+        $path = self::AVATAR_DIR . $user->username;
+        if (!$avatar) {
+            Storage::deleteDirectory($path);
+            $user->avatar = null;
+            $user->save();
+
+            return BasicResponse::send('Avatar deleted.');
+        }
+        
+        Storage::deleteDirectory($path);
+        $filename = $avatar->store($path);
+        $user->avatar = $filename;
+        $user->avatar_url = url('/api/users/' . $user->username . '/avatar');
+        $user->save();
+
+        return BasicResponse::send('Avatar saved.');
+    }
+
+    public function getAvatar(string $username)
+    {
+        $user = User::query()->firstWhere('username', '=', $username);
+        if (!$user) return BasicResponse::send('User not found.', 'error', 404);
+
+        if (!$user->avatar) return BasicResponse::send('User has no avatar set.', 'error', 400);
+
+        return Storage::response($user->avatar);
+    }
+
+    public function update(Request $request)
+    {
+        $this->validate($request, [
+            'token' => 'required|string',
+            'username' => 'required|string|alpha_dash',
+            'password' => 'required|string',
+            'email' => 'sometimes|nullable|email',
+            'fullname' => 'sometimes|nullable|string',
+            'description' => 'sometimes|nullable|string',
+            'website' => 'sometimes|nullable|url',
+            'github' => 'sometimes|nullable|string',
+        ]);
+
+        $data = $request->except(['token', 'password']);
+        $user = $request->attributes->get('user', null);
+
+        if (!$user) return new BasicResponse('User not logged in.', 'error', 400);
+
+        // $user->avatar
     }
 
     public function login(Request $request)
