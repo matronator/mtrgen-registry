@@ -7,6 +7,7 @@ use App\Models\Template;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Matronator\Mtrgen\Store\Storage as MtrgenStorage;
 use Matronator\Mtrgen\Template\Generator;
 use Matronator\Parsem\Parser;
 use Nette\PhpGenerator\PsrPrinter;
@@ -43,6 +44,15 @@ class TemplateController extends Controller
         if (!$template)
             return response()->json(['status' => 'error', 'message' => 'No template with this identifier.'], 404);
 
+        if ($template->type === Template::TYPE_TEMPLATE) {
+            return response()->json($this->templateDetails($template));
+        } else {
+            return response()->json($this->bundleDetails($template));
+        }
+    }
+
+    private function templateDetails(Template $template)
+    {
         $path = self::TEMPLATES_DIR . $template->vendor . DIRECTORY_SEPARATOR . $template->filename;
 
         if (!Storage::exists($path))
@@ -62,7 +72,47 @@ class TemplateController extends Controller
         $template->setAttribute('preview', $generated);
         $template->setAttribute('generatedFilename', $parsed->filename);
 
-        return response()->json($template);
+        return $template;
+    }
+
+    private function bundleDetails(Template $bundle)
+    {
+        $path = self::TEMPLATES_DIR . $bundle->vendor . DIRECTORY_SEPARATOR . $bundle->filename;
+        $dir = self::TEMPLATES_DIR . $bundle->vendor . DIRECTORY_SEPARATOR . $bundle->name;
+
+        if (!Storage::exists($path))
+            return response()->json(['status' => 'error', 'message' => 'Template file not found.'], 404);
+
+        $contents = Storage::get($path);
+        $bundle->setAttribute('content', json_encode(json_decode($contents), JSON_PRETTY_PRINT));
+
+        $files = Storage::files($dir);
+        $templates = [];
+        foreach ($files as $file) {
+            $content = Storage::get($file);
+            $arguments = Parser::getArguments($content);
+            $templateVars = [];
+            foreach ($arguments as $arg) {
+                $templateVars[$arg] = '__' . strtoupper($arg) . '__';
+            }
+            $parsed = Generator::parse($file, $content, $templateVars);
+            $printer = new PsrPrinter;
+            $generated = $printer->printFile($parsed->contents);
+
+            $templateObject = Parser::decodeByExtension($file, $content);
+
+            $templates[] = (object) [
+                'content' => $content,
+                'preview' => $generated,
+                'generatedFilename' => $parsed->filename,
+                'name' => $templateObject->name,
+                'filename' => basename($file),
+            ];
+        }
+
+        $bundle->setAttribute('templates', $templates);
+
+        return $bundle;
     }
 
     public function get(string $vendor, string $name)

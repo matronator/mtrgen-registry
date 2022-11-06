@@ -34,6 +34,9 @@ class UserController extends Controller
 
         $user = $request->attributes->get('user');
 
+        if (!$user)
+            return BasicResponse::send('User not logged in.', 'error', '401');
+
         return response()->json(User::query()->find($user->id));
     }
 
@@ -201,6 +204,7 @@ class UserController extends Controller
             'status' => 'success',
             'message' => 'Access token created.',
             'token' => $accessToken->token,
+            'user' => $user,
         ], 200);
     }
 
