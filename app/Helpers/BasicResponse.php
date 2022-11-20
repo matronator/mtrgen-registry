@@ -28,7 +28,8 @@ class BasicResponse
         int $code = Response::HTTP_OK,
         array $headers = [],
         array $rest = [],
-    ) {
+    ): JsonResponse
+    {
         return response()->json(['status' => $status, 'message' => $message, ...$rest], $code, $headers);
     }
 

@@ -26,6 +26,23 @@ class Template extends Model
         return $this->belongsToMany(Tag::class, 'tags_templates')->withTimestamps();
     }
 
+    public static function allPublic($columns = ['*'])
+    {
+        return static::query()->where('private', '=', false)->get(
+            is_array($columns) ? $columns : func_get_args()
+        );
+    }
+
+    /**
+     * Begin querying the model with only public templates.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public static function queryPublic()
+    {
+        return (new static)->newQuery()->where('private', '=', false);
+    }
+
     /**
      * The attributes that are mass assignable.
      *

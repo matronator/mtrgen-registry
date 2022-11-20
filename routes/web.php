@@ -22,15 +22,15 @@ $router->group(['middleware' => 'cors', 'prefix' => 'api'], function () use ($ro
         return $router->app->version();
     });
     $router->group(['prefix' => 'templates'], function () use ($router) {
-        $router->get('/', ['uses' => 'TemplateController@findAll']);
+        $router->get('/', ['uses' => 'TemplateController@findAllPublic']);
 
-        $router->get('{vendor}', ['uses' => 'TemplateController@findByVendor']);
+        $router->get('{vendor}', ['uses' => 'TemplateController@findPublicByVendor']);
     
-        $router->get('{vendor}/{name}', ['uses' => 'TemplateController@findByName']);
+        $router->get('{vendor}/{name}', ['uses' => 'TemplateController@findPublicByName']);
 
-        $router->get('{vendor}/{name}/details', ['uses' => 'TemplateController@getTemplateDetails']);
+        $router->get('{vendor}/{name}/details', ['uses' => 'TemplateController@getPublicTemplateDetails']);
     
-        $router->get('{vendor}/{name}/get', ['uses' => 'TemplateController@get']);
+        $router->get('{vendor}/{name}/get', ['uses' => 'TemplateController@getPublic']);
 
         $router->get('{vendor}/{name}/type', ['uses' => 'TemplateController@getType']);
     
@@ -62,6 +62,20 @@ $router->group(['middleware' => 'cors', 'prefix' => 'api'], function () use ($ro
     $router->group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () use ($router) {
         $router->post('/', ['uses' => 'UserController@getLoggedUser']);
         $router->post('/check', ['uses' => 'UserController@isUserLoggedIn']);
+
+        $router->group(['prefix' => 'templates'], function () use ($router) {
+            $router->post('{vendor}', ['uses' => 'TemplateController@findByVendor']);
+        
+            $router->post('{vendor}/{name}', ['uses' => 'TemplateController@findByName']);
+    
+            $router->post('{vendor}/{name}/details', ['uses' => 'TemplateController@getTemplateDetails']);
+        
+            $router->post('{vendor}/{name}/get', ['uses' => 'TemplateController@get']);
+    
+            $router->get('{vendor}/{name}/type', ['uses' => 'TemplateController@getType']);
+
+            $router->post('{vendor}/{name}/visibility', ['uses' => 'TemplateController@setVisibility']);
+        });
     });
     
     $router->post('signup', ['uses' => 'UserController@create']);

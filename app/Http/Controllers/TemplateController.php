@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\BasicResponse;
 use App\Models\Template;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Matronator\Mtrgen\Template\Generator;
@@ -14,30 +16,76 @@ class TemplateController extends Controller
 {
     public const TEMPLATES_DIR = 'templates/';
 
-    public function findAll()
+    public function findAllPublic()
     {
-        return response()->json(Template::all()->load('tags')->all());
+        return response()->json(Template::allPublic()->load('tags')->all());
     }
 
-    public function findByVendor(string $vendor)
+    public function findPublicByVendor(string $vendor)
     {
         $vendor = strtolower($vendor);
-        return response()->json(Template::all()->where('vendor', '=', $vendor));
+        return response()->json(Template::allPublic()->where('vendor', '=', $vendor)->load('tags')->all());
     }
 
-    public function findByName(string $vendor, string $name)
+    public function findByVendor(Request $request, string $vendor)
+    {
+        $this->validate($request, [
+            'username' => 'required|string|alpha_dash',
+            'token' => 'required|string',
+        ]);
+
+        $vendor = strtolower($vendor);
+
+        return $this->checkUserPrivileges($request, $vendor, response()->json(Template::all()->where('vendor', '=', $vendor)->load('tags')->all()));
+    }
+
+    public function findByName(Request $request, string $vendor, string $name)
+    {
+        $this->validate($request, [
+            'username' => 'required|string|alpha_dash',
+            'token' => 'required|string',
+        ]);
+
+        $vendor = strtolower($vendor);
+        $name = strtolower($name);
+
+        return $this->checkUserPrivileges($request, $vendor, response()->json(Template::query()->where('vendor', '=', $vendor)->firstWhere('name', '=', $name)));
+    }
+
+    public function findPublicByName(string $vendor, string $name)
     {
         $vendor = strtolower($vendor);
         $name = strtolower($name);
-        return response()->json(Template::query()->where('vendor', '=', $vendor)->firstWhere('name', '=', $name));
+        return response()->json(Template::queryPublic()->where('vendor', '=', $vendor)->firstWhere('name', '=', $name));
     }
 
-    public function getTemplateDetails(string $vendor, string $name)
+    public function getTemplateDetails(Request $request, string $vendor, string $name)
     {
+        $this->validate($request, [
+            'username' => 'required|string|alpha_dash',
+            'token' => 'required|string',
+        ]);
+
         $vendor = strtolower($vendor);
         $name = strtolower($name);
 
         $template = Template::query()->where('vendor', '=', $vendor)->firstWhere('name', '=', $name);
+        if (!$template)
+            return response()->json(['status' => 'error', 'message' => 'No template with this identifier.'], 404);
+        
+        if ($template->type === Template::TYPE_TEMPLATE) {
+            return $this->checkUserPrivileges($request, $vendor, response()->json($this->templateDetails($template)));
+        } else {
+            return $this->checkUserPrivileges($request, $vendor, response()->json($this->bundleDetails($template)));
+        }
+    }
+
+    public function getPublicTemplateDetails(string $vendor, string $name)
+    {
+        $vendor = strtolower($vendor);
+        $name = strtolower($name);
+
+        $template = Template::queryPublic()->where('vendor', '=', $vendor)->firstWhere('name', '=', $name);
 
         if (!$template)
             return response()->json(['status' => 'error', 'message' => 'No template with this identifier.'], 404);
@@ -49,75 +97,34 @@ class TemplateController extends Controller
         }
     }
 
-    private function templateDetails(Template $template)
+    public function get(Request $request, string $vendor, string $name)
     {
-        $path = self::TEMPLATES_DIR . $template->vendor . DIRECTORY_SEPARATOR . $template->filename;
+        $this->validate($request, [
+            'username' => 'required|string|alpha_dash',
+            'token' => 'required|string',
+        ]);
 
-        if (!Storage::exists($path))
-            return response()->json(['status' => 'error', 'message' => 'Template file not found.'], 404);
+        $vendor = strtolower($vendor);
+        $name = strtolower($name);
 
-        $contents = Storage::get($path);
-        $template->setAttribute('content', $contents);
+        $user = $request->attributes->get('user');
 
-        $arguments = Parser::getArguments($contents);
-        $templateVars = [];
-        foreach ($arguments as $arg) {
-            $templateVars[$arg] = '__' . strtoupper($arg) . '__';
-        }
-        $parsed = Generator::parse($template->filename, $contents, $templateVars);
-        $printer = new PsrPrinter;
-        $generated = $printer->printFile($parsed->contents);
-        $template->setAttribute('preview', $generated);
-        $template->setAttribute('generatedFilename', $parsed->filename);
-
-        return $template;
-    }
-
-    private function bundleDetails(Template $bundle)
-    {
-        $path = self::TEMPLATES_DIR . $bundle->vendor . DIRECTORY_SEPARATOR . $bundle->filename;
-        $dir = self::TEMPLATES_DIR . $bundle->vendor . DIRECTORY_SEPARATOR . $bundle->name;
-
-        if (!Storage::exists($path))
-            return response()->json(['status' => 'error', 'message' => 'Template file not found.'], 404);
-
-        $contents = Storage::get($path);
-        $bundle->setAttribute('content', json_encode(json_decode($contents), JSON_PRETTY_PRINT));
-
-        $files = Storage::files($dir);
-        $templates = [];
-        foreach ($files as $file) {
-            $content = Storage::get($file);
-            $arguments = Parser::getArguments($content);
-            $templateVars = [];
-            foreach ($arguments as $arg) {
-                $templateVars[$arg] = '__' . strtoupper($arg) . '__';
-            }
-            $parsed = Generator::parse($file, $content, $templateVars);
-            $printer = new PsrPrinter;
-            $generated = $printer->printFile($parsed->contents);
-
-            $templateObject = Parser::decodeByExtension($file, $content);
-
-            $templates[] = (object) [
-                'content' => $content,
-                'preview' => $generated,
-                'generatedFilename' => $parsed->filename,
-                'name' => $templateObject->name,
-                'filename' => basename($file),
-            ];
+        if ($user->username !== $vendor) {
+            return BasicResponse::send('You are not authorized to view this page.', BasicResponse::STATUS_ERROR, 401);
         }
 
-        $bundle->setAttribute('templates', $templates);
-
-        return $bundle;
+        return $this->getPublic($vendor, $name, true);
     }
 
-    public function get(string $vendor, string $name)
+    public function getPublic(string $vendor, string $name, bool $alsoPrivate = false)
     {
         $vendor = strtolower($vendor);
         $name = strtolower($name);
-        $template = Template::query()->where('vendor', '=', $vendor)->firstWhere('name', '=', $name);
+        if ($alsoPrivate) {
+            $template = Template::query()->where('vendor', '=', $vendor)->firstWhere('name', '=', $name);
+        } else {
+            $template = Template::queryPublic()->where('vendor', '=', $vendor)->firstWhere('name', '=', $name);
+        }
 
         if (!$template)
             return response()->json(['error' => 'No template with this identifier.'], 404);
@@ -156,6 +163,34 @@ class TemplateController extends Controller
         $template = Template::query()->where('vendor', '=', $vendor)->firstWhere('name', '=', $name);
 
         return response()->json($template->type);
+    }
+
+    public function setVisibility(Request $request, string $vendor, string $name)
+    {
+        $this->validate($request, [
+            'username' => 'required|string|alpha_dash',
+            'token' => 'required|string',
+            'private' => 'required|boolean'
+        ]);
+
+        $vendor = strtolower($vendor);
+        $name = strtolower($name);
+
+        $user = $request->attributes->get('user');
+
+        if ($user->username !== $vendor) {
+            return BasicResponse::send('You are not authorized to view this page.', BasicResponse::STATUS_ERROR, 401);
+        }
+
+        $template = Template::query()->where('vendor', '=', $vendor)->firstWhere('name', '=', $name);
+        if (!$template)
+            return response()->json(['status' => 'error', 'message' => 'No template with this identifier.'], 404);
+        
+        $private = request('private', true);
+        $template->private = $private;
+        $template->save();
+
+        return BasicResponse::send('Visibility changed to ' . ($private ? 'private' : 'public') . '.');
     }
 
     public function getFromBundle(string $vendor, string $name, string $templateName)
@@ -299,12 +334,12 @@ class TemplateController extends Controller
         $user = $request->attributes->get('user');
 
         if ($isBundle) {
-            $name = request('name');
+            $name = strtolower(request('name'));
             $files = $request->file('files');
 
             if (count($files) < 2)
                 return response()->json(['status' => 'error', 'message' => 'Bundle must have at least two templates.'], 400);
-            
+
             $bundleObject = (object) [
                 'name' => $name,
                 'templates' => [],
@@ -321,7 +356,7 @@ class TemplateController extends Controller
                 Storage::put($path, $contents);
 
                 $parsedTemplate = Parser::decodeByExtension($filename, $contents);
-                
+
                 $bundleObject->templates[] = (object) [
                     'name' => $parsedTemplate->name,
                     'path' => $name . DIRECTORY_SEPARATOR . $filename,
@@ -341,12 +376,76 @@ class TemplateController extends Controller
             if (!Parser::isValid($file->getClientOriginalName(), $contents))
                 return response()->json(['status' => 'error', 'message' => 'Invalid template.'], 400);
 
-            $templateObject = Parser::decodeByExtension($file->getFilename(), $contents);
-            
+            $templateObject = Parser::decodeByExtension($file->getClientOriginalName(), $contents);
+
             $this->saveTemplate($user, $templateObject->name, $file->getClientOriginalName(), $isPrivate, $description, $contents);
 
             return response()->json(['status' => 'success', 'message' => 'Template ' . strtolower($user->username . '/' . $templateObject->name) . ' published!']);
         }
+    }
+
+    private function templateDetails(Template $template)
+    {
+        $path = self::TEMPLATES_DIR . $template->vendor . DIRECTORY_SEPARATOR . $template->filename;
+
+        if (!Storage::exists($path))
+            return response()->json(['status' => 'error', 'message' => 'Template file not found.'], 404);
+
+        $contents = Storage::get($path);
+        $template->setAttribute('content', $contents);
+
+        $arguments = Parser::getArguments($contents);
+        $templateVars = [];
+        foreach ($arguments as $arg) {
+            $templateVars[$arg] = '__' . strtoupper($arg) . '__';
+        }
+        $parsed = Generator::parse($template->filename, $contents, $templateVars);
+        $printer = new PsrPrinter;
+        $generated = $printer->printFile($parsed->contents);
+        $template->setAttribute('preview', $generated);
+        $template->setAttribute('generatedFilename', $parsed->filename);
+
+        return $template;
+    }
+
+    private function bundleDetails(Template $bundle)
+    {
+        $path = self::TEMPLATES_DIR . $bundle->vendor . DIRECTORY_SEPARATOR . $bundle->filename;
+        $dir = self::TEMPLATES_DIR . $bundle->vendor . DIRECTORY_SEPARATOR . $bundle->name;
+
+        if (!Storage::exists($path))
+            return response()->json(['status' => 'error', 'message' => 'Template file not found.'], 404);
+
+        $contents = Storage::get($path);
+        $bundle->setAttribute('content', json_encode(json_decode($contents), JSON_PRETTY_PRINT));
+
+        $files = Storage::files($dir);
+        $templates = [];
+        foreach ($files as $file) {
+            $content = Storage::get($file);
+            $arguments = Parser::getArguments($content);
+            $templateVars = [];
+            foreach ($arguments as $arg) {
+                $templateVars[$arg] = '__' . strtoupper($arg) . '__';
+            }
+            $parsed = Generator::parse($file, $content, $templateVars);
+            $printer = new PsrPrinter;
+            $generated = $printer->printFile($parsed->contents);
+
+            $templateObject = Parser::decodeByExtension($file, $content);
+
+            $templates[] = (object) [
+                'content' => $content,
+                'preview' => $generated,
+                'generatedFilename' => $parsed->filename,
+                'name' => $templateObject->name,
+                'filename' => basename($file),
+            ];
+        }
+
+        $bundle->setAttribute('templates', $templates);
+
+        return $bundle;
     }
 
     private function saveTemplate(mixed $user, string $name, string $filename, bool $isPrivate, ?string $description, string $contents, string $type = Template::TYPE_TEMPLATE): void
@@ -371,5 +470,16 @@ class TemplateController extends Controller
         $path = self::TEMPLATES_DIR . $template->vendor . DIRECTORY_SEPARATOR . $template->filename;
 
         Storage::put($path, $contents);
+    }
+
+    private function checkUserPrivileges(Request $request, string $vendor, JsonResponse $response): bool|\Illuminate\Http\JsonResponse
+    {
+        $user = $request->attributes->get('user');
+
+        if ($user->username !== $vendor) {
+            return BasicResponse::send('You are not authorized to view this page.', BasicResponse::STATUS_ERROR, 401);
+        }
+
+        return $response;
     }
 }
