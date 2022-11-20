@@ -35,6 +35,8 @@ $router->group(['middleware' => 'cors', 'prefix' => 'api'], function () use ($ro
         $router->get('{vendor}/{name}/type', ['uses' => 'TemplateController@getType']);
     
         $router->post('/', ['middleware' => 'auth', 'uses' => 'TemplateController@save']);
+
+        $router->post('/publish', ['middleware' => 'auth', 'uses' => 'TemplateController@publish']);
     });
 
     $router->group(['prefix' => 'bundles'], function () use ($router) {

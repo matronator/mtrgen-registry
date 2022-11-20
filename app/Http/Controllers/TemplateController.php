@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tag;
 use App\Models\Template;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Matronator\Mtrgen\Store\Storage as MtrgenStorage;
 use Matronator\Mtrgen\Template\Generator;
+use Illuminate\Http\UploadedFile;
 use Matronator\Parsem\Parser;
 use Nette\PhpGenerator\PsrPrinter;
 
@@ -168,7 +166,7 @@ class TemplateController extends Controller
 
         if (!$template)
             return response()->json(['error' => 'No template with this identifier.'], 404);
-        
+
         if ($template->type !== Template::TYPE_BUNDLE)
             return response()->json(['error' => 'Not a bundle.'], 400);
 
@@ -191,18 +189,18 @@ class TemplateController extends Controller
             if (!$mime) {
                 $matched = preg_match('/^.+?(?:\.template)?\.(json|yaml|yml|neon)$/', $temp->path, $matches);
                 if (!$matched) $mime = 'text/plain';
-        
+
                 $ext = $matches[1] === 'yml' ? 'yaml' : $matches[1];
                 $mime = "text/$ext";
             }
-        
+
             if (request()->hasHeader('X-Requested-By')) {
                 if (request()->header('X-Requested-By') === 'cli') {
                     $template->downloads += 1;
                     $template->save();
                 }
             }
-        
+
             return response($contents, 200, [
                 'Content-Type' => $mime,
             ]);
@@ -216,6 +214,7 @@ class TemplateController extends Controller
             'token' => 'required|string',
             'filename' => 'required|string',
             'name' => 'required|string|alpha_num',
+            'private' => 'sometimes|nullable|boolean',
             'description' => 'string',
             'contents' => 'required',
             'templates' => 'required|array',
@@ -226,6 +225,7 @@ class TemplateController extends Controller
 
         $filename = request('filename');
         $name = strtolower(request('name'));
+        $isPrivate = request('private') ?? false;
         $contents = request('contents');
         $description = request('description') ?? null;
         if (!Parser::isValidBundle($filename, $contents))
@@ -234,35 +234,18 @@ class TemplateController extends Controller
         $templates = request('templates');
         if (count($templates) < 2)
             return response()->json(['status' => 'error', 'message' => 'Bundle must have at least two templates.'], 400);
-        
+
         $user = $request->attributes->get('user');
 
         foreach ($templates as $item) {
             if (!Parser::isValid($item['filename'], $item['contents']))
                 return response()->json(['status' => 'error', 'message' => 'Bundle contains invalid template/s.'], 400);
-            
+
             $path = self::TEMPLATES_DIR . $user->username . DIRECTORY_SEPARATOR . $item['filename'];
             Storage::put($path, $item['contents']);
         }
 
-        $template = Template::query()->updateOrCreate([
-            'user_id' => $user->id,
-            'name' => $name,
-            'filename' => $filename,
-            'vendor' => strtolower($user->username),
-            'type' => Template::TYPE_BUNDLE,
-        ], ['user_id' => $user->id, 'name' => $name, 'filename' => $filename, 'vendor' => strtolower($user->username), 'type' => Template::TYPE_BUNDLE, 'description' => $description]);
-
-        $template->filename = $filename;
-        $template->name = $name;
-        $template->user_id = $user->id;
-        $template->vendor = strtolower($user->username);
-        if ($description) $template->description = $description;
-        $template->type = Template::TYPE_BUNDLE;
-        $template->save();
-
-        $path = self::TEMPLATES_DIR . $template->vendor . DIRECTORY_SEPARATOR . $template->filename;
-        Storage::put($path, $contents);
+        $this->saveTemplate($user, $name, $filename, $isPrivate, $description, $contents, Template::TYPE_BUNDLE);
 
         return response()->json(['status' => 'success', 'message' => 'Bundle ' . strtolower($user->username . '/' . $name) . ' published.']);
     }
@@ -274,12 +257,14 @@ class TemplateController extends Controller
             'token' => 'required|string',
             'filename' => 'required|string',
             'name' => 'required|string|alpha_num',
-            'description' => 'string',
+            'private' => 'sometimes|nullable|boolean',
+            'description' => 'sometimes|nullable|string',
             'contents' => 'required'
         ]);
 
         $filename = request('filename');
         $name = request('name');
+        $isPrivate = request('private') ?? false;
         $contents = request('contents');
         $description = request('description') ?? null;
 
@@ -288,26 +273,103 @@ class TemplateController extends Controller
 
         $user = $request->attributes->get('user');
 
+        $this->saveTemplate($user, $name, $filename, $isPrivate, $description, $contents);
+
+        return response()->json(['status' => 'success', 'message' => 'Template ' . strtolower($user->username . '/' . $name) . ' published.']);
+    }
+
+    public function publish(Request $request)
+    {
+        $this->validate($request, [
+            'username' => 'required|string|alpha_dash',
+            'token' => 'required|string',
+            'bundle' => 'required|boolean',
+            'name' => 'sometimes|nullable|string|alpha_num',
+            'private' => 'sometimes|nullable|boolean',
+            'description' => 'sometimes|nullable|string',
+            'files' => 'required_without:file|array',
+            'files.*' => 'file',
+            'file' => 'required_without:files|file',
+        ]);
+
+        $isBundle = request('bundle');
+        $isPrivate = request('private') ?? false;
+        $description = request('description') ?? null;
+
+        $user = $request->attributes->get('user');
+
+        if ($isBundle) {
+            $name = request('name');
+            $files = $request->file('files');
+
+            if (count($files) < 2)
+                return response()->json(['status' => 'error', 'message' => 'Bundle must have at least two templates.'], 400);
+            
+            $bundleObject = (object) [
+                'name' => $name,
+                'templates' => [],
+            ];
+
+            /** @var UploadedFile $file */
+            foreach ($files as $file) {
+                $filename = $file->getClientOriginalName();
+                $contents = $file->getContent();
+                if (!Parser::isValid($filename, $contents))
+                    return response()->json(['status' => 'error', 'message' => 'Bundle contains invalid template/s.'], 400);
+
+                $path = self::TEMPLATES_DIR . $user->username . DIRECTORY_SEPARATOR . $name . DIRECTORY_SEPARATOR . $filename;
+                Storage::put($path, $contents);
+
+                $parsedTemplate = Parser::decodeByExtension($filename, $contents);
+                
+                $bundleObject->templates[] = (object) [
+                    'name' => $parsedTemplate->name,
+                    'path' => $name . DIRECTORY_SEPARATOR . $filename,
+                ];
+            }
+
+            $bundleContents = json_encode($bundleObject, JSON_PRETTY_PRINT);
+            $bundleFilename = "$name.bundle.json";
+
+            $this->saveTemplate($user, $name, $bundleFilename, $isPrivate, $description, $bundleContents, Template::TYPE_BUNDLE);
+
+            return response()->json(['status' => 'success', 'message' => 'Bundle ' . strtolower($user->username . '/' . $name) . ' published!']);
+        } else {
+            $file = $request->file('file');
+            $contents = $file->getContent();
+
+            if (!Parser::isValid($file->getClientOriginalName(), $contents))
+                return response()->json(['status' => 'error', 'message' => 'Invalid template.'], 400);
+
+            $templateObject = Parser::decodeByExtension($file->getFilename(), $contents);
+            
+            $this->saveTemplate($user, $templateObject->name, $file->getClientOriginalName(), $isPrivate, $description, $contents);
+
+            return response()->json(['status' => 'success', 'message' => 'Template ' . strtolower($user->username . '/' . $templateObject->name) . ' published!']);
+        }
+    }
+
+    private function saveTemplate(mixed $user, string $name, string $filename, bool $isPrivate, ?string $description, string $contents, string $type = Template::TYPE_TEMPLATE): void
+    {
         $template = Template::query()->updateOrCreate([
             'user_id' => $user->id,
             'name' => strtolower($name),
             'filename' => $filename,
             'vendor' => strtolower($user->username),
-            'type' => Template::TYPE_TEMPLATE,
-        ], ['user_id' => $user->id, 'name' => strtolower($name), 'filename' => $filename, 'vendor' => strtolower($user->username), 'type' => Template::TYPE_TEMPLATE, 'description' => $description]);
+            'type' => $type,
+            'private' => $isPrivate,
+        ], ['user_id' => $user->id, 'name' => strtolower($name), 'filename' => $filename, 'vendor' => strtolower($user->username), 'type' => $type, 'description' => $description]);
 
         $template->filename = $filename;
         $template->name = strtolower($name);
         $template->user_id = $user->id;
         $template->vendor = strtolower($user->username);
         if ($description) $template->description = $description;
-        $template->type = Template::TYPE_TEMPLATE;
+        $template->type = $type;
         $template->save();
 
         $path = self::TEMPLATES_DIR . $template->vendor . DIRECTORY_SEPARATOR . $template->filename;
 
         Storage::put($path, $contents);
-
-        return response()->json(['status' => 'success', 'message' => 'Template ' . strtolower($user->username . '/' . $name) . ' published.']);
     }
 }

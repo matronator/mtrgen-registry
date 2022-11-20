@@ -32,7 +32,7 @@ class Template extends Model
      * @var string[]
      */
     protected $fillable = [
-        'name', 'filename', 'vendor', 'user_id', 'type', 'downloads', 'description'
+        'name', 'filename', 'vendor', 'user_id', 'type', 'private', 'downloads', 'description'
     ];
 
     /**
