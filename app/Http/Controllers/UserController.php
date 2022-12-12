@@ -156,7 +156,6 @@ class UserController extends Controller
         $this->validate($request, [
             'token' => 'required|string',
             'username' => 'required|string|alpha_dash',
-            'password' => 'required|string',
             'email' => 'sometimes|nullable|email',
             'fullname' => 'sometimes|nullable|string',
             'description' => 'sometimes|nullable|string',
@@ -164,12 +163,14 @@ class UserController extends Controller
             'github' => 'sometimes|nullable|string',
         ]);
 
-        $data = $request->except(['token', 'password']);
+        $data = $request->except(['username', 'token']);
         $user = $request->attributes->get('user', null);
 
-        if (!$user) return new BasicResponse('User not logged in.', 'error', 400);
+        if (!$user) return BasicResponse::send('User not logged in.', 'error', 400);
 
-        // $user->avatar
+        User::query()->find($user->id)->update($data);
+
+        return BasicResponse::send('User updated!');
     }
 
     public function login(Request $request)

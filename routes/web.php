@@ -53,7 +53,7 @@ $router->group(['middleware' => 'cors', 'prefix' => 'api'], function () use ($ro
         $router->get('/', ['uses' => 'UserController@findAll']);
         $router->get('{username}', ['uses' => 'UserController@findByName']);
 
-        $router->put('/', ['middleware' => 'auth', 'uses' => 'UserController@update']);
+        $router->post('/', ['middleware' => 'auth', 'uses' => 'UserController@update']);
 
         $router->get('{username}/avatar', ['uses' => 'UserController@getAvatar']);
         $router->post('/avatar', ['middleware' => 'auth', 'uses' => 'UserController@setAvatar']);
