@@ -18,13 +18,13 @@ class TemplateController extends Controller
 
     public function findAllPublic()
     {
-        return response()->json(Template::allPublic()->load('tags')->all());
+        return response()->json(array_values(Template::allPublic()->load('tags')->all()));
     }
 
     public function findPublicByVendor(string $vendor)
     {
         $vendor = strtolower($vendor);
-        return response()->json(Template::allPublic()->where('vendor', '=', $vendor)->load('tags')->all());
+        return response()->json(array_values(Template::allPublic()->where('vendor', '=', $vendor)->load('tags')->all()));
     }
 
     public function findByVendor(Request $request, string $vendor)
@@ -36,7 +36,7 @@ class TemplateController extends Controller
 
         $vendor = strtolower($vendor);
 
-        return $this->checkUserPrivileges($request, $vendor, response()->json(Template::all()->where('vendor', '=', $vendor)->load('tags')->all()));
+        return $this->checkUserPrivileges($request, $vendor, response()->json(array_values(Template::all()->where('vendor', '=', $vendor)->load('tags')->all())));
     }
 
     public function findByName(Request $request, string $vendor, string $name)
