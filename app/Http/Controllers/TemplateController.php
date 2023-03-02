@@ -31,7 +31,6 @@ class TemplateController extends Controller
     {
         $this->validate($request, [
             'username' => 'required|string|alpha_dash',
-            'token' => 'required|string',
         ]);
 
         $vendor = strtolower($vendor);
@@ -43,7 +42,6 @@ class TemplateController extends Controller
     {
         $this->validate($request, [
             'username' => 'required|string|alpha_dash',
-            'token' => 'required|string',
         ]);
 
         $vendor = strtolower($vendor);
@@ -63,7 +61,6 @@ class TemplateController extends Controller
     {
         $this->validate($request, [
             'username' => 'required|string|alpha_dash',
-            'token' => 'required|string',
         ]);
 
         $vendor = strtolower($vendor);
@@ -101,7 +98,6 @@ class TemplateController extends Controller
     {
         $this->validate($request, [
             'username' => 'required|string|alpha_dash',
-            'token' => 'required|string',
         ]);
 
         $vendor = strtolower($vendor);
@@ -169,7 +165,6 @@ class TemplateController extends Controller
     {
         $this->validate($request, [
             'username' => 'required|string|alpha_dash',
-            'token' => 'required|string',
             'private' => 'required|boolean'
         ]);
 
@@ -246,7 +241,6 @@ class TemplateController extends Controller
     {
         $this->validate($request, [
             'username' => 'required|string|alpha_dash',
-            'token' => 'required|string',
             'filename' => 'required|string',
             'name' => 'required|string|alpha_num',
             'private' => 'sometimes|nullable|boolean',
@@ -289,7 +283,6 @@ class TemplateController extends Controller
     {
         $this->validate($request, [
             'username' => 'required|string|alpha_dash',
-            'token' => 'required|string',
             'filename' => 'required|string',
             'name' => 'required|string|alpha_num',
             'private' => 'sometimes|nullable|boolean',
@@ -317,7 +310,6 @@ class TemplateController extends Controller
     {
         $this->validate($request, [
             'username' => 'required|string|alpha_dash',
-            'token' => 'required|string',
             'bundle' => 'required|boolean',
             'name' => 'sometimes|nullable|string|alpha_num',
             'private' => 'sometimes|nullable|boolean',

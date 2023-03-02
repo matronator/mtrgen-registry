@@ -29,7 +29,6 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'username' => 'required|string|alpha_dash',
-            'token' => 'required|string',
         ]);
 
         $user = $request->attributes->get('user');
@@ -44,7 +43,6 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'username' => 'required|string|alpha_dash',
-            'token' => 'required|string',
         ]);
 
         $user = $request->attributes->get('user', null);
@@ -59,10 +57,10 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'username' => 'required|string|alpha_dash',
-            'token' => 'required|string',
         ]);
 
-        $token = $request->input('token');
+        $token = $request->header('Authorization');
+        $token = str_replace('Bearer ', '', $token);
 
         $user = $request->attributes->get('user', null);
 
@@ -114,7 +112,6 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'username' => 'required|string|alpha_dash',
-            'token' => 'required|string',
             'avatar' => 'sometimes|nullable|image|mimes:png,jpg',
         ]);
 
@@ -154,7 +151,6 @@ class UserController extends Controller
     public function update(Request $request)
     {
         $this->validate($request, [
-            'token' => 'required|string',
             'username' => 'required|string|alpha_dash',
             'email' => 'sometimes|nullable|email',
             'fullname' => 'sometimes|nullable|string',
@@ -163,7 +159,7 @@ class UserController extends Controller
             'github' => 'sometimes|nullable|string',
         ]);
 
-        $data = $request->except(['username', 'token']);
+        $data = $request->except(['username']);
         $user = $request->attributes->get('user', null);
 
         if (!$user) return BasicResponse::send('User not logged in.', 'error', 400);
@@ -188,7 +184,7 @@ class UserController extends Controller
             // $expiresAt = (new DateTime())->add(DateInterval::createFromDateString("$duration hours"));
             $expiresAt = new DateTime("now + $duration hours");
         } else {
-            $expiresAt = new DateTime('2030-12-12');
+            $expiresAt = new DateTime('2037-12-12');
         }
 
         AccessToken::query()->where('user_id', '=', $user->id)->delete();

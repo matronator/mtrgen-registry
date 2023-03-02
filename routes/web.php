@@ -13,10 +13,6 @@
 |
 */
 
-$router->get('/', function () {
-    return redirect('https://matronator.github.io/MTRGen/', '301');
-});
-
 $router->group(['middleware' => 'cors', 'prefix' => 'api'], function () use ($router) {
     $router->get('/', function () use ($router) {
         return $router->app->version();
@@ -81,4 +77,8 @@ $router->group(['middleware' => 'cors', 'prefix' => 'api'], function () use ($ro
     $router->post('signup', ['uses' => 'UserController@create']);
     $router->post('login', ['middleware' => 'login', 'uses' => 'UserController@login']);
     $router->post('logout', ['middleware' => 'auth', 'uses' => 'UserController@logout']);
+});
+
+$router->get('/{any:.*}', function () {
+    return view('index');
 });

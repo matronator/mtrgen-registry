@@ -20,11 +20,14 @@ class AuthMiddleware
     public function handle($request, Closure $next)
     {
         $username = $request->input('username');
-        $token = $request->input('token');
-
-        if (!$username || !$token)
-            return response()->json(['status' => 'error', 'message' => 'Unauthorized access. Please login.'], 401);
+        $token = $request->header('Authorization');
         
+        if (!$username || !$token)
+            return response()->withHeaders([
+                'WWW-Authenticate' => 'Bearer',
+            ])->json(['status' => 'error', 'message' => 'Unauthorized access. Please login.'], 401);
+        
+        $token = str_replace('Bearer ', '', $token);
         $username = strtolower($username);
         $token = AccessToken::query()->firstWhere('token', '=', $token);
 

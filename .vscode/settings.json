@@ -4,5 +4,37 @@
             "https://files.matronator.com/public/mtrgen/latest/mtrgen-template-schema.json",
             "file:///Users/matejbystricky/Documents/Work.nosync/Matronator%20Brand/projects/mtrgen-registry/storage/app/templates/matronator/test.template.yaml"
         ]
-    }
+    },
+    "colorTabs.config": [
+        {
+            "regex": ".*\\.test\\.ts",
+            "color": "#224411",
+            "label": "TEST"
+        },
+        {
+            "regex": ".*\\.ts",
+            "color": "#226677",
+            "label": "TS"
+        },
+        {
+            "regex": ".*\\.json",
+            "color": "#227755",
+            "label": "JSON"
+        },
+        {
+            "regex": ".*\\.php",
+            "color": "#224455",
+            "label": "JSON"
+        }
+    ],
+    "workbench.colorCustomizations": {
+        "tab.activeBorder": "#224455",
+        "titleBar.activeBackground": "#224455",
+        "titleBar.activeForeground": "#ffffff",
+        "activityBar.background": "#224455",
+        "activityBar.foreground": "#ffffff",
+        "statusBar.background": "#224455",
+        "statusBar.foreground": "#ffffff"
+    },
+    "window.title": "~[JSON]~${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${separator}${activeEditorShort}${separator}${rootName}${separator}${profileName}"
 }
