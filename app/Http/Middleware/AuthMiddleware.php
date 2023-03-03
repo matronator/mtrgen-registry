@@ -7,6 +7,7 @@ use App\Models\AccessToken;
 use App\Models\User;
 use Closure;
 use DateTime;
+use Illuminate\Support\Facades\Log;
 
 class AuthMiddleware
 {
@@ -21,11 +22,10 @@ class AuthMiddleware
     {
         $username = $request->input('username');
         $token = $request->header('Authorization');
+        Log::debug($token);
         
         if (!$username || !$token)
-            return response()->withHeaders([
-                'WWW-Authenticate' => 'Bearer',
-            ])->json(['status' => 'error', 'message' => 'Unauthorized access. Please login.'], 401);
+            return response()->json(['status' => 'error', 'message' => 'Unauthorized access. Please login.'], 401)->header('WWW-Authenticate', 'Bearer');
         
         $token = str_replace('Bearer ', '', $token);
         $username = strtolower($username);

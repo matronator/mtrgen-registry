@@ -3360,16 +3360,16 @@
         },
         {
             "name": "matronator/mtrgen",
-            "version": "v1.1.3",
+            "version": "v1.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/matronator/MTRGen.git",
-                "reference": "773cc4c844b3724b8eaf60e82d4f0f354653ebc0"
+                "reference": "7ea64b256fccafea8526b4f801712b37dcdfc139"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/matronator/MTRGen/zipball/773cc4c844b3724b8eaf60e82d4f0f354653ebc0",
-                "reference": "773cc4c844b3724b8eaf60e82d4f0f354653ebc0",
+                "url": "https://api.github.com/repos/matronator/MTRGen/zipball/7ea64b256fccafea8526b4f801712b37dcdfc139",
+                "reference": "7ea64b256fccafea8526b4f801712b37dcdfc139",
                 "shasum": ""
             },
             "require": {
@@ -3424,7 +3424,7 @@
             ],
             "support": {
                 "issues": "https://github.com/matronator/MTRGen/issues",
-                "source": "https://github.com/matronator/MTRGen/tree/v1.1.3"
+                "source": "https://github.com/matronator/MTRGen/tree/v1.1.4"
             },
             "funding": [
                 {
@@ -3444,7 +3444,7 @@
                     "type": "paypal"
                 }
             ],
-            "time": "2022-10-16T09:43:59+00:00"
+            "time": "2023-03-03T19:35:11+00:00"
         },
         {
             "name": "matronator/parsem",

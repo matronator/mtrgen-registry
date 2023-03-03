@@ -391,12 +391,17 @@ class TemplateController extends Controller
         foreach ($arguments as $arg) {
             $templateVars[$arg] = '__' . strtoupper($arg) . '__';
         }
-        $parsed = Generator::parse($template->filename, $contents, $templateVars);
-        $printer = new PsrPrinter;
-        $generated = $printer->printFile($parsed->contents);
-        $template->setAttribute('preview', $generated);
-        $template->setAttribute('generatedFilename', $parsed->filename);
 
+        try {
+            $parsed = Generator::parse($template->filename, $contents, $templateVars);
+            $printer = new PsrPrinter;
+            $generated = $printer->printFile($parsed->contents);
+            $template->setAttribute('generatedFilename', $parsed->filename);
+        } catch (\Exception $e) {
+            $generated = $e->getMessage();
+        }
+        
+        $template->setAttribute('preview', $generated);
         return $template;
     }
 
