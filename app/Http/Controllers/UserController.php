@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\BasicResponse;
+use App\Helpers\Image;
 use App\Models\AccessToken;
 use App\Models\User;
 use DateTime;
@@ -131,8 +132,12 @@ class UserController extends Controller
         
         Storage::deleteDirectory($path);
         $filename = $avatar->store($path);
+        $dir = url('/api/users/' . $user->username . '/avatar');
+
+        Image::resizeAvatar(Storage::path($filename));
+
         $user->avatar = $filename;
-        $user->avatar_url = url('/api/users/' . $user->username . '/avatar');
+        $user->avatar_url = $dir;
         $user->save();
 
         return BasicResponse::send('Avatar saved.');

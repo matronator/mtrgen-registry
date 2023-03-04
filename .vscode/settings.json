@@ -36,5 +36,5 @@
         "statusBar.background": "#224455",
         "statusBar.foreground": "#ffffff"
     },
-    "window.title": "~[JSON]~${separator}${separator}${separator}${activeEditorShort}${separator}${rootName}${separator}${profileName}"
+    "window.title": "~[JSON]~${separator}${activeEditorShort}${separator}${rootName}${separator}${profileName}"
 }

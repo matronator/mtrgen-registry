@@ -22,7 +22,6 @@ class AuthMiddleware
     {
         $username = $request->input('username');
         $token = $request->header('Authorization');
-        Log::debug($token);
         
         if (!$username || !$token)
             return response()->json(['status' => 'error', 'message' => 'Unauthorized access. Please login.'], 401)->header('WWW-Authenticate', 'Bearer');
