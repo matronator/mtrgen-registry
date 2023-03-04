@@ -7,3 +7,4 @@ Homestead.yaml
 .env.prod
 .phpunit.result.cache
 .DS_Store
+/.vscode
