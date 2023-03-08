@@ -16,25 +16,39 @@ class BasicResponse
         public string $message,
         public string $status = self::STATUS_SUCCESS,
         public int $code = Response::HTTP_OK,
+        public ?ErrorCode $error = null,
         array $headers = [],
         array $rest = [],
     ) {
-        return response()->json(['status' => $status, 'message' => $message, ...$rest], $code, $headers);
+        $array = ['status' => $status, 'message' => $message, ...$rest];
+        if ($error) {
+            $array['error'] = $error->value;
+        }
+        return response()->json($array, $code, $headers);
     }
 
     public static function send(
         string $message,
         string $status = self::STATUS_SUCCESS,
         int $code = Response::HTTP_OK,
+        ?ErrorCode $error = null,
         array $headers = [],
         array $rest = [],
     ): JsonResponse
     {
-        return response()->json(['status' => $status, 'message' => $message, ...$rest], $code, $headers);
+        $array = ['status' => $status, 'message' => $message, ...$rest];
+        if ($error) {
+            $array['error'] = $error->value;
+        }
+        return response()->json($array, $code, $headers);
     }
 
-    public static function toArray(string $message, string $status = self::STATUS_SUCCESS)
+    public static function toArray(string $message, string $status = self::STATUS_SUCCESS, ?ErrorCode $error = null)
     {
-        return ['status' => $status, 'message' => $message];
+        $array = ['status' => $status, 'message' => $message];
+        if ($error) {
+            $array['error'] = $error->value;
+        }
+        return $array;
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\BasicResponse;
+use App\Helpers\ErrorCode;
 use App\Helpers\Image;
 use App\Models\AccessToken;
 use App\Models\User;
@@ -35,7 +36,7 @@ class UserController extends Controller
         $user = $request->attributes->get('user');
 
         if (!$user)
-            return BasicResponse::send('User not logged in.', 'error', '401');
+            return BasicResponse::send('User not logged in.', 'error', 401, ErrorCode::USER_NOT_LOGGED_IN);
 
         return response()->json(User::query()->find($user->id));
     }
@@ -70,7 +71,7 @@ class UserController extends Controller
             $token->delete();
             return response()->json(['status' => 'success', 'message' => 'User logged out.']);
         } else {
-            return response()->json(['status' => 'error', 'message' => 'User was not logged in.']);
+            return response()->json(['status' => 'error', 'message' => 'User was not logged in.', 'error' => ErrorCode::USER_NOT_LOGGED_IN->value], 401);
         }
     }
 
@@ -119,7 +120,7 @@ class UserController extends Controller
         $avatar = $request->file('avatar');
         $user = $request->attributes->get('user', null);
 
-        if (!$user) return BasicResponse::send('User not logged in.', 'error', 400);
+        if (!$user) return BasicResponse::send('User not logged in.', 'error', 401, ErrorCode::USER_NOT_LOGGED_IN);
 
         $path = self::AVATAR_DIR . $user->username;
         if (!$avatar) {
@@ -167,7 +168,7 @@ class UserController extends Controller
         $data = $request->except(['username']);
         $user = $request->attributes->get('user', null);
 
-        if (!$user) return BasicResponse::send('User not logged in.', 'error', 400);
+        if (!$user) return BasicResponse::send('User not logged in.', 'error', 400, ErrorCode::USER_NOT_LOGGED_IN);
 
         User::query()->find($user->id)->update($data);
 
@@ -186,7 +187,6 @@ class UserController extends Controller
 
         $duration = (int) $request->input('duration');
         if ($duration !== 0) {
-            // $expiresAt = (new DateTime())->add(DateInterval::createFromDateString("$duration hours"));
             $expiresAt = new DateTime("now + $duration hours");
         } else {
             $expiresAt = new DateTime('2037-12-12');
