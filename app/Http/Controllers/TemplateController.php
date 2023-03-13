@@ -94,6 +94,43 @@ class TemplateController extends Controller
         }
     }
 
+    public function convert(Request $request)
+    {
+        $this->validate($request, [
+            'template' => 'required|json',
+        ]);
+
+        $template = request('template');
+
+        if (!Parser::isValid('test.template.json', $template)) {
+            return BasicResponse::send('Invalid template.', BasicResponse::STATUS_ERROR, 400);
+        }
+
+        $decoded = Parser::decodeByExtension('test.template.json', $template);
+
+        $arguments = Parser::getArguments($template);
+        $templateVars = [];
+        foreach ($arguments as $arg) {
+            $templateVars[$arg] = '__' . strtoupper($arg) . '__';
+        }
+
+        try {
+            $parsed = Generator::parse($decoded->filename . '.json', $template, $templateVars);
+            $printer = new PsrPrinter;
+            $generated = $printer->printFile($parsed->contents);
+        } catch (\Exception $e) {
+            return BasicResponse::send('Invalid template.', BasicResponse::STATUS_ERROR, 400);
+        }
+
+        return response()->json([
+            'template' => $template,
+            'parsed' => $parsed,
+            'generated' => $generated,
+        ], 200, [
+            'Content-Type' => 'application/json',
+        ]);
+    }
+
     public function get(Request $request, string $vendor, string $name)
     {
         $this->validate($request, [

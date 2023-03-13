@@ -33,6 +33,8 @@ $router->group(['middleware' => 'cors', 'prefix' => 'api'], function () use ($ro
         $router->post('/', ['middleware' => 'auth', 'uses' => 'TemplateController@save']);
 
         $router->post('/publish', ['middleware' => 'auth', 'uses' => 'TemplateController@publish']);
+
+        $router->post('/convert', ['uses' => 'TemplateController@convert']);
     });
 
     $router->group(['prefix' => 'bundles'], function () use ($router) {
