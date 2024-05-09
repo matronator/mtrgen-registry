@@ -7,8 +7,8 @@ use App\Models\Template;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Matronator\Mtrgen\Template\Generator;
 use Illuminate\Http\UploadedFile;
+use Matronator\Mtrgen\Template\ClassicGenerator;
 use Matronator\Parsem\Parser;
 use Nette\PhpGenerator\PsrPrinter;
 
@@ -115,7 +115,7 @@ class TemplateController extends Controller
         }
 
         try {
-            $parsed = Generator::parse($decoded->filename . '.json', $template, $templateVars);
+            $parsed = ClassicGenerator::parse($decoded->filename . '.json', $template, $templateVars);
             $printer = new PsrPrinter;
             $generated = $printer->printFile($parsed->contents);
         } catch (\Exception $e) {
@@ -186,6 +186,7 @@ class TemplateController extends Controller
 
         return response($contents, 200, [
             'Content-Type' => $mime,
+            'X-Template-Filename' => $template->filename,
         ]);
     }
 
@@ -254,7 +255,7 @@ class TemplateController extends Controller
             $contents = Storage::get($path);
             $mime = Storage::mimeType($path);
             if (!$mime) {
-                $matched = preg_match('/^.+?(?:\.template)?\.(json|yaml|yml|neon)$/', $temp->path, $matches);
+                $matched = preg_match('/^.+?(?:\.template)?\.(json|yaml|yml|neon|.+?)$/', $temp->path, $matches);
                 if (!$matched) $mime = 'text/plain';
 
                 $ext = $matches[1] === 'yml' ? 'yaml' : $matches[1];
@@ -270,6 +271,7 @@ class TemplateController extends Controller
 
             return response($contents, 200, [
                 'Content-Type' => $mime,
+                'X-Template-Filename' => $temp->filename,
             ]);
         }
     }
@@ -430,7 +432,7 @@ class TemplateController extends Controller
         }
 
         try {
-            $parsed = Generator::parse($template->filename, $contents, $templateVars);
+            $parsed = ClassicGenerator::parse($template->filename, $contents, $templateVars);
             $printer = new PsrPrinter;
             $generated = $printer->printFile($parsed->contents);
             $template->setAttribute('generatedFilename', $parsed->filename);
@@ -462,7 +464,7 @@ class TemplateController extends Controller
             foreach ($arguments as $arg) {
                 $templateVars[$arg] = '__' . strtoupper($arg) . '__';
             }
-            $parsed = Generator::parse($file, $content, $templateVars);
+            $parsed = ClassicGenerator::parse($file, $content, $templateVars);
             $printer = new PsrPrinter;
             $generated = $printer->printFile($parsed->contents);
 

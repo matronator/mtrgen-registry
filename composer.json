@@ -9,8 +9,8 @@
         "barryvdh/laravel-ide-helper": "^2.12",
         "laravel/lumen-framework": "^9.1",
         "league/flysystem": "^3.3",
-        "matronator/mtrgen": "^1.1",
-        "matronator/parsem": "^2.0"
+        "matronator/mtrgen": "^2.0",
+        "matronator/parsem": "^3.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
