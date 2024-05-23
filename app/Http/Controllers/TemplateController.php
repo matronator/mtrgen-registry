@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Log;
 use Matronator\Mtrgen\Template\ClassicGenerator;
 use Matronator\Parsem\Parser;
 use Nette\PhpGenerator\PsrPrinter;
@@ -15,6 +16,15 @@ use Nette\PhpGenerator\PsrPrinter;
 class TemplateController extends Controller
 {
     public const TEMPLATES_DIR = 'templates/';
+
+    public function options(Request $request)
+    {
+        $request->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, HEAD');
+        $request->header('Access-Control-Allow-Headers', 'Authorization, Content-Type, Accept, Origin, User-Agent, DNT, Cache-Control, X-Mx-ReqToken, Keep-Alive, X-Requested-With, If-Modified-Since');
+        $request->header('Access-Control-Allow-Origin', 'https://mtrgen.com');
+
+        return response()->json(['status' => 'success']);
+    }
 
     public function findAllPublic()
     {
@@ -110,7 +120,7 @@ class TemplateController extends Controller
 
         $arguments = Parser::getArguments($template);
         $templateVars = [];
-        foreach ($arguments as $arg) {
+        foreach ($arguments->arguments as $arg) {
             $templateVars[$arg] = '__' . strtoupper($arg) . '__';
         }
 
@@ -427,7 +437,7 @@ class TemplateController extends Controller
 
         $arguments = Parser::getArguments($contents);
         $templateVars = [];
-        foreach ($arguments as $arg) {
+        foreach ($arguments->arguments as $arg) {
             $templateVars[$arg] = '__' . strtoupper($arg) . '__';
         }
 
@@ -461,7 +471,7 @@ class TemplateController extends Controller
             $content = Storage::get($file);
             $arguments = Parser::getArguments($content);
             $templateVars = [];
-            foreach ($arguments as $arg) {
+            foreach ($arguments->arguments as $arg) {
                 $templateVars[$arg] = '__' . strtoupper($arg) . '__';
             }
             $parsed = ClassicGenerator::parse($file, $content, $templateVars);

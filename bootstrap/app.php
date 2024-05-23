@@ -76,6 +76,7 @@ $app->configure('cors');
 $app->middleware([
     App\Http\Middleware\ExampleMiddleware::class,
     Illuminate\Http\Middleware\HandleCors::class,
+    \Fruitcake\Cors\HandleCors::class,
 ]);
 
 $app->routeMiddleware([
@@ -98,6 +99,8 @@ $app->routeMiddleware([
 if ($app->environment() !== 'production') {
     $app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
 }
+
+$app->register(Fruitcake\Cors\CorsServiceProvider::class);
 
 // $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);

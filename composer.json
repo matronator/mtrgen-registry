@@ -7,6 +7,7 @@
     "require": {
         "php": "^8.0",
         "barryvdh/laravel-ide-helper": "^2.12",
+        "fruitcake/laravel-cors": "^3.0@dev",
         "laravel/lumen-framework": "^9.1",
         "league/flysystem": "^3.3",
         "matronator/mtrgen": "^2.0",

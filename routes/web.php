@@ -13,10 +13,12 @@
 |
 */
 
+
 $router->group(['middleware' => 'cors', 'prefix' => 'api'], function () use ($router) {
     $router->get('/', function () use ($router) {
         return $router->app->version();
     });
+    $router->options('{any:.*}', ['middleware' => 'cors', 'uses' => 'TemplateController@options']);
 
     $router->post('generate', ['uses' => 'GeneratorController@generate']);
 
