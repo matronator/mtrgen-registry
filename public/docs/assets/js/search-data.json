@@ -1,0 +1,331 @@
+{"0": {
+    "doc": "REST API",
+    "title": "REST API",
+    "content": "This documentation covers the RESTful API for a template management system with user authentication and dashboard features. Base URL: https://mtrgen.com/api . ",
+    "url": "/docs/online-registry/api.html",
+    
+    "relUrl": "/online-registry/api.html"
+  },"1": {
+    "doc": "REST API",
+    "title": "Endpoints",
+    "content": "POST /signup . Registers a new user. Parameters . | username: (Required) A string representing the user’s unique username. It should consist of alphanumeric characters and underscores or dashes. Example: “john_doe12”. | password: (Required) A string representing the user’s password. The password should be kept secure and adhere to the application’s password policies, if any. | email: (Optional) A valid email address for the user. This field can be left empty or null if the user does not want to provide an email address. Example: “john.doe@example.com”. | . POST /login . The login endpoint is used to authenticate a user and generate an access token for the session. Parameters . | username: (Required) A string representing the user’s unique username. It should consist of alphanumeric characters and underscores or dashes. Example: “john_doe12”. | password: (Required) A string representing the user’s password. The password should be kept secure and adhere to the application’s password policies, if any. | duration: (Required) An integer representing the number of hours the access token should remain valid. A value of 0 will never expire the session. | . Response . 200 OK . On successful authentication, the endpoint returns a JSON object containing the following information: . | status: A string indicating the success of the operation, with a value of “success”. | message: A string containing a descriptive message, such as “Access token created.” . | token: A string representing the generated access token for the authenticated session. | user: An object containing the user’s details. | . 400 Bad Request . | status: A string indicating the failure of the operation, with a value of “error”. | message: Something went wrong. | . 401 Unauthorized . | status: A string indicating the failure of the operation, with a value of “error”. | . Missing credentials . | message: Unauthorized access. Use credentials to login. | . Wrong credentials . | message: Invalid credentials. | . POST /logout . Logs out the authenticated user. Requires authentication. GET /templates . Returns all public templates. GET /templates/{vendor} . Returns all public templates for the specified vendor. | Parameters: . | {vendor}: The vendor’s name. | . | . GET /templates/{vendor}/{name} . Returns the public template with the specified vendor and name. | Parameters: . | {vendor}: The vendor’s name. | {name}: The template’s name. | . | . GET /templates/{vendor}/{name}/details . Returns the public template details for the specified vendor and name. | Parameters: . | {vendor}: The vendor’s name. | {name}: The template’s name. | . | . GET /templates/{vendor}/{name}/get . Downloads the public template with the specified vendor and name. | Parameters: . | {vendor}: The vendor’s name. | {name}: The template’s name. | . | . GET /templates/{vendor}/{name}/type . Returns the type of the template with the specified vendor and name. | Parameters: . | {vendor}: The vendor’s name. | {name}: The template’s name. | . | . POST /templates . Saves a new template to the system. Requires authentication. | Request body: JSON object containing the contents of the template as a string. | . POST /templates/publish . Publishes a template. Requires authentication. | Request body: JSON object containing template data and files. | . POST /templates/convert . Converts a template file to a generated PHP file. | Request body: JSON object containing template data and target format. | . POST /bundles . Saves a new bundle of templates to the system. Requires authentication. | Request body: JSON object containing bundle data. | . GET /bundles/{vendor}/{name}/{templateName}/get . Downloads a template from a bundle with the specified vendor, name, and template name. | Parameters: . | {vendor}: The vendor’s name. | {name}: The bundle’s name. | {templateName}: The template’s name within the bundle. | . | . GET /users . Returns all users. GET /users/{username} . Returns the user with the specified username. | Parameters: . | {username}: The user’s username. | . | . POST /users . Updates a user’s information. Requires authentication. | Request body: JSON object containing user data. | . GET /users/{username}/avatar . Returns the avatar of the user with the specified username. | Parameters: . | {username}: The user’s username. | . | . POST /users/avatar . Sets the avatar for the authenticated user. | Request body: JSON object containing avatar data. | . POST /dashboard . Returns the logged-in user’s information. POST /dashboard/check . Checks if the user is logged in. POST /dashboard/templates/{vendor} . Returns the templates of the specified vendor for the logged-in user. | Parameters: . | {vendor}: The vendor’s name. | . | . POST /dashboard/templates/{vendor}/{name} . Returns the template with the specified vendor and name for the logged-in user. | Parameters: . | {vendor}: The vendor’s name. | {name}: The template’s name. | . | . POST /dashboard/templates/{vendor}/{name}/details . Returns the template details for the specified vendor and name for the logged-in user. | Parameters: . | {vendor}: The vendor’s name. | {name}: The template’s name. | . | . POST /dashboard/templates/{vendor}/{name}/get . Downloads the template with the specified vendor and name for the logged-in user. | Parameters: . | {vendor}: The vendor’s name. | {name}: The template’s name. | . | . GET /dashboard/templates/{vendor}/{name}/type . Returns the type of the template with the specified vendor and name for the logged-in user. | Parameters: . | {vendor}: The vendor’s name. | {name}: The template’s name. | . | . POST /dashboard/templates/{vendor}/{name}/visibility . Sets the visibility of the template with the specified vendor and name for the logged-in user. | Parameters: . | {vendor}: The vendor’s name. | {name}: The template’s name. | . | . ",
+    "url": "/docs/online-registry/api.html#endpoints",
+    
+    "relUrl": "/online-registry/api.html#endpoints"
+  },"2": {
+    "doc": "CLI Commands",
+    "title": "CLI Commands",
+    "content": "Here is a list of all the commands the CLI utility supports (excluding default symfony/console commands). Command list: . | generate, gen (default) | save, s | save-bundle, sb, save-b | saved, ls | remove, rm | validate, v | add, a | signup, sign | login, in | publish, pub | use, u | . ",
+    "url": "/docs/usage/commands.html",
+    
+    "relUrl": "/usage/commands.html"
+  },"3": {
+    "doc": "CLI Commands",
+    "title": "generate, gen (default)",
+    "content": "The generate command is the default command of the CLI tool, meaning it will be run if no command is provided (eg. vendor/bin/mtrgen or with some parameters: vendor/bin/mtrgen -p my/path/to/file.json). It is used for generating PHP files from a template or a bundle. Usage . | 1 2 . | vendor/bin/mtrgen generate [options] [--] [&lt;name&gt; [&lt;args&gt;...]] gen # Alias . | . Arguments . name - The name of the template to generate under which it is saved in the local store. If no name is provided, the program will show you a list of all the templates you have saved in your local store and you can choose a template to generate from that list. args - Arguments to pass to the template (key=value items separated by space). If no arguments are provided, the program will ask you to provide values for the arguments it finds when parsing the template. Options . -p, --path - The path to a template file. You can use this instead of the name argument. ",
+    "url": "/docs/usage/commands.html#generate-gen-default",
+    
+    "relUrl": "/usage/commands.html#generate-gen-default"
+  },"4": {
+    "doc": "CLI Commands",
+    "title": "save, s",
+    "content": "Saves a template to the local store. Usage . | 1 2 . | vendor/bin/mtrgen save [options] [--] &lt;path&gt; s # Alias . | . Arguments . path - The path to a template file. Options . -a, --alias - Alias to use instead of the name defined inside the template. ",
+    "url": "/docs/usage/commands.html#save-s",
+    
+    "relUrl": "/usage/commands.html#save-s"
+  },"5": {
+    "doc": "CLI Commands",
+    "title": "save-bundle, sb, save-b",
+    "content": "Creates a bundle from two or more template files and add it to your local store. Usage . | 1 2 3 . | save-bundle [options] [--] &lt;name&gt; [&lt;templates&gt;...] sb # Alias save-b # Alias . | . Arguments . name - The name of the bundle. templates - The paths to the template files separated by space. Options . -f, --format - The file format that should be used for the bundle. Options: json|yaml|neon. ",
+    "url": "/docs/usage/commands.html#save-bundle-sb-save-b",
+    
+    "relUrl": "/usage/commands.html#save-bundle-sb-save-b"
+  },"6": {
+    "doc": "CLI Commands",
+    "title": "saved, ls",
+    "content": "Lists all the templates saved in your local store. Usage . | 1 2 . | vendor/bin/mtrgen saved ls # Alias . | . ",
+    "url": "/docs/usage/commands.html#saved-ls",
+    
+    "relUrl": "/usage/commands.html#saved-ls"
+  },"7": {
+    "doc": "CLI Commands",
+    "title": "remove, rm",
+    "content": "Removes a template or bundle from your local store. Usage . | 1 2 . | vendor/bin/mtrgen remove &lt;name&gt; rm # Alias . | . Arguments . name - The name of the template or bundle to remove. ",
+    "url": "/docs/usage/commands.html#remove-rm",
+    
+    "relUrl": "/usage/commands.html#remove-rm"
+  },"8": {
+    "doc": "CLI Commands",
+    "title": "validate, v",
+    "content": "Checks if a file is valid template or bundle. Usage . | 1 2 . | vendor/bin/mtrgen validate &lt;path&gt; v # Alias . | . Arguments . path - The path to the file to validate. ",
+    "url": "/docs/usage/commands.html#validate-v",
+    
+    "relUrl": "/usage/commands.html#validate-v"
+  },"9": {
+    "doc": "CLI Commands",
+    "title": "add, a",
+    "content": "Adds a template from the online registry to your local store. Usage . | 1 2 . | vendor/bin/mtrgen add &lt;identifier&gt; a # Alias . | . Arguments . identifier - Full identifier of the template (vendor/name). ",
+    "url": "/docs/usage/commands.html#add-a",
+    
+    "relUrl": "/usage/commands.html#add-a"
+  },"10": {
+    "doc": "CLI Commands",
+    "title": "signup, sign",
+    "content": "Creates new user account on the online registry. Usage . | 1 2 . | vendor/bin/mtrgen signup &lt;username&gt; &lt;password&gt; [&lt;email&gt;] sign # Alias . | . Arguments . username - The username to use for the account. password - The password to use for the account. email (optional) - The email address to use for the account. ",
+    "url": "/docs/usage/commands.html#signup-sign",
+    
+    "relUrl": "/usage/commands.html#signup-sign"
+  },"11": {
+    "doc": "CLI Commands",
+    "title": "login, in",
+    "content": "Logs in to the online registry. Usage . | 1 2 . | vendor/bin/mtrgen login [options] [--] &lt;username&gt; &lt;password&gt; in # Alias . | . Arguments . username - The username to use for the account. password - The password to use for the account. Options . -d, --duration - The duration (in hours) for which the user should stay logged in. Use 0 to never logout (not recommended). (default=24) . ",
+    "url": "/docs/usage/commands.html#login-in",
+    
+    "relUrl": "/usage/commands.html#login-in"
+  },"12": {
+    "doc": "CLI Commands",
+    "title": "publish, pub",
+    "content": "Publishes a template to the online registry. Usage . | 1 2 . | vendor/bin/mtrgen publish [options] [--] [&lt;name&gt;] pub # Alias . | . Arguments . name - The name of the template to publish. If no name is provided, the program will show you a list of all the templates you have saved in your local store and you can choose a template to publish from that list. Options . -p, --path - The path to a template file. You can use this instead of the name argument. ",
+    "url": "/docs/usage/commands.html#publish-pub",
+    
+    "relUrl": "/usage/commands.html#publish-pub"
+  },"13": {
+    "doc": "CLI Commands",
+    "title": "use, u",
+    "content": "Uses a template from the online registry to generate a file without saving that template locally. Usage . | 1 2 . | vendor/bin/mtrgen use [&lt;identifier&gt; [&lt;args&gt;...]] u # Alias . | . Arguments . identifier - Full identifier of the template (vendor/name). args - Arguments to pass to the template (key=value items separated by space). If no arguments are provided, the program will ask you to provide values for the arguments it finds when parsing the template. ",
+    "url": "/docs/usage/commands.html#use-u",
+    
+    "relUrl": "/usage/commands.html#use-u"
+  },"14": {
+    "doc": "Generator",
+    "title": "Generator class",
+    "content": "This code provides a Generator class for parsing, generating, and manipulating PHP files. It handles various PHP constructs such as namespaces, classes, interfaces, traits, and more. Additionally, it can detect reserved keywords and make names safe for use in generated code. | Important Classes . | FileObject | PhpFile | . | Constants | Methods . | isBundle | parse | parseFile | generateFile | getName | generate | is | isReservedKeyword | makeNameSafe | . | . ",
+    "url": "/docs/code-api/generator.html#generator-class",
+    
+    "relUrl": "/code-api/generator.html#generator-class"
+  },"15": {
+    "doc": "Generator",
+    "title": "Important Classes",
+    "content": "FileObject . Matronator\\Mtrgen\\FileObject is the main data structure for the parsed templates. It contains all the information about the file that is needed for writing it to the disk. | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 . | class FileObject { public PhpFile $contents; public string $filename; public string $directory; public ?string $entity = null; public function __construct(string $directory, string $filename, PhpFile $contents, ?string $entity = null) { $this-&gt;filename = $filename . '.php'; $this-&gt;contents = $contents; $this-&gt;directory = $directory; $this-&gt;entity = $entity; } } . | . PhpFile . Nette\\PhpGenerator\\PhpFile is a class from the Nette PHP Generator library. It is used to represent a PHP file and its contents. It is used by the Generator class for generating the parsed templates. ",
+    "url": "/docs/code-api/generator.html#important-classes",
+    
+    "relUrl": "/code-api/generator.html#important-classes"
+  },"16": {
+    "doc": "Generator",
+    "title": "Constants",
+    "content": ". | RESERVED_KEYWORDS: An array of reserved keywords in PHP. | RESERVED_CONSTANTS: An array of reserved constants in PHP. | . ",
+    "url": "/docs/code-api/generator.html#constants",
+    
+    "relUrl": "/code-api/generator.html#constants"
+  },"17": {
+    "doc": "Generator",
+    "title": "Methods",
+    "content": "isBundle(string $path, ?string $contents = null): bool . Checks if a given template is a bundle. | $path: The path of the template file. | $contents: (optional) The contents of the template file. | Returns: A boolean indicating whether the template is a bundle. | . parse(string $filename, string $contents, array $arguments): FileObject . Parses and generates a FileObject from string content and a filename. | $filename: The filename of the file to parse. | $contents: The contents of the file to parse. | $arguments: An array of arguments for parsing. | Returns: A FileObject representing the parsed file. | . parseFile(string $path, array $arguments): FileObject . Parses and generates a FileObject from a file. | $path: The path to the file to parse. | $arguments: An array of arguments for parsing. | Returns: A FileObject representing the parsed file. | . generateFile(object $parsed, array $arguments): FileObject . Generates a FileObject from a parsed object. | $parsed: The parsed object. | $arguments: An array of arguments for generating the file. | Returns: A FileObject representing the generated file. | . getName(string $path, ?string $contents = null): string . Gets the name of the template from a file. | $path: The path of the template file. | $contents: (optional) The contents of the template file. | Returns: The name of the template. | . generate(object $body, array $args): PhpFile . Generates a PhpFile from a parsed object. | $body: The parsed object. | $args: An array of arguments for generating the file. | Returns: A PhpFile representing the generated file. | . is(mixed &amp;$subject): bool . Shorthand for checking if a variable is set and not empty. | $subject: The variable to check. | Returns: A boolean indicating whether the variable is set and not empty. | . isReservedKeyword(string $name): bool . Checks if the given name is a reserved keyword. | $name: The name to check. | Returns: A boolean indicating whether the name is a reserved keyword. | . makeNameSafe(string $name): string . Makes the given name safe by adding an underscore if it is a reserved keyword. | $name: The name to make safe. | Returns: A safe name that doesn’t conflict with reserved keywords or constants. | . ",
+    "url": "/docs/code-api/generator.html#methods",
+    
+    "relUrl": "/code-api/generator.html#methods"
+  },"18": {
+    "doc": "Generator",
+    "title": "Generator",
+    "content": " ",
+    "url": "/docs/code-api/generator.html",
+    
+    "relUrl": "/code-api/generator.html"
+  },"19": {
+    "doc": "Introduction",
+    "title": "MTRGen",
+    "content": ". File generator engine that can generate PHP files from JSON/YAML/NEON templates. ",
+    "url": "/docs/#mtrgen",
+    
+    "relUrl": "/#mtrgen"
+  },"20": {
+    "doc": "Introduction",
+    "title": "Requirements",
+    "content": ". | PHP &gt;= 7.4 | Composer | . ",
+    "url": "/docs/#requirements",
+    
+    "relUrl": "/#requirements"
+  },"21": {
+    "doc": "Introduction",
+    "title": "Instalation",
+    "content": "Install with Composer: . | 1 . | composer require matronator/mtrgen --dev . | . Troubleshooting . If you get this error when trying to install: . | 1 . | matronator/mtrgen requires composer-runtime-api ^2.2 -&gt; found composer-runtime-api[2.1.0] but it does not match the constraint. | . Run this command to update composer to the latest version: . | 1 . | composer self-update . | . ",
+    "url": "/docs/#instalation",
+    
+    "relUrl": "/#instalation"
+  },"22": {
+    "doc": "Introduction",
+    "title": "Quickstart",
+    "content": "You run the script from terminal using this command: . | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 . | # To list all available commands vendor/bin/mtrgen list # To see usage of the generate command vendor/bin/mtrgen generate --help vendor/bin/mtrgen gen -h # Generate from file vendor/bin/mtrgen generate --path=my/folder/template.json vendor/bin/mtrgen gen -p my/folder/template.json # Generate from the local store vendor/bin/mtrgen generate TemplateName # Save a template to the local store vendor/bin/mtrgen save path/to/template.json vendor/bin/mtrgen s path/to/template.json # Optionally provide an alias to save the template under vendor/bin/mtrgen save path/to/template.json --alias=NewName # Remove a template from the local store vendor/bin/mtrgen remove TemplateName vendor/bin/mtrgen r TemplateName . | . ",
+    "url": "/docs/#quickstart",
+    
+    "relUrl": "/#quickstart"
+  },"23": {
+    "doc": "Introduction",
+    "title": "Acknowledgement",
+    "content": "This project would not be possible without Nette’s php-generator package, which is used for the final code generation itself to output the finished PHP file. ",
+    "url": "/docs/#acknowledgement",
+    
+    "relUrl": "/#acknowledgement"
+  },"24": {
+    "doc": "Introduction",
+    "title": "License",
+    "content": "MIT License . Copyright (c) 2022 Matronator . Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: . The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. ",
+    "url": "/docs/#license",
+    
+    "relUrl": "/#license"
+  },"25": {
+    "doc": "Introduction",
+    "title": "Introduction",
+    "content": " ",
+    "url": "/docs/",
+    
+    "relUrl": "/"
+  },"26": {
+    "doc": "API",
+    "title": "API",
+    "content": " ",
+    "url": "/docs/code-api/",
+    
+    "relUrl": "/code-api/"
+  },"27": {
+    "doc": "Usage",
+    "title": "Usage",
+    "content": ". | CLI usage | Usage in code | . ",
+    "url": "/docs/usage/",
+    
+    "relUrl": "/usage/"
+  },"28": {
+    "doc": "Usage",
+    "title": "CLI usage",
+    "content": "Now when the parser reads the template, it finds these variables and use them as arguments for the CLI tool during the generation process. You can then assign any value you want to these parameters during generation. The tool will automatically ask you to provide values for the arguments if you don’t provide any in the initial command. But if you know what parameters the template needs, you can pass them as an argument to the generate command: . | 1 . | vendor/bin/mtrgen generate --path=my.template.yaml name=Hello anotherArg=app/entity/test numberArg=42 . | . ",
+    "url": "/docs/usage/#cli-usage",
+    
+    "relUrl": "/usage/#cli-usage"
+  },"29": {
+    "doc": "Usage",
+    "title": "Usage in code",
+    "content": "You can also use the tool in your code. There are several classes that you are most likely to use: . | Matronator\\Mtrgen\\Template\\Generator - This class is used for parsing the templates into file objects. | Matronator\\Mtrgen\\FileGenerator - This class is used for writing parsed file objects to actual files. | Matronator\\Mtrgen\\Registry\\Profile - This class handles everything related to user profiles. | Matronator\\Mtrgen\\Registry\\Connection - This is the main class for communicating with the online template registry’s API. | Matronator\\Mtrgen\\Store\\Storage - This handles saving, loading and removing templates and bundles from the local store. | . There is also a Matronator\\Mtrgen\\FileObject class that serves as the main data structure for the parsed templates. It contains all the information about the file that is needed for writing it to the disk. FileObject structure . | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 . | declare(strict_types=1); namespace Matronator\\Mtrgen; use Nette\\PhpGenerator\\PhpFile; class FileObject { public PhpFile $contents; public string $filename; public string $directory; public ?string $entity = null; public function __construct(string $directory, string $filename, PhpFile $contents, ?string $entity = null) { $this-&gt;filename = $filename . '.php'; $this-&gt;contents = $contents; $this-&gt;directory = $directory; $this-&gt;entity = $entity; } } . | . Parsing templates . ",
+    "url": "/docs/usage/#usage-in-code",
+    
+    "relUrl": "/usage/#usage-in-code"
+  },"30": {
+    "doc": "Online registry",
+    "title": "Online Registry",
+    "content": "In addition to saving your templates locally from a file, you can also download and save templates that others have made using the online template registry. ",
+    "url": "/docs/online-registry/#online-registry",
+    
+    "relUrl": "/online-registry/#online-registry"
+  },"31": {
+    "doc": "Online registry",
+    "title": "Adding templates to your local store",
+    "content": "You can download a template from the registry and add it to your local store using the add command. You can specify the identifier as an argument or if you run the command without any arguments, it will ask you for an identifier after you run it. Valid identifier is in the format vendor/name where vendor is the template author’s username that they published the template under and name is the name of the template itself. So for example it could look like this: matronator/my-template. Using the add command . | 1 . | vendor/bin/mtrgen add vendor/template . | . After you saved the template to your local store, you can start generating files with it, using the identifier for the name argument, like so: . | 1 . | vendor/bin/mtrgen generate vendor/template . | . ",
+    "url": "/docs/online-registry/#adding-templates-to-your-local-store",
+    
+    "relUrl": "/online-registry/#adding-templates-to-your-local-store"
+  },"32": {
+    "doc": "Online registry",
+    "title": "Generating from registry without saving the template locally",
+    "content": "If you just want to generate a file from a template in the online registry one-time only and don’t want to add it to your local store, you can use the use command. This command works just like the generate command, except it takes an identifier as an argument and searches the online registry instead of your local store. When it finds the template, it will prompt you to provide arguments for the template (if there are any) and generates the PHP file without saving the template in your local store. This is useful if you just want to use a template one time and know you won’t be needing it in the future again. Using the use command . | 1 . | vendor/bin/mtrgen use vendor/template-name . | . ",
+    "url": "/docs/online-registry/#generating-from-registry-without-saving-the-template-locally",
+    
+    "relUrl": "/online-registry/#generating-from-registry-without-saving-the-template-locally"
+  },"33": {
+    "doc": "Online registry",
+    "title": "Online registry",
+    "content": " ",
+    "url": "/docs/online-registry/",
+    
+    "relUrl": "/online-registry/"
+  },"34": {
+    "doc": "Templates",
+    "title": "Templates",
+    "content": " ",
+    "url": "/docs/templates/",
+    
+    "relUrl": "/templates/"
+  },"35": {
+    "doc": "Templates",
+    "title": "Introduction",
+    "content": "Generator templates (or just templates) describe the structure of the generated file. Templates can be either YAML, JSON or NEON files and they have to conform to a JSON schema. We will talk more about the schema in the next chapter (see mtrgen-template-schema.json). It is recommended to name your templates with a .mtr suffix after the name right after the extension (eg. entity.yaml.mtr). If you do that, the MTRGen Templates Syntax Highlighting VSCode extension, will add syntax highlighting and snippets to all *.mtr files. ",
+    "url": "/docs/templates/#introduction",
+    
+    "relUrl": "/templates/#introduction"
+  },"36": {
+    "doc": "Templates",
+    "title": "Template syntax",
+    "content": "Templates are parsed with Pars’Em template parser which enables some extra features to make the templates more generic and useful. Header . All templates must include a header block with details about the template at the very top of the file starting on the first line. Templates without a header are not considered valid and even though can still be parsed with Pars’Em, they won’t work with the mtrgen CLI tool. The header block looks like this: . | 1 2 3 4 5 6 7 . | --- MTRGEN --- name: template-name filename: &lt;% name|firstUpper %&gt;.php path: ./app/Controllers --- MTRGEN --- // Rest of the template . | . You can use template variables for the header values, except for the name field, which must be known beforehand to be able to correctly save and use the template later. Header fields . name . A unique name of the template to be saved under in the local store. If published to online repository, it will be used for the identifier (user/name). Can’t use template variables in the value. filename . The filename of the generated file. Can use template variables to make the filename dynamic. path . Path to the directory into which to generate the file. Can use variables to make path dynamic. Conditions . You can use conditions in your templates by using the &lt;% if %&gt; and &lt;% endif %&gt; tags. The condition must be a valid PHP expression that will be evaluated and if it returns true, the content between the tags will be included in the final output. To use a variable provided in the arguments array in a condition, you must use the $ sign before the variable name, like this: &lt;% if $variable == 'value' %&gt;. The $ sign is used to differentiate between the template variable and a keyword such as true or null. Example . | 1 2 3 4 5 . | some: key &lt;% if $variable === 'value' %&gt; with value &lt;% endif %&gt; . | . If you provide an argument ['variable' =&gt; 'value'], the final output will be this: . | 1 2 3 . | some: key with value . | . Variables . You can define template variables (or placeholder variables) anywhere in the template. Variables are wrapped in &lt;% and %&gt; with optional space on either side (both &lt;%nospace%&gt; and &lt;% space %&gt; are valid) and the name must be an alphanumeric string with optional underscore/s (must match this regex [a-zA-Z0-9_]+?). To show you an example, here we define template parameters prefix and dir (note the use of both syntaxes, one with spaces and one without): . | 1 2 3 4 5 . | name: TestEntity filename: &lt;% prefix %&gt;TestEntity path: &lt;%dir%&gt; file: ... | . Default values . Variables can optionally have a default value that will be used if no argument is provided for that variable during parsing. You can specify a default value like this: &lt;% variable='Default' %&gt; . If you’re going to use filters, the default value comes before the filter, ie.: &lt;% variable='Default'|filter %&gt; . Filters . You can optionally provide filter to a variable by placing the pipe symbol | right after the variable name and the filter right after that (no space around the | pipe symbol), like this: &lt;% variable|filter %&gt;. The filter can be any PHP function with the variable used as the function’s argument. Example . If we have &lt;% foo|strtoupper %&gt; in the template and we provide an argument ['foo' =&gt; 'hello world'], the final (parsed) output will be this: HELLO WORLD. Additional filter arguments . Filters can also have additional arguments apart from the variable itself. To pass additional arguments to a filter, write it like this: &lt;% var|filter:'arg','arg2',20,true %&gt;. Each argument after the colon is separated by a comma and can have any scalar type as a value. The first argument will always the variable on which we’re declaring the filter, with any other arguments passed after that. Example . If we have &lt;% foo|substr:1,3 %&gt; and provide an argument ['foo' =&gt; 'abcdef'], the filter will get called like this using the arguments provided: substr('abcdef', 1, 3). The final parsed output will thus be this: bcd. So far you can specify only one filter per variable declaration, but that will probably change in the future. Built-in filters . There are a few built-in filters that you can use: . upper - Converts the variable to uppercase . lower - Converts the variable to lowercase . upperFirst - Converts the first character of the variable to uppercase . lowerFirst - Converts the first character of the variable to lowercase . first - Returns the first character of the variable . last - Returns the last character of the variable . camelCase - Converts the variable to camelCase . snakeCase - Converts the variable to snake_case . kebabCase - Converts the variable to kebab-case . pascalCase - Converts the variable to PascalCase . titleCase - Converts the variable to Title Case . length - Returns the length of the variable . reverse - Reverses the variable . random - Returns a random character from the variable . truncate - Truncates the variable to the specified length . ",
+    "url": "/docs/templates/#template-syntax",
+    
+    "relUrl": "/templates/#template-syntax"
+  },"37": {
+    "doc": "Templates",
+    "title": "VSCode Extension",
+    "content": "To get syntax highlighting for template files (highlight/colorize &lt;% variable|filter %&gt; and &lt;% if %&gt;&lt;% endif %&gt; even inside strings) and some helper snippets (like --- to insert the template header), you can download the MTRGen Templates Syntax Highlighting extension for VS Code. ",
+    "url": "/docs/templates/#vscode-extension",
+    
+    "relUrl": "/templates/#vscode-extension"
+  },"38": {
+    "doc": "Publishing templates",
+    "title": "Publishing templates",
+    "content": "Anyone can publish their template to the online registry. All you need is an account and a valid template to publish. Let’s walk through the steps of how to publish a template. | How to publish a template . | 1. Using the CLI tool . | Using the signup and login commands | Publish your template with the publish command | . | 2. Using the website . | Create an account and login | Publish your template on the website | . | . | Template identifier | . ",
+    "url": "/docs/online-registry/publishing-templates.html",
+    
+    "relUrl": "/online-registry/publishing-templates.html"
+  },"39": {
+    "doc": "Publishing templates",
+    "title": "How to publish a template",
+    "content": "You need an account to be able to publish your template online, so the first thing we need to do is to create an account. Then we can publish the template. There are two ways you can do that: . | Use the CLI tool | Use the website | . 1. Using the CLI tool . To create an account using the CLI tool, we’ll be using the signup command. It takes two arguments - username and a password. The order of arguments matter. Username has to be first and password second. Be careful not to switch them up and create an account with your password for username. Using the signup and login commands . | 1 2 3 . | vendor/bin/mtrgen signup username password # Or a slightly shorter syntax vendor/bin/mtrgen sign username password . | . If no account with the username you provided already exists, your account will be created and you can now login: . | 1 2 3 . | vendor/bin/mtrgen login username password # Or a slightly shorter syntax vendor/bin/mtrgen in username password . | . This will log you in for 24 hours by default. You can change the duration by providing the --duration option (or -d for short) with the amount of hours you want to stay logged in. Provide 0 to stay logged in forever (not recommended). | 1 2 3 4 . | vendor/bin/mtrgen login username password --duration=48 vendor/bin/mtrgen login username password -d 48 # Or to never get logged out vendor/bin/mtrgen login username password -d 0 . | . Now that your account is created and you’ve successfully logged in, it’s time you finally publish your template. Publish your template with the publish command . Publishing a template is as simple as just running a single command: . | 1 2 3 . | vendor/bin/mtrgen publish --path=path/to/your/template.json # Or a shorter alias vendor/bin/mtrgen pub -p path/to/your/template.json . | . Alternatively if you want to publish a template you already have saved in your local store, just provide the template name instead of the --path option, like this: . | 1 . | vendor/bin/mtrgen publish my-template . | . If you don’t provide any arguments/options (name nor path), the program will show you a list of all the templates you have saved in your local store and you can choose a template to publish from that list. 2. Using the website . If you don’t want to use the CLI tool, you can also create an account using the website. Create an account and login . Just go to https://mtrgen.com and click on the Sign-up button in the top right corner. You’ll be redirected to the sign-up page where you can create your account. After your account is created, you can login to the website and navigate to the Profile page. Publish your template on the website . On the profile page, navigate to Publish using the side menu on the left and there you can upload and publish your template. And that’s it! Your template is now available to everyone (if you didn’t set it as private) on the online registry. ",
+    "url": "/docs/online-registry/publishing-templates.html#how-to-publish-a-template",
+    
+    "relUrl": "/online-registry/publishing-templates.html#how-to-publish-a-template"
+  },"40": {
+    "doc": "Publishing templates",
+    "title": "Template identifier",
+    "content": "After you publish the template, the identifier for the template will be constructed from your username and the name field inside your template file. Example . So if your username is hunter2 and you have set the name inside your template to be my-cool-template, the identifier under which it will be available to others after publishing will be hunter2/my-cool-template. ",
+    "url": "/docs/online-registry/publishing-templates.html#template-identifier",
+    
+    "relUrl": "/online-registry/publishing-templates.html#template-identifier"
+  },"41": {
+    "doc": "Storage",
+    "title": "Storage class",
+    "content": "The Storage class is a utility class responsible for managing file storage and retrieval for templates in a local store. | Properties | Methods . | __construct() | save | saveBundle | getBasename | download | remove | saveFolder | getContent | load | getFilename | getFullPath | . | . ",
+    "url": "/docs/code-api/storage.html#storage-class",
+    
+    "relUrl": "/code-api/storage.html#storage-class"
+  },"42": {
+    "doc": "Storage",
+    "title": "Properties",
+    "content": ". | $homeDir: The path to the main directory for storing templates and related files. | $tempDir: The path to the directory for storing temporary files. | $templateDir: The path to the directory for storing template files. | $store: The path to the file that stores metadata about the templates in the global store. | . ",
+    "url": "/docs/code-api/storage.html#properties",
+    
+    "relUrl": "/code-api/storage.html#properties"
+  },"43": {
+    "doc": "Storage",
+    "title": "Methods",
+    "content": "__construct() . The constructor initializes the Storage object and sets up the directory structure if it doesn’t exist. save(string $filename, ?string $alias = null, ?string $bundle = null): bool . Saves a template to the global store. It takes the following parameters: . | $filename: The path to the template file. | $alias (optional): The alias to save the template under, instead of the name defined inside the template. | $bundle (optional): The bundle name, if the template is part of a bundle. | . Returns true if the save is successful, false otherwise. saveBundle(object $bundleObject, string $format = 'json'): bool . Saves a bundle of templates to the global store. It takes the following parameters: . | $bundleObject: An object containing the bundle information. | $format: The format of the bundle file (default is ‘json’). | . Returns true if the save is successful, false otherwise. getBasename(string $path): string . Returns the basename of a file. It takes the following parameter: . | $path: The path to the file. | . download(string $identifier, string $filename, string $content): mixed . Downloads a template and saves it to the global store. It takes the following parameters: . | $identifier: The identifier for the template. | $filename: The filename for the template. | $content: The content of the template. | . Returns the number of bytes written to the file, or false on failure. remove(string $name): bool . Removes a template from the global store. It takes the following parameter: . | $name: The name under which the template is stored. | . Returns true if removed successfully, false otherwise. saveFolder(string $path): ?int . Saves all templates from a folder to the global store. It takes the following parameter: . | $path: The path to the folder. | . Returns the number of saved templates or null on failure. getContent(string $name): string . Returns the content of a template, or false if the template is not found. It takes the following parameter: . | $name: The name under which the template is stored. | . load(string $name): ?object . Loads a template from the global store and returns an object with properties filename (filename of the template) and contents (contents of the template), or null if not found. It takes the following parameter: . | $name: The name under which the template is stored. | . getFilename(string $name): ?string . Returns the filename of the template from the local store, or null if not found. It takes the following parameter: . | $name: The name under which the template is stored. | . getFullPath(string $name): ?string . Returns the full canonicalized path of the template, or null if not found. It takes the following parameter: . | $name: The name under which the template is stored. | . listAll(): object . Retrieves all templates from the global store and returns them as an object containing key-value pairs of template names and their corresponding filenames. | Returns: An object containing all the templates as [name =&gt; filename]. | . isBundle(string $filename): bool . Checks if a given template is a bundle by analyzing its filename. | Parameters: . | $filename: The name of the template file. | . | Returns: true if the template is a bundle, and false otherwise. | . ",
+    "url": "/docs/code-api/storage.html#methods",
+    
+    "relUrl": "/code-api/storage.html#methods"
+  },"44": {
+    "doc": "Storage",
+    "title": "Storage",
+    "content": " ",
+    "url": "/docs/code-api/storage.html",
+    
+    "relUrl": "/code-api/storage.html"
+  },"45": {
+    "doc": "Template structure",
+    "title": "Template structure",
+    "content": "As mentioned earlier, the template parser supports YAML, JSON and NEON files, so you can write your templates using any of these formats. All templates must follow the same structure, which is defined in a JSON schema. You can find the full schema here: mtrgen-template-schema.json . Here is a simplified version of the schema in YAML format for better readability. ",
+    "url": "/docs/templates/template-structure.html",
+    
+    "relUrl": "/templates/template-structure.html"
+  },"46": {
+    "doc": "Template structure",
+    "title": "mtrgen-template-schema",
+    "content": "| 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 . | name: string # name of the template filename: string # name of the generated file without the `.php` extension path: string # path where to generate the file autoImports: boolean # (optional) if true, use statements will be generated automatically for parameter and return types file: strict: boolean # (optional) if true, the file will start by declaring strict_types=1 use: # (optional) a string[] array with a list of dependencies to define with a use statement - string # you can specify an alias for your use statement like this: Some\\Class\\Name as MyAlias - string - string as string class: # (optional) name: string # name of the class modifier: final|abstract # (optional) class modifier extends: string # (optional) fully qualified class name from which to extend implements: # (optional) array of interfaces this class implements (use fully qualified names) - string - string constants: # (optional) array of class constants - name: string # constant name value: any # constant value comments: # (optional) each array entry is one comment line - string - string methods: # (optional) array of class methods - name: string # method name modifier: final|abstract # (optional) method modifier visibility: private|public|protected # (optional) method visibility - public if not specified return: string # (optional) the return type of the method ref: boolean # (optional) if true, return value by reference nullable: boolean # (optional) if true, return value can be null static: boolean # (optional) if true, the method will be static params: # (optional) array of parameters - name: string # parameter name type: string # (optional) parameter type value: any # (optional) default value promoted: boolean # (optional) if true, converts to promoted property nullable: boolean # (optional) ref: boolean # (optional) if true, parameter is passed by reference body: # (optional) array of string[] where each entry represents single line - string - string - string comments: # (optional) same as above props: # (optional) array of class properties - name: string # property name visibility: private|public|protected # (optional) property visibility - public if not specified type: string # (optional) property type value: any # (optional) property value getter: boolean # (optional) if true, getter method will be generated automatically setter: boolean # (optional) if true, setter method will be generated automatically static: boolean # (optional) if true, property will be static init: boolean # (optional) if true, property will be initialized nullable: boolean # (optional) if true, property will be nullable comments: # (optional) same as above comments: # (optional) each array entry is one comment line - string - string traits: # (optional) array of traits to use (use fully qualified names) - string - string interface: # (optional) name: string # name of the interface extends: string # same as above constants: # same as above methods: # same as above, but without body comments: # same as above trait: # (optional) name: string # name of the trait props: # same as above methods: # same as above comments: # same as above namespace: # (optional) If you want to put your classes and whatnot in a namespace, you can define them here name: string # fully qualified name of the namespace (eg. App\\MyNamespace\\DeeperLevel) use: # Same as above class: # Same as above interface: # Same as above trait: # Same as above . | . ",
+    "url": "/docs/templates/template-structure.html#mtrgen-template-schema",
+    
+    "relUrl": "/templates/template-structure.html#mtrgen-template-schema"
+  }
+}

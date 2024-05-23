@@ -1,0 +1,761 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  <link rel="stylesheet" href="/docs/assets/css/just-the-docs-default.css">
+
+  <link rel="stylesheet" href="/docs/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet">
+
+  <style id="jtd-nav-activation">
+  
+
+.site-nav > ul.nav-list:first-child > li > a,
+.site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(1)) > a,
+.site-nav > ul.nav-list:first-child > li > ul > li > ul > li > a {
+  background-image: none;
+}
+
+.site-nav > ul.nav-list:not(:first-child) a,
+.site-nav li.external a {
+  background-image: none;
+}
+
+.site-nav > ul.nav-list:first-child > li:nth-child(3) > ul > li:nth-child(1) > a {
+  font-weight: 600;
+  text-decoration: none;
+}.site-nav > ul.nav-list:first-child > li:nth-child(3) > button svg,
+.site-nav > ul.nav-list:first-child > li:nth-child(3) > ul > li:nth-child(1) > button svg {
+  transform: rotate(-90deg);
+}.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(3) > ul.nav-list,
+.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(3) > ul.nav-list > li.nav-list-item:nth-child(1) > ul.nav-list {
+  display: block;
+}
+  </style>
+
+  
+
+  
+    <script src="/docs/assets/js/vendor/lunr.min.js"></script>
+  
+
+  <script src="/docs/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>CLI Commands | MTRGen Docs</title>
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="CLI Commands" />
+<meta name="author" content="Matronator" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="File generator engine that can generate PHP files from JSON/YAML/NEON templates." />
+<meta property="og:description" content="File generator engine that can generate PHP files from JSON/YAML/NEON templates." />
+<meta property="og:site_name" content="MTRGen Docs" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="CLI Commands" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Matronator","url":"https://matronator.cz"},"description":"File generator engine that can generate PHP files from JSON/YAML/NEON templates.","headline":"CLI Commands","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/docs/assets/images/logo-main.png"},"name":"Matronator"},"url":"/docs/usage/commands.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <link rel="stylesheet" href="/docs/assets/css/custom.css">
+<meta name="monetization" content="$coil.xrptipbot.com/qwoCBFTsQ9GW8cy-uk-c8g">
+
+<script defer>
+    document.addEventListener('DOMContentLoaded', () => {
+        const theme = localStorage.getItem('theme');
+        if (theme === 'dark') {
+            jtd.setTheme('dark');
+            darkThemeToggle.innerText = '🌕';
+            document.documentElement.classList.add('dark');
+        } else {
+            jtd.setTheme('light');
+            darkThemeToggle.innerText = '🌑';
+            document.documentElement.classList.remove('dark');
+        }
+    });
+</script>
+
+
+</head>
+
+<body>
+  <a class="skip-to-main" href="#main-content">Skip to main content</a>
+  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="svg-link" viewBox="0 0 24 24">
+  <title>Link</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+  </svg>
+</symbol>
+
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+  <title>Menu</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+</symbol>
+
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+  <title>Expand</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+    <polyline points="9 18 15 12 9 6"></polyline>
+  </svg>
+</symbol>
+
+  <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE -->
+<symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link">
+  <title id="svg-external-link-title">(external link)</title>
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+</symbol>
+
+  
+    <symbol id="svg-doc" viewBox="0 0 24 24">
+  <title>Document</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+  </svg>
+</symbol>
+
+    <symbol id="svg-search" viewBox="0 0 24 24">
+  <title>Search</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+    <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </svg>
+</symbol>
+
+  
+  
+    <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md -->
+<symbol id="svg-copy" viewBox="0 0 16 16">
+  <title>Copy</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+  </svg>
+</symbol>
+<symbol id="svg-copied" viewBox="0 0 16 16">
+  <title>Copied</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16">
+    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/>
+  </svg>
+</symbol>
+
+  
+</svg>
+
+  
+    <div class="side-bar">
+  <div class="site-header" role="banner">
+    <a href="/docs/" class="site-title lh-tight">
+  <div class="site-logo" role="img" aria-label="MTRGen Docs"></div>
+
+</a>
+    <button id="menu-button" class="site-button btn-reset" aria-label="Toggle menu" aria-pressed="false">
+      <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg>
+    </button>
+  </div>
+
+  <nav aria-label="Main" id="site-nav" class="site-nav">
+  
+  
+    <ul class="nav-list"><li class="nav-list-item"><a href="/docs/" class="nav-list-link">Introduction</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Templates category" aria-pressed="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+    </button><a href="/docs/templates/" class="nav-list-link">Templates</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/templates/template-structure.html" class="nav-list-link">Template structure</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Usage category" aria-pressed="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+    </button><a href="/docs/usage/" class="nav-list-link">Usage</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/usage/commands.html" class="nav-list-link">CLI Commands</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Online registry category" aria-pressed="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+    </button><a href="/docs/online-registry/" class="nav-list-link">Online registry</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/online-registry/publishing-templates.html" class="nav-list-link">Publishing templates</a></li><li class="nav-list-item"><a href="/docs/online-registry/api.html" class="nav-list-link">REST API</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in API category" aria-pressed="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+    </button><a href="/docs/code-api/" class="nav-list-link">API</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/code-api/generator.html" class="nav-list-link">Generator</a></li><li class="nav-list-item"><a href="/docs/code-api/storage.html" class="nav-list-link">Storage</a></li></ul></li></ul>
+
+  <ul class="nav-list"><li class="nav-list-item external">
+          <a href="https://mtrgen.com" class="nav-list-link external"
+            
+          >
+            Main website
+            <svg viewBox="0 0 24 24" aria-labelledby="svg-external-link-title"><use xlink:href="#svg-external-link"></use></svg>
+          </a>
+        </li><li class="nav-list-item external">
+          <a href="https://github.com/matronator/MTRGen" class="nav-list-link external"
+            
+          >
+            View on GitHub
+            <svg viewBox="0 0 24 24" aria-labelledby="svg-external-link-title"><use xlink:href="#svg-external-link"></use></svg>
+          </a>
+        </li></ul>
+</nav>
+
+
+  
+  
+    <footer class="site-footer">
+      This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+    </footer>
+  
+</div>
+
+  
+  <div class="main" id="top">
+    <div id="main-header" class="main-header">
+  
+    
+
+<div class="search" role="search">
+  <div class="search-input-wrap">
+    <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search MTRGen Docs" aria-label="Search MTRGen Docs" autocomplete="off">
+    <label for="search-input" class="search-label"><svg viewBox="0 0 24 24" class="search-icon"><use xlink:href="#svg-search"></use></svg></label>
+  </div>
+  <div id="search-results" class="search-results"></div>
+</div>
+
+  
+  <button class="btn" id="darkThemeToggle" className="text-decoration-none">🌕</button>
+
+<script>
+    const darkThemeToggle = document.getElementById('darkThemeToggle');
+    darkThemeToggle.addEventListener('click', () => {
+        if (jtd.getTheme() === 'dark') {
+            jtd.setTheme('light');
+            darkThemeToggle.innerText = '🌑';
+            localStorage.setItem('theme', 'light');
+            document.documentElement.classList.remove('dark');
+        } else {
+            jtd.setTheme('dark');
+            darkThemeToggle.innerText = '🌕';
+            localStorage.setItem('theme', 'dark');
+            document.documentElement.classList.add('dark');
+        }
+    });
+</script>
+
+  
+    <nav aria-label="Auxiliary" class="aux-nav">
+  <ul class="aux-nav-list">
+    
+      <li class="aux-nav-list-item">
+        <a href="//github.com/matronator/MTRGen" class="site-button"
+          
+        >
+          View on GitHub
+        </a>
+      </li>
+    
+      <li class="aux-nav-list-item">
+        <a href="//" class="site-button"
+          
+        >
+          Main website
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+  
+</div>
+
+    <div class="main-content-wrap">
+      <nav aria-label="Breadcrumb" class="breadcrumb-nav">
+  <ol class="breadcrumb-nav-list">
+    <li class="breadcrumb-nav-list-item"><a href="/docs/usage/">Usage</a></li>
+    <li class="breadcrumb-nav-list-item"><span>CLI Commands</span></li>
+  </ol>
+</nav>
+      <div id="main-content" class="main-content">
+        <main>
+          
+            <h1 id="cli-commands">
+  
+  
+    <a href="#cli-commands" class="anchor-heading" aria-labelledby="cli-commands"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> CLI Commands
+  
+  
+</h1>
+    
+
+<p>Here is a list of all the commands the CLI utility supports (excluding default <code class="language-plaintext highlighter-rouge">symfony/console</code> commands).</p>
+<h3 id="command-list">
+  
+  
+    <a href="#command-list" class="anchor-heading" aria-labelledby="command-list"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Command list:
+  
+  
+</h3>
+    
+
+<ul>
+  <li><a href="#generate-gen-default"><code class="language-plaintext highlighter-rouge">generate</code>, <code class="language-plaintext highlighter-rouge">gen</code> (default)</a></li>
+  <li><a href="#save-s"><code class="language-plaintext highlighter-rouge">save</code>, <code class="language-plaintext highlighter-rouge">s</code></a></li>
+  <li><a href="#save-bundle-sb-save-b"><code class="language-plaintext highlighter-rouge">save-bundle</code>, <code class="language-plaintext highlighter-rouge">sb</code>, <code class="language-plaintext highlighter-rouge">save-b</code></a></li>
+  <li><a href="#saved-ls"><code class="language-plaintext highlighter-rouge">saved</code>, <code class="language-plaintext highlighter-rouge">ls</code></a></li>
+  <li><a href="#remove-rm"><code class="language-plaintext highlighter-rouge">remove</code>, <code class="language-plaintext highlighter-rouge">rm</code></a></li>
+  <li><a href="#validate-v"><code class="language-plaintext highlighter-rouge">validate</code>, <code class="language-plaintext highlighter-rouge">v</code></a></li>
+  <li><a href="#add-a"><code class="language-plaintext highlighter-rouge">add</code>, <code class="language-plaintext highlighter-rouge">a</code></a></li>
+  <li><a href="#signup-sign"><code class="language-plaintext highlighter-rouge">signup</code>, <code class="language-plaintext highlighter-rouge">sign</code></a></li>
+  <li><a href="#login-in"><code class="language-plaintext highlighter-rouge">login</code>, <code class="language-plaintext highlighter-rouge">in</code></a></li>
+  <li><a href="#publish-pub"><code class="language-plaintext highlighter-rouge">publish</code>, <code class="language-plaintext highlighter-rouge">pub</code></a></li>
+  <li><a href="#use-u"><code class="language-plaintext highlighter-rouge">use</code>, <code class="language-plaintext highlighter-rouge">u</code></a></li>
+</ul>
+<h2 id="generate-gen-default">
+  
+  
+    <a href="#generate-gen-default" class="anchor-heading" aria-labelledby="generate-gen-default"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">generate</code>, <code class="language-plaintext highlighter-rouge">gen</code> (default)
+  
+  
+</h2>
+    
+
+<p>The <code class="language-plaintext highlighter-rouge">generate</code> command is the default command of the CLI tool, meaning it will be run if no command is provided (eg. <code class="language-plaintext highlighter-rouge">vendor/bin/mtrgen</code> or with some parameters: <code class="language-plaintext highlighter-rouge">vendor/bin/mtrgen -p my/path/to/file.json</code>). It is used for generating PHP files from a template or a bundle.</p>
+<h3 id="usage">
+  
+  
+    <a href="#usage" class="anchor-heading" aria-labelledby="usage"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Usage
+  
+  
+</h3>
+    
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>vendor/bin/mtrgen generate <span class="o">[</span>options] <span class="o">[</span><span class="nt">--</span><span class="o">]</span> <span class="o">[</span>&lt;name&gt; <span class="o">[</span>&lt;args&gt;...]]
+gen <span class="c"># Alias</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+<h3 id="arguments">
+  
+  
+    <a href="#arguments" class="anchor-heading" aria-labelledby="arguments"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Arguments
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">name</code> - The name of the template to generate under which it is saved in the local store. If no name is provided, the program will show you a list of all the templates you have saved in your local store and you can choose a template to generate from that list.</p>
+
+<p><code class="language-plaintext highlighter-rouge">args</code> - Arguments to pass to the template (<code class="language-plaintext highlighter-rouge">key=value</code> items separated by space). If no arguments are provided, the program will ask you to provide values for the arguments it finds when parsing the template.</p>
+<h3 id="options">
+  
+  
+    <a href="#options" class="anchor-heading" aria-labelledby="options"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Options
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">-p, --path</code> - The path to a template file. You can use this instead of the <code class="language-plaintext highlighter-rouge">name</code> argument.</p>
+<h2 id="save-s">
+  
+  
+    <a href="#save-s" class="anchor-heading" aria-labelledby="save-s"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">save</code>, <code class="language-plaintext highlighter-rouge">s</code>
+  
+  
+</h2>
+    
+
+<p>Saves a template to the local store.</p>
+<h3 id="usage-1">
+  
+  
+    <a href="#usage-1" class="anchor-heading" aria-labelledby="usage-1"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Usage
+  
+  
+</h3>
+    
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>vendor/bin/mtrgen save <span class="o">[</span>options] <span class="o">[</span><span class="nt">--</span><span class="o">]</span> &lt;path&gt;
+s <span class="c"># Alias</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+<h3 id="arguments-1">
+  
+  
+    <a href="#arguments-1" class="anchor-heading" aria-labelledby="arguments-1"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Arguments
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">path</code> - The path to a template file.</p>
+<h3 id="options-1">
+  
+  
+    <a href="#options-1" class="anchor-heading" aria-labelledby="options-1"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Options
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">-a, --alias</code> - Alias to use instead of the name defined inside the template.</p>
+<h2 id="save-bundle-sb-save-b">
+  
+  
+    <a href="#save-bundle-sb-save-b" class="anchor-heading" aria-labelledby="save-bundle-sb-save-b"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">save-bundle</code>, <code class="language-plaintext highlighter-rouge">sb</code>, <code class="language-plaintext highlighter-rouge">save-b</code>
+  
+  
+</h2>
+    
+
+<p>Creates a bundle from two or more template files and add it to your local store.</p>
+<h3 id="usage-2">
+  
+  
+    <a href="#usage-2" class="anchor-heading" aria-labelledby="usage-2"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Usage
+  
+  
+</h3>
+    
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre>save-bundle <span class="o">[</span>options] <span class="o">[</span><span class="nt">--</span><span class="o">]</span> &lt;name&gt; <span class="o">[</span>&lt;templates&gt;...]
+sb <span class="c"># Alias</span>
+save-b <span class="c"># Alias</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+<h3 id="arguments-2">
+  
+  
+    <a href="#arguments-2" class="anchor-heading" aria-labelledby="arguments-2"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Arguments
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">name</code> - The name of the bundle.</p>
+
+<p><code class="language-plaintext highlighter-rouge">templates</code> - The paths to the template files separated by space.</p>
+<h3 id="options-2">
+  
+  
+    <a href="#options-2" class="anchor-heading" aria-labelledby="options-2"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Options
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">-f, --format</code> - The file format that should be used for the bundle. Options: <code class="language-plaintext highlighter-rouge">json|yaml|neon</code>.</p>
+<h2 id="saved-ls">
+  
+  
+    <a href="#saved-ls" class="anchor-heading" aria-labelledby="saved-ls"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">saved</code>, <code class="language-plaintext highlighter-rouge">ls</code>
+  
+  
+</h2>
+    
+
+<p>Lists all the templates saved in your local store.</p>
+<h3 id="usage-3">
+  
+  
+    <a href="#usage-3" class="anchor-heading" aria-labelledby="usage-3"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Usage
+  
+  
+</h3>
+    
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>vendor/bin/mtrgen saved
+<span class="nb">ls</span> <span class="c"># Alias</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+<h2 id="remove-rm">
+  
+  
+    <a href="#remove-rm" class="anchor-heading" aria-labelledby="remove-rm"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">remove</code>, <code class="language-plaintext highlighter-rouge">rm</code>
+  
+  
+</h2>
+    
+
+<p>Removes a template or bundle from your local store.</p>
+<h3 id="usage-4">
+  
+  
+    <a href="#usage-4" class="anchor-heading" aria-labelledby="usage-4"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Usage
+  
+  
+</h3>
+    
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>vendor/bin/mtrgen remove &lt;name&gt;
+<span class="nb">rm</span> <span class="c"># Alias</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+<h3 id="arguments-3">
+  
+  
+    <a href="#arguments-3" class="anchor-heading" aria-labelledby="arguments-3"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Arguments
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">name</code> - The name of the template or bundle to remove.</p>
+<h2 id="validate-v">
+  
+  
+    <a href="#validate-v" class="anchor-heading" aria-labelledby="validate-v"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">validate</code>, <code class="language-plaintext highlighter-rouge">v</code>
+  
+  
+</h2>
+    
+
+<p>Checks if a file is valid template or bundle.</p>
+<h3 id="usage-5">
+  
+  
+    <a href="#usage-5" class="anchor-heading" aria-labelledby="usage-5"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Usage
+  
+  
+</h3>
+    
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>vendor/bin/mtrgen validate &lt;path&gt;
+v <span class="c"># Alias</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+<h3 id="arguments-4">
+  
+  
+    <a href="#arguments-4" class="anchor-heading" aria-labelledby="arguments-4"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Arguments
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">path</code> - The path to the file to validate.</p>
+<h2 id="add-a">
+  
+  
+    <a href="#add-a" class="anchor-heading" aria-labelledby="add-a"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">add</code>, <code class="language-plaintext highlighter-rouge">a</code>
+  
+  
+</h2>
+    
+
+<p>Adds a template from the online registry to your local store.</p>
+<h3 id="usage-6">
+  
+  
+    <a href="#usage-6" class="anchor-heading" aria-labelledby="usage-6"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Usage
+  
+  
+</h3>
+    
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>vendor/bin/mtrgen add &lt;identifier&gt;
+a <span class="c"># Alias</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+<h3 id="arguments-5">
+  
+  
+    <a href="#arguments-5" class="anchor-heading" aria-labelledby="arguments-5"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Arguments
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">identifier</code> - Full identifier of the template (<code class="language-plaintext highlighter-rouge">vendor/name</code>).</p>
+<h2 id="signup-sign">
+  
+  
+    <a href="#signup-sign" class="anchor-heading" aria-labelledby="signup-sign"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">signup</code>, <code class="language-plaintext highlighter-rouge">sign</code>
+  
+  
+</h2>
+    
+
+<p>Creates new user account on the online registry.</p>
+<h3 id="usage-7">
+  
+  
+    <a href="#usage-7" class="anchor-heading" aria-labelledby="usage-7"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Usage
+  
+  
+</h3>
+    
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>vendor/bin/mtrgen signup &lt;username&gt; &lt;password&gt; <span class="o">[</span>&lt;email&gt;]
+sign <span class="c"># Alias</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+<h3 id="arguments-6">
+  
+  
+    <a href="#arguments-6" class="anchor-heading" aria-labelledby="arguments-6"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Arguments
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">username</code> - The username to use for the account.</p>
+
+<p><code class="language-plaintext highlighter-rouge">password</code> - The password to use for the account.</p>
+
+<p><code class="language-plaintext highlighter-rouge">email</code> (optional) - The email address to use for the account.</p>
+<h2 id="login-in">
+  
+  
+    <a href="#login-in" class="anchor-heading" aria-labelledby="login-in"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">login</code>, <code class="language-plaintext highlighter-rouge">in</code>
+  
+  
+</h2>
+    
+
+<p>Logs in to the online registry.</p>
+<h3 id="usage-8">
+  
+  
+    <a href="#usage-8" class="anchor-heading" aria-labelledby="usage-8"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Usage
+  
+  
+</h3>
+    
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>vendor/bin/mtrgen login <span class="o">[</span>options] <span class="o">[</span><span class="nt">--</span><span class="o">]</span> &lt;username&gt; &lt;password&gt;
+<span class="k">in</span> <span class="c"># Alias</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+<h3 id="arguments-7">
+  
+  
+    <a href="#arguments-7" class="anchor-heading" aria-labelledby="arguments-7"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Arguments
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">username</code> - The username to use for the account.</p>
+
+<p><code class="language-plaintext highlighter-rouge">password</code> - The password to use for the account.</p>
+<h3 id="options-3">
+  
+  
+    <a href="#options-3" class="anchor-heading" aria-labelledby="options-3"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Options
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">-d, --duration</code> - The duration (in hours) for which the user should stay logged in. Use 0 to never logout (not recommended). (default=<code class="language-plaintext highlighter-rouge">24</code>)</p>
+<h2 id="publish-pub">
+  
+  
+    <a href="#publish-pub" class="anchor-heading" aria-labelledby="publish-pub"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">publish</code>, <code class="language-plaintext highlighter-rouge">pub</code>
+  
+  
+</h2>
+    
+
+<p>Publishes a template to the online registry.</p>
+<h3 id="usage-9">
+  
+  
+    <a href="#usage-9" class="anchor-heading" aria-labelledby="usage-9"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Usage
+  
+  
+</h3>
+    
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>vendor/bin/mtrgen publish <span class="o">[</span>options] <span class="o">[</span><span class="nt">--</span><span class="o">]</span> <span class="o">[</span>&lt;name&gt;]
+pub <span class="c"># Alias</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+<h3 id="arguments-8">
+  
+  
+    <a href="#arguments-8" class="anchor-heading" aria-labelledby="arguments-8"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Arguments
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">name</code> - The name of the template to publish. If no name is provided, the program will show you a list of all the templates you have saved in your local store and you can choose a template to publish from that list.</p>
+<h3 id="options-4">
+  
+  
+    <a href="#options-4" class="anchor-heading" aria-labelledby="options-4"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Options
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">-p, --path</code> - The path to a template file. You can use this instead of the <code class="language-plaintext highlighter-rouge">name</code> argument.</p>
+<h2 id="use-u">
+  
+  
+    <a href="#use-u" class="anchor-heading" aria-labelledby="use-u"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">use</code>, <code class="language-plaintext highlighter-rouge">u</code>
+  
+  
+</h2>
+    
+
+<p>Uses a template from the online registry to generate a file without saving that template locally.</p>
+<h3 id="usage-10">
+  
+  
+    <a href="#usage-10" class="anchor-heading" aria-labelledby="usage-10"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Usage
+  
+  
+</h3>
+    
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>vendor/bin/mtrgen use <span class="o">[</span>&lt;identifier&gt; <span class="o">[</span>&lt;args&gt;...]]
+u <span class="c"># Alias</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+<h3 id="arguments-9">
+  
+  
+    <a href="#arguments-9" class="anchor-heading" aria-labelledby="arguments-9"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Arguments
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">identifier</code> - Full identifier of the template (<code class="language-plaintext highlighter-rouge">vendor/name</code>).</p>
+
+<p><code class="language-plaintext highlighter-rouge">args</code> - Arguments to pass to the template (<code class="language-plaintext highlighter-rouge">key=value</code> items separated by space). If no arguments are provided, the program will ask you to provide values for the arguments it finds when parsing the template.</p>
+
+          
+
+          
+        </main>
+        
+
+
+      </div>
+    </div>
+    
+      
+
+<div class="search-overlay"></div>
+
+    
+  </div>
+
+  
+</body>
+</html>
+
+

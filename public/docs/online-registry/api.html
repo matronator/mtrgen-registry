@@ -1,0 +1,864 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  <link rel="stylesheet" href="/docs/assets/css/just-the-docs-default.css">
+
+  <link rel="stylesheet" href="/docs/assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet">
+
+  <style id="jtd-nav-activation">
+  
+
+.site-nav > ul.nav-list:first-child > li > a,
+.site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(2)) > a,
+.site-nav > ul.nav-list:first-child > li > ul > li > ul > li > a {
+  background-image: none;
+}
+
+.site-nav > ul.nav-list:not(:first-child) a,
+.site-nav li.external a {
+  background-image: none;
+}
+
+.site-nav > ul.nav-list:first-child > li:nth-child(4) > ul > li:nth-child(2) > a {
+  font-weight: 600;
+  text-decoration: none;
+}.site-nav > ul.nav-list:first-child > li:nth-child(4) > button svg,
+.site-nav > ul.nav-list:first-child > li:nth-child(4) > ul > li:nth-child(2) > button svg {
+  transform: rotate(-90deg);
+}.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(4) > ul.nav-list,
+.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(4) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list {
+  display: block;
+}
+  </style>
+
+  
+
+  
+    <script src="/docs/assets/js/vendor/lunr.min.js"></script>
+  
+
+  <script src="/docs/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+
+
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>REST API | MTRGen Docs</title>
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="REST API" />
+<meta name="author" content="Matronator" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="File generator engine that can generate PHP files from JSON/YAML/NEON templates." />
+<meta property="og:description" content="File generator engine that can generate PHP files from JSON/YAML/NEON templates." />
+<meta property="og:site_name" content="MTRGen Docs" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="REST API" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Matronator","url":"https://matronator.cz"},"description":"File generator engine that can generate PHP files from JSON/YAML/NEON templates.","headline":"REST API","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/docs/assets/images/logo-main.png"},"name":"Matronator"},"url":"/docs/online-registry/api.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <link rel="stylesheet" href="/docs/assets/css/custom.css">
+<meta name="monetization" content="$coil.xrptipbot.com/qwoCBFTsQ9GW8cy-uk-c8g">
+
+<script defer>
+    document.addEventListener('DOMContentLoaded', () => {
+        const theme = localStorage.getItem('theme');
+        if (theme === 'dark') {
+            jtd.setTheme('dark');
+            darkThemeToggle.innerText = '🌕';
+            document.documentElement.classList.add('dark');
+        } else {
+            jtd.setTheme('light');
+            darkThemeToggle.innerText = '🌑';
+            document.documentElement.classList.remove('dark');
+        }
+    });
+</script>
+
+
+</head>
+
+<body>
+  <a class="skip-to-main" href="#main-content">Skip to main content</a>
+  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="svg-link" viewBox="0 0 24 24">
+  <title>Link</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+  </svg>
+</symbol>
+
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+  <title>Menu</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+</symbol>
+
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+  <title>Expand</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+    <polyline points="9 18 15 12 9 6"></polyline>
+  </svg>
+</symbol>
+
+  <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE -->
+<symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link">
+  <title id="svg-external-link-title">(external link)</title>
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+</symbol>
+
+  
+    <symbol id="svg-doc" viewBox="0 0 24 24">
+  <title>Document</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+  </svg>
+</symbol>
+
+    <symbol id="svg-search" viewBox="0 0 24 24">
+  <title>Search</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+    <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </svg>
+</symbol>
+
+  
+  
+    <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md -->
+<symbol id="svg-copy" viewBox="0 0 16 16">
+  <title>Copy</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+  </svg>
+</symbol>
+<symbol id="svg-copied" viewBox="0 0 16 16">
+  <title>Copied</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16">
+    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/>
+  </svg>
+</symbol>
+
+  
+</svg>
+
+  
+    <div class="side-bar">
+  <div class="site-header" role="banner">
+    <a href="/docs/" class="site-title lh-tight">
+  <div class="site-logo" role="img" aria-label="MTRGen Docs"></div>
+
+</a>
+    <button id="menu-button" class="site-button btn-reset" aria-label="Toggle menu" aria-pressed="false">
+      <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg>
+    </button>
+  </div>
+
+  <nav aria-label="Main" id="site-nav" class="site-nav">
+  
+  
+    <ul class="nav-list"><li class="nav-list-item"><a href="/docs/" class="nav-list-link">Introduction</a></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Templates category" aria-pressed="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+    </button><a href="/docs/templates/" class="nav-list-link">Templates</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/templates/template-structure.html" class="nav-list-link">Template structure</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Usage category" aria-pressed="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+    </button><a href="/docs/usage/" class="nav-list-link">Usage</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/usage/commands.html" class="nav-list-link">CLI Commands</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in Online registry category" aria-pressed="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+    </button><a href="/docs/online-registry/" class="nav-list-link">Online registry</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/online-registry/publishing-templates.html" class="nav-list-link">Publishing templates</a></li><li class="nav-list-item"><a href="/docs/online-registry/api.html" class="nav-list-link">REST API</a></li></ul></li><li class="nav-list-item"><button class="nav-list-expander btn-reset" aria-label="toggle items in API category" aria-pressed="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><use xlink:href="#svg-arrow-right"></use></svg>
+    </button><a href="/docs/code-api/" class="nav-list-link">API</a><ul class="nav-list"><li class="nav-list-item"><a href="/docs/code-api/generator.html" class="nav-list-link">Generator</a></li><li class="nav-list-item"><a href="/docs/code-api/storage.html" class="nav-list-link">Storage</a></li></ul></li></ul>
+
+  <ul class="nav-list"><li class="nav-list-item external">
+          <a href="https://mtrgen.com" class="nav-list-link external"
+            
+          >
+            Main website
+            <svg viewBox="0 0 24 24" aria-labelledby="svg-external-link-title"><use xlink:href="#svg-external-link"></use></svg>
+          </a>
+        </li><li class="nav-list-item external">
+          <a href="https://github.com/matronator/MTRGen" class="nav-list-link external"
+            
+          >
+            View on GitHub
+            <svg viewBox="0 0 24 24" aria-labelledby="svg-external-link-title"><use xlink:href="#svg-external-link"></use></svg>
+          </a>
+        </li></ul>
+</nav>
+
+
+  
+  
+    <footer class="site-footer">
+      This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+    </footer>
+  
+</div>
+
+  
+  <div class="main" id="top">
+    <div id="main-header" class="main-header">
+  
+    
+
+<div class="search" role="search">
+  <div class="search-input-wrap">
+    <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search MTRGen Docs" aria-label="Search MTRGen Docs" autocomplete="off">
+    <label for="search-input" class="search-label"><svg viewBox="0 0 24 24" class="search-icon"><use xlink:href="#svg-search"></use></svg></label>
+  </div>
+  <div id="search-results" class="search-results"></div>
+</div>
+
+  
+  <button class="btn" id="darkThemeToggle" className="text-decoration-none">🌕</button>
+
+<script>
+    const darkThemeToggle = document.getElementById('darkThemeToggle');
+    darkThemeToggle.addEventListener('click', () => {
+        if (jtd.getTheme() === 'dark') {
+            jtd.setTheme('light');
+            darkThemeToggle.innerText = '🌑';
+            localStorage.setItem('theme', 'light');
+            document.documentElement.classList.remove('dark');
+        } else {
+            jtd.setTheme('dark');
+            darkThemeToggle.innerText = '🌕';
+            localStorage.setItem('theme', 'dark');
+            document.documentElement.classList.add('dark');
+        }
+    });
+</script>
+
+  
+    <nav aria-label="Auxiliary" class="aux-nav">
+  <ul class="aux-nav-list">
+    
+      <li class="aux-nav-list-item">
+        <a href="//github.com/matronator/MTRGen" class="site-button"
+          
+        >
+          View on GitHub
+        </a>
+      </li>
+    
+      <li class="aux-nav-list-item">
+        <a href="//" class="site-button"
+          
+        >
+          Main website
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+  
+</div>
+
+    <div class="main-content-wrap">
+      <nav aria-label="Breadcrumb" class="breadcrumb-nav">
+  <ol class="breadcrumb-nav-list">
+    <li class="breadcrumb-nav-list-item"><a href="/docs/online-registry/">Online registry</a></li>
+    <li class="breadcrumb-nav-list-item"><span>REST API</span></li>
+  </ol>
+</nav>
+      <div id="main-content" class="main-content">
+        <main>
+          
+            <h1 id="rest-api">
+  
+  
+    <a href="#rest-api" class="anchor-heading" aria-labelledby="rest-api"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> REST API
+  
+  
+</h1>
+    
+
+<p>This documentation covers the RESTful API for a template management system with user authentication and dashboard features.</p>
+
+<p>Base URL: <code class="language-plaintext highlighter-rouge">https://mtrgen.com/api</code></p>
+<h2 id="endpoints">
+  
+  
+    <a href="#endpoints" class="anchor-heading" aria-labelledby="endpoints"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Endpoints
+  
+  
+</h2>
+    
+<h3 id="post-signup">
+  
+  
+    <a href="#post-signup" class="anchor-heading" aria-labelledby="post-signup"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">POST /signup</code>
+  
+  
+</h3>
+    
+
+<p>Registers a new user.</p>
+<h4 id="parameters">
+  
+  
+    <a href="#parameters" class="anchor-heading" aria-labelledby="parameters"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Parameters
+  
+  
+</h4>
+    
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">username</code>: <strong>(Required)</strong> A string representing the user’s unique username. It should consist of alphanumeric characters and underscores or dashes. Example: “john_doe12”.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">password</code>: <strong>(Required)</strong> A string representing the user’s password. The password should be kept secure and adhere to the application’s password policies, if any.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">email</code>: <strong>(Optional)</strong> A valid email address for the user. This field can be left empty or null if the user does not want to provide an email address. Example: “<a href="mailto:john.doe@example.com">john.doe@example.com</a>”.</p>
+  </li>
+</ul>
+<h3 id="post-login">
+  
+  
+    <a href="#post-login" class="anchor-heading" aria-labelledby="post-login"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">POST /login</code>
+  
+  
+</h3>
+    
+
+<p>The <code class="language-plaintext highlighter-rouge">login</code> endpoint is used to authenticate a user and generate an access token for the session.</p>
+<h4 id="parameters-1">
+  
+  
+    <a href="#parameters-1" class="anchor-heading" aria-labelledby="parameters-1"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Parameters
+  
+  
+</h4>
+    
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">username</code>: <strong>(Required)</strong> A string representing the user’s unique username. It should consist of alphanumeric characters and underscores or dashes. Example: “john_doe12”.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">password</code>: <strong>(Required)</strong> A string representing the user’s password. The password should be kept secure and adhere to the application’s password policies, if any.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">duration</code>: <strong>(Required)</strong> An integer representing the number of hours the access token should remain valid. A value of <code class="language-plaintext highlighter-rouge">0</code> will never expire the session.</p>
+  </li>
+</ul>
+<h4 id="response">
+  
+  
+    <a href="#response" class="anchor-heading" aria-labelledby="response"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Response
+  
+  
+</h4>
+    
+<h5 class="text-green-200" id="200-ok">
+  
+  
+    <a href="#200-ok" class="anchor-heading" aria-labelledby="200-ok"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 200 OK
+  
+  
+</h5>
+    
+
+<p>On successful authentication, the endpoint returns a JSON object containing the following information:</p>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">status</code>: A string indicating the success of the operation, with a value of “success”.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">message</code>: A string containing a descriptive message, such as “Access token created.”</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">token</code>: A string representing the generated access token for the authenticated session.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">user</code>: An object containing the user’s details.</p>
+  </li>
+</ul>
+<h5 class="text-red-200" id="400-bad-request">
+  
+  
+    <a href="#400-bad-request" class="anchor-heading" aria-labelledby="400-bad-request"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 400 Bad Request
+  
+  
+</h5>
+    
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">status</code>: A string indicating the failure of the operation, with a value of “error”.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">message</code>: <code class="language-plaintext highlighter-rouge">Something went wrong.</code></p>
+  </li>
+</ul>
+<h5 class="text-red-200" id="401-unauthorized">
+  
+  
+    <a href="#401-unauthorized" class="anchor-heading" aria-labelledby="401-unauthorized"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 401 Unauthorized
+  
+  
+</h5>
+    
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">status</code>: A string indicating the failure of the operation, with a value of “error”.</li>
+</ul>
+<h6 id="missing-credentials">
+  
+  
+    <a href="#missing-credentials" class="anchor-heading" aria-labelledby="missing-credentials"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Missing credentials
+  
+  
+</h6>
+    
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">message</code>: <code class="language-plaintext highlighter-rouge">Unauthorized access. Use credentials to login.</code></li>
+</ul>
+<h6 id="wrong-credentials">
+  
+  
+    <a href="#wrong-credentials" class="anchor-heading" aria-labelledby="wrong-credentials"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Wrong credentials
+  
+  
+</h6>
+    
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">message</code>: <code class="language-plaintext highlighter-rouge">Invalid credentials.</code></li>
+</ul>
+<h3 id="post-logout">
+  
+  
+    <a href="#post-logout" class="anchor-heading" aria-labelledby="post-logout"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">POST /logout</code>
+  
+  
+</h3>
+    
+
+<p>Logs out the authenticated user. Requires authentication.</p>
+<h3 id="get-templates">
+  
+  
+    <a href="#get-templates" class="anchor-heading" aria-labelledby="get-templates"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">GET /templates</code>
+  
+  
+</h3>
+    
+
+<p>Returns all public templates.</p>
+<h3 id="get-templatesvendor">
+  
+  
+    <a href="#get-templatesvendor" class="anchor-heading" aria-labelledby="get-templatesvendor"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">GET /templates/{vendor}</code>
+  
+  
+</h3>
+    
+
+<p>Returns all public templates for the specified vendor.</p>
+
+<ul>
+  <li>Parameters:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">{vendor}</code>: The vendor’s name.</li>
+    </ul>
+  </li>
+</ul>
+<h3 id="get-templatesvendorname">
+  
+  
+    <a href="#get-templatesvendorname" class="anchor-heading" aria-labelledby="get-templatesvendorname"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">GET /templates/{vendor}/{name}</code>
+  
+  
+</h3>
+    
+
+<p>Returns the public template with the specified vendor and name.</p>
+
+<ul>
+  <li>Parameters:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">{vendor}</code>: The vendor’s name.</li>
+      <li><code class="language-plaintext highlighter-rouge">{name}</code>: The template’s name.</li>
+    </ul>
+  </li>
+</ul>
+<h3 id="get-templatesvendornamedetails">
+  
+  
+    <a href="#get-templatesvendornamedetails" class="anchor-heading" aria-labelledby="get-templatesvendornamedetails"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">GET /templates/{vendor}/{name}/details</code>
+  
+  
+</h3>
+    
+
+<p>Returns the public template details for the specified vendor and name.</p>
+
+<ul>
+  <li>Parameters:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">{vendor}</code>: The vendor’s name.</li>
+      <li><code class="language-plaintext highlighter-rouge">{name}</code>: The template’s name.</li>
+    </ul>
+  </li>
+</ul>
+<h3 id="get-templatesvendornameget">
+  
+  
+    <a href="#get-templatesvendornameget" class="anchor-heading" aria-labelledby="get-templatesvendornameget"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">GET /templates/{vendor}/{name}/get</code>
+  
+  
+</h3>
+    
+
+<p>Downloads the public template with the specified vendor and name.</p>
+
+<ul>
+  <li>Parameters:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">{vendor}</code>: The vendor’s name.</li>
+      <li><code class="language-plaintext highlighter-rouge">{name}</code>: The template’s name.</li>
+    </ul>
+  </li>
+</ul>
+<h3 id="get-templatesvendornametype">
+  
+  
+    <a href="#get-templatesvendornametype" class="anchor-heading" aria-labelledby="get-templatesvendornametype"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">GET /templates/{vendor}/{name}/type</code>
+  
+  
+</h3>
+    
+
+<p>Returns the type of the template with the specified vendor and name.</p>
+
+<ul>
+  <li>Parameters:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">{vendor}</code>: The vendor’s name.</li>
+      <li><code class="language-plaintext highlighter-rouge">{name}</code>: The template’s name.</li>
+    </ul>
+  </li>
+</ul>
+<h3 id="post-templates">
+  
+  
+    <a href="#post-templates" class="anchor-heading" aria-labelledby="post-templates"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">POST /templates</code>
+  
+  
+</h3>
+    
+
+<p>Saves a new template to the system. Requires authentication.</p>
+
+<ul>
+  <li>Request body: JSON object containing the contents of the template as a string.</li>
+</ul>
+<h3 id="post-templatespublish">
+  
+  
+    <a href="#post-templatespublish" class="anchor-heading" aria-labelledby="post-templatespublish"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">POST /templates/publish</code>
+  
+  
+</h3>
+    
+
+<p>Publishes a template. Requires authentication.</p>
+
+<ul>
+  <li>Request body: JSON object containing template data and files.</li>
+</ul>
+<h3 id="post-templatesconvert">
+  
+  
+    <a href="#post-templatesconvert" class="anchor-heading" aria-labelledby="post-templatesconvert"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">POST /templates/convert</code>
+  
+  
+</h3>
+    
+
+<p>Converts a template file to a generated PHP file.</p>
+
+<ul>
+  <li>Request body: JSON object containing template data and target format.</li>
+</ul>
+<h3 id="post-bundles">
+  
+  
+    <a href="#post-bundles" class="anchor-heading" aria-labelledby="post-bundles"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">POST /bundles</code>
+  
+  
+</h3>
+    
+
+<p>Saves a new bundle of templates to the system. Requires authentication.</p>
+
+<ul>
+  <li>Request body: JSON object containing bundle data.</li>
+</ul>
+<h3 id="get-bundlesvendornametemplatenameget">
+  
+  
+    <a href="#get-bundlesvendornametemplatenameget" class="anchor-heading" aria-labelledby="get-bundlesvendornametemplatenameget"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">GET /bundles/{vendor}/{name}/{templateName}/get</code>
+  
+  
+</h3>
+    
+
+<p>Downloads a template from a bundle with the specified vendor, name, and template name.</p>
+
+<ul>
+  <li>Parameters:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">{vendor}</code>: The vendor’s name.</li>
+      <li><code class="language-plaintext highlighter-rouge">{name}</code>: The bundle’s name.</li>
+      <li><code class="language-plaintext highlighter-rouge">{templateName}</code>: The template’s name within the bundle.</li>
+    </ul>
+  </li>
+</ul>
+<h3 id="get-users">
+  
+  
+    <a href="#get-users" class="anchor-heading" aria-labelledby="get-users"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">GET /users</code>
+  
+  
+</h3>
+    
+
+<p>Returns all users.</p>
+<h3 id="get-usersusername">
+  
+  
+    <a href="#get-usersusername" class="anchor-heading" aria-labelledby="get-usersusername"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">GET /users/{username}</code>
+  
+  
+</h3>
+    
+
+<p>Returns the user with the specified username.</p>
+
+<ul>
+  <li>Parameters:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">{username}</code>: The user’s username.</li>
+    </ul>
+  </li>
+</ul>
+<h3 id="post-users">
+  
+  
+    <a href="#post-users" class="anchor-heading" aria-labelledby="post-users"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">POST /users</code>
+  
+  
+</h3>
+    
+
+<p>Updates a user’s information. Requires authentication.</p>
+
+<ul>
+  <li>Request body: JSON object containing user data.</li>
+</ul>
+<h3 id="get-usersusernameavatar">
+  
+  
+    <a href="#get-usersusernameavatar" class="anchor-heading" aria-labelledby="get-usersusernameavatar"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">GET /users/{username}/avatar</code>
+  
+  
+</h3>
+    
+
+<p>Returns the avatar of the user with the specified username.</p>
+
+<ul>
+  <li>Parameters:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">{username}</code>: The user’s username.</li>
+    </ul>
+  </li>
+</ul>
+<h3 id="post-usersavatar">
+  
+  
+    <a href="#post-usersavatar" class="anchor-heading" aria-labelledby="post-usersavatar"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">POST /users/avatar</code>
+  
+  
+</h3>
+    
+
+<p>Sets the avatar for the authenticated user.</p>
+
+<ul>
+  <li>Request body: JSON object containing avatar data.</li>
+</ul>
+<h3 id="post-dashboard">
+  
+  
+    <a href="#post-dashboard" class="anchor-heading" aria-labelledby="post-dashboard"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">POST /dashboard</code>
+  
+  
+</h3>
+    
+
+<p>Returns the logged-in user’s information.</p>
+<h3 id="post-dashboardcheck">
+  
+  
+    <a href="#post-dashboardcheck" class="anchor-heading" aria-labelledby="post-dashboardcheck"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">POST /dashboard/check</code>
+  
+  
+</h3>
+    
+
+<p>Checks if the user is logged in.</p>
+<h3 id="post-dashboardtemplatesvendor">
+  
+  
+    <a href="#post-dashboardtemplatesvendor" class="anchor-heading" aria-labelledby="post-dashboardtemplatesvendor"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">POST /dashboard/templates/{vendor}</code>
+  
+  
+</h3>
+    
+
+<p>Returns the templates of the specified vendor for the logged-in user.</p>
+
+<ul>
+  <li>Parameters:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">{vendor}</code>: The vendor’s name.</li>
+    </ul>
+  </li>
+</ul>
+<h3 id="post-dashboardtemplatesvendorname">
+  
+  
+    <a href="#post-dashboardtemplatesvendorname" class="anchor-heading" aria-labelledby="post-dashboardtemplatesvendorname"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">POST /dashboard/templates/{vendor}/{name}</code>
+  
+  
+</h3>
+    
+
+<p>Returns the template with the specified vendor and name for the logged-in user.</p>
+
+<ul>
+  <li>Parameters:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">{vendor}</code>: The vendor’s name.</li>
+      <li><code class="language-plaintext highlighter-rouge">{name}</code>: The template’s name.</li>
+    </ul>
+  </li>
+</ul>
+<h3 id="post-dashboardtemplatesvendornamedetails">
+  
+  
+    <a href="#post-dashboardtemplatesvendornamedetails" class="anchor-heading" aria-labelledby="post-dashboardtemplatesvendornamedetails"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">POST /dashboard/templates/{vendor}/{name}/details</code>
+  
+  
+</h3>
+    
+
+<p>Returns the template details for the specified vendor and name for the logged-in user.</p>
+
+<ul>
+  <li>Parameters:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">{vendor}</code>: The vendor’s name.</li>
+      <li><code class="language-plaintext highlighter-rouge">{name}</code>: The template’s name.</li>
+    </ul>
+  </li>
+</ul>
+<h3 id="post-dashboardtemplatesvendornameget">
+  
+  
+    <a href="#post-dashboardtemplatesvendornameget" class="anchor-heading" aria-labelledby="post-dashboardtemplatesvendornameget"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">POST /dashboard/templates/{vendor}/{name}/get</code>
+  
+  
+</h3>
+    
+
+<p>Downloads the template with the specified vendor and name for the logged-in user.</p>
+
+<ul>
+  <li>Parameters:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">{vendor}</code>: The vendor’s name.</li>
+      <li><code class="language-plaintext highlighter-rouge">{name}</code>: The template’s name.</li>
+    </ul>
+  </li>
+</ul>
+<h3 id="get-dashboardtemplatesvendornametype">
+  
+  
+    <a href="#get-dashboardtemplatesvendornametype" class="anchor-heading" aria-labelledby="get-dashboardtemplatesvendornametype"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">GET /dashboard/templates/{vendor}/{name}/type</code>
+  
+  
+</h3>
+    
+
+<p>Returns the type of the template with the specified vendor and name for the logged-in user.</p>
+
+<ul>
+  <li>Parameters:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">{vendor}</code>: The vendor’s name.</li>
+      <li><code class="language-plaintext highlighter-rouge">{name}</code>: The template’s name.</li>
+    </ul>
+  </li>
+</ul>
+<h3 id="post-dashboardtemplatesvendornamevisibility">
+  
+  
+    <a href="#post-dashboardtemplatesvendornamevisibility" class="anchor-heading" aria-labelledby="post-dashboardtemplatesvendornamevisibility"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">POST /dashboard/templates/{vendor}/{name}/visibility</code>
+  
+  
+</h3>
+    
+
+<p>Sets the visibility of the template with the specified vendor and name for the logged-in user.</p>
+
+<ul>
+  <li>Parameters:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">{vendor}</code>: The vendor’s name.</li>
+      <li><code class="language-plaintext highlighter-rouge">{name}</code>: The template’s name.</li>
+    </ul>
+  </li>
+</ul>
+
+          
+
+          
+        </main>
+        
+
+
+      </div>
+    </div>
+    
+      
+
+<div class="search-overlay"></div>
+
+    
+  </div>
+
+  
+</body>
+</html>
+
+
