@@ -83,6 +83,7 @@ $app->routeMiddleware([
     'cors' => App\Http\Middleware\CorsMiddleware::class,
     'auth' => App\Http\Middleware\AuthMiddleware::class,
     'login' => App\Http\Middleware\LoginMiddleware::class,
+    'stacks' => App\Http\Middleware\StacksMiddleware::class,
 ]);
 
 /*

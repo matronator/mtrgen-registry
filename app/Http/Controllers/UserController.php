@@ -210,6 +210,18 @@ class UserController extends Controller
         ], 200);
     }
 
+    public function connectWallet(Request $request)
+    {
+        $this->validate($request, [
+            'id_address' => 'required|string|alpha_num',
+            'stx_address' => 'required|string|alpha_num',
+            'stx_testnet_address' => 'nullable|string|alpha_num',
+            'btc_address' => 'required|string|alpha_num',
+        ]);
+
+        return response();
+    }
+
     private function generateUniqueToken(): string
     {
         $faker = Factory::create();

@@ -1,9 +1,13 @@
 <?php
+
+use Fruitcake\Cors\CorsServiceProvider;
+
 return [
     'aliases' => [
         'App' => Illuminate\Support\Facades\App::class,
     ],
     'providers' => [
-        Barryvdh\Cors\ServiceProvider::class,
-    ]
+        CorsServiceProvider::class,
+    ],
+    'cachePath' => realpath(storage_path('framework/cache'))
 ];
