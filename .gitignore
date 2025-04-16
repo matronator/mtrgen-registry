@@ -8,3 +8,5 @@ Homestead.yaml
 .phpunit.result.cache
 .DS_Store
 /.vscode
+Icon[\r]
+Icon?
