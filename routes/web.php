@@ -33,15 +33,15 @@ $router->group(['middleware' => 'cors', 'prefix' => 'api'], function () use ($ro
         $router->get('/', ['uses' => 'TemplateController@findAllPublic']);
 
         $router->get('{vendor}', ['uses' => 'TemplateController@findPublicByVendor']);
-    
+
         $router->get('{vendor}/{name}', ['uses' => 'TemplateController@findPublicByName']);
 
         $router->get('{vendor}/{name}/details', ['uses' => 'TemplateController@getPublicTemplateDetails']);
-    
+
         $router->get('{vendor}/{name}/get', ['uses' => 'TemplateController@getPublic']);
 
         $router->get('{vendor}/{name}/type', ['uses' => 'TemplateController@getType']);
-    
+
         $router->post('/', ['middleware' => 'auth', 'uses' => 'TemplateController@save']);
 
         $router->post('/publish', ['middleware' => 'auth', 'uses' => 'TemplateController@publish']);
@@ -75,19 +75,19 @@ $router->group(['middleware' => 'cors', 'prefix' => 'api'], function () use ($ro
 
         $router->group(['prefix' => 'templates'], function () use ($router) {
             $router->post('{vendor}', ['uses' => 'TemplateController@findByVendor']);
-        
+
             $router->post('{vendor}/{name}', ['uses' => 'TemplateController@findByName']);
-    
+
             $router->post('{vendor}/{name}/details', ['uses' => 'TemplateController@getTemplateDetails']);
-        
+
             $router->post('{vendor}/{name}/get', ['uses' => 'TemplateController@get']);
-    
+
             $router->get('{vendor}/{name}/type', ['uses' => 'TemplateController@getType']);
 
             $router->post('{vendor}/{name}/visibility', ['uses' => 'TemplateController@setVisibility']);
         });
     });
-    
+
     $router->post('signup', ['uses' => 'UserController@create']);
     $router->post('login', ['middleware' => 'login', 'uses' => 'UserController@login']);
     $router->post('logout', ['middleware' => 'auth', 'uses' => 'UserController@logout']);

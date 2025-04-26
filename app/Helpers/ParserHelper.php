@@ -10,14 +10,14 @@ use Matronator\Parsem\Parser;
 
 class ParserHelper
 {
-    public const string CONTRACTS_DIR = 'contracts/';
+    public const CONTRACTS_DIR = 'contracts/';
 
     public static function parse(string $template, array $arguments): string
     {
         return Parser::parseString($template, $arguments);
     }
 
-    public static function getTemplate(string $filename): string
+    public static function getTemplate(string $filename): ?string
     {
         return Storage::get(self::CONTRACTS_DIR . $filename);
     }

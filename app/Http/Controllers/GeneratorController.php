@@ -26,7 +26,7 @@ class GeneratorController extends Controller
 
         $file = static::virtualFile($template);
 
-        $fileObject = Generator::parseFile($file, $params);
+        $fileObject = Generator::parseAnyFile($file, $params);
 
         return response()->json([
             'template' => $template,
