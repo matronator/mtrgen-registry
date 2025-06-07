@@ -1,75 +1,108 @@
-;; Implement the `ft-trait` trait defined in the `ft-trait` contract
+<# The template for generating the contract.
+Uses MTRGen and Pars'Em under the hood #>
+
+<% if !$removeWatermark %>
+;; SIP-010 token <% name %> created by Stacks TokenFactory
+;; https://factory.matronator.cz
+<% endif %>
+
 <# (impl-trait .ft-trait.sip-010-trait) #>
 (impl-trait 'SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE.sip-010-trait-ft-standard.sip-010-trait)
+<# (impl-trait 'ST1NXBK3K5YYMD6FD41MVNP3JS1GABZ8TRVX023PT.sip-010-trait-ft-standard.sip-010-trait) #>
 
-(define-fungible-token <% name|kebabCase %>)
+(define-fungible-token <% name|kebabCase %><% if $tokenSupply > 0 %> u<% tokenSupply %><% endif %>)
 
-(define-constant ERR_OWNER_ONLY (err u100))
-(define-constant ERR_NOT_TOKEN_OWNER (err u101))
+(define-constant ERR_ADMIN_ONLY (err u401))
+(define-constant ERR_EXCEEDS_MAX_AMOUNT (err u402))
+(define-constant ERR_NOT_TOKEN_OWNER (err u403))
 
-(define-constant CONTRACT_OWNER '<% userWallet %>)
-(define-constant TOKEN_URI u"<% tokenUri %>") ;; utf-8 string with token metadata host
-(define-constant TOKEN_NAME "<% name %>")
-(define-constant TOKEN_SYMBOL "<% tokenSymbol %>")
-(define-constant TOKEN_DECIMALS u<% tokenDecimals %>) ;; 6 units displayed past decimal, e.g. 1.000_000 = 1 token
+(define-constant CONTRACT_OWNER tx-sender)
+<% if $mintable === true %>
+<% if $mintAmount > 0 %>
+(define-constant MAX_MINT_AMOUNT u<% mintAmount %>)
+<% endif %>
+<% endif %>
 
-;; get the token balance of owner
+(define-data-var token-uri (optional (string-utf8 256)) (some u"<% tokenUri %>"))
+
+;; SIP-010 Trait Implementation
 (define-read-only (get-balance (owner principal))
-  (begin
-    (ok (ft-get-balance <% name|kebabCase %> owner))))
+  (ok (ft-get-balance <% name|kebabCase %> owner)))
 
-;; returns the total number of tokens
 (define-read-only (get-total-supply)
   (ok (ft-get-supply <% name|kebabCase %>)))
 
-;; returns the token name
 (define-read-only (get-name)
-  (ok TOKEN_NAME))
+  (ok "<% name %>"))
 
-;; the symbol or "ticker" for this token
 (define-read-only (get-symbol)
-  (ok TOKEN_SYMBOL))
+  (ok "<% tokenSymbol %>"))
 
-;; the number of decimals used
 (define-read-only (get-decimals)
-  (ok TOKEN_DECIMALS))
+  (ok u<% tokenDecimals %>))
 
-;; Transfers tokens to a recipient
-(define-public (transfer
-  (amount uint)
-  (sender principal)
-  (recipient principal)
-  (memo (optional (buff 34)))
-)
-  (begin
-    ;; #[filter(amount, recipient)]
-    (asserts! (is-eq tx-sender sender) ERR_NOT_TOKEN_OWNER)
-    (try! (ft-transfer? <% name|kebabCase %> amount sender recipient))
-    (match memo to-print (print to-print) 0x)
-    (ok true)
-  )
-)
+(define-read-only (get-token-uri)
+  (ok (var-get token-uri)))
 
-(define-public (get-token-uri)
-  (ok TOKEN_URI))
-
-(define-public (set-token-uri (token_uri (option buff 34)))
-  (if (is-eq tx-sender (ft-get-owner <% name|kebabCase %>))
+(define-public (set-token-uri (value (string-utf8 256)))
     (begin
-      (ft-set-token-uri <% name|kebabCase %> token_uri)
-      (ok true))
-    (err u4)))
+        (asserts! (is-eq tx-sender CONTRACT_OWNER) (err ERR_ADMIN_ONLY))
+        (var-set token-uri (some value))
+        (ok (print {
+              notification: "token-metadata-update",
+              payload: {
+                contract-id: (as-contract tx-sender),
+                token-class: "ft"}}))))
+
+(define-public (transfer (amount uint) (from principal) (to principal) (memo (optional (buff 34))))
+    (begin
+      (asserts! (is-eq contract-caller from) ERR_NOT_TOKEN_OWNER)
+      (try! (ft-transfer? <% name|kebabCase %> amount from to))
+      (match memo to-print (print to-print) 0x)
+      (ok true)))
 
 <% if $mintable === true %>
-
-(define-public (mint (amount uint) (recipient principal))
+;; Minting
+(define-public (mint <% if !$mintFixedAmount %>(amount uint) <% endif %>(recipient principal))
   (begin
-    (asserts! (is-eq tx-sender CONTRACT_OWNER) ERR_OWNER_ONLY)
-    (ft-mint? <% name|kebabCase %> amount recipient)
+<% if !$allowMintToAll %>
+    (asserts! (is-eq tx-sender CONTRACT_OWNER) ERR_ADMIN_ONLY)
+<% endif %>
+<% if !$mintFixedAmount %>
+<% if $mintAmount > 0 %>
+    (asserts! (<= amount MAX_MINT_AMOUNT) (err ERR_EXCEEDS_MAX_AMOUNT))
+<% endif %>
+<% endif %>
+    (ft-mint? <% name|kebabCase %> <% if !$mintFixedAmount %>amount<% else %>u<% mintAmount %><% endif %> recipient)
   )
 )
-
 <% endif %>
 
-;; Mint this token to a few people when deployed
-(ft-mint? <% name|kebabCase %> u<% tokenSupply %> '<% userWallet %>)
+;; Utility functions
+(define-public (send-many (recipients (list 200 { to: principal, amount: uint, memo: (optional (buff 34)) })))
+  (fold check-err (map send-token recipients) (ok true)))
+
+(define-private (check-err (result (response bool uint)) (prior (response bool uint)))
+  (match prior ok-value result err-value (err err-value)))
+
+(define-private (send-token (recipient { to: principal, amount: uint, memo: (optional (buff 34)) }))
+  (send-token-with-memo (get amount recipient) (get to recipient) (get memo recipient)))
+
+(define-private (send-token-with-memo (amount uint) (to principal) (memo (optional (buff 34))))
+  (let ((transferOk (try! (transfer amount tx-sender to memo))))
+    (ok transferOk)))
+
+(define-private (send-stx (recipient principal) (amount uint))
+  (begin
+    (try! (stx-transfer? amount tx-sender recipient))
+    (ok true)))
+
+(begin
+  (try! (send-stx '<% serviceAddress %> u<% deployCost %>))
+<% if $initialAmount > 0 %>
+  (try! (ft-mint? <% name|kebabCase %> u<% initialAmount %> CONTRACT_OWNER))
+<% endif %>
+<% if !$mintable %>
+  (try! (ft-mint? <% name|kebabCase %> u<% tokenSupply %> CONTRACT_OWNER))
+<% endif %>
+)

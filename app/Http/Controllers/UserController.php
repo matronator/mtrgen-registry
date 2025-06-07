@@ -21,6 +21,14 @@ class UserController extends Controller
         return response()->json(User::all());
     }
 
+    public function getDepositAddress()
+    {
+        return response()->make('SP39DTEJFPPWA3295HEE5NXYGMM7GJ8MA0TQX379', 200, [
+        // return response()->make('ST2FCRYHEYX9EPHX7QE7HH7RQ2S2XXA9WX1FVV26P', 200, [
+            'Content-Type' => 'text/plain',
+        ]);
+    }
+
     public function findByName(string $username)
     {
         $username = strtolower($username);
@@ -91,10 +99,10 @@ class UserController extends Controller
             return BasicResponse::send('Credentials missing.', BasicResponse::STATUS_ERROR, 400);
 
         $username = strtolower($username);
-        
+
         if (User::query()->firstWhere('username', '=', $username))
             return BasicResponse::send('User with this username already exists.', BasicResponse::STATUS_ERROR, 400);
-        
+
         if ($email && User::query()->firstWhere('email', '=', $email))
             return BasicResponse::send('This email is already in use.', BasicResponse::STATUS_ERROR, 400);
 
@@ -130,7 +138,7 @@ class UserController extends Controller
 
             return BasicResponse::send('Avatar deleted.');
         }
-        
+
         Storage::deleteDirectory($path);
         $filename = $avatar->store($path);
         $dir = url('/api/users/' . $user->username . '/avatar');
@@ -215,7 +223,6 @@ class UserController extends Controller
         $this->validate($request, [
             'id_address' => 'required|string|alpha_num',
             'stx_address' => 'required|string|alpha_num',
-            'stx_testnet_address' => 'nullable|string|alpha_num',
             'btc_address' => 'required|string|alpha_num',
         ]);
 

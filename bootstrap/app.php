@@ -84,6 +84,7 @@ $app->routeMiddleware([
     'auth' => App\Http\Middleware\AuthMiddleware::class,
     'login' => App\Http\Middleware\LoginMiddleware::class,
     'stacks' => App\Http\Middleware\StacksMiddleware::class,
+    'deploy' => App\Http\Middleware\DeployMiddleware::class,
 ]);
 
 /*

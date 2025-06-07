@@ -25,7 +25,7 @@ $router->group(['middleware' => 'cors', 'prefix' => 'api'], function () use ($ro
 
         $router->group(['prefix' => 'contract'], function () use ($router) {
             //@: api/generate/contract/token
-            $router->post('/token', ['uses' => 'GeneratorController@clarityTokenContract']);
+            $router->post('/token', ['middleware' => 'deploy', 'uses' => 'GeneratorController@clarityTokenContract']);
         });
     });
 
@@ -92,7 +92,8 @@ $router->group(['middleware' => 'cors', 'prefix' => 'api'], function () use ($ro
     $router->post('login', ['middleware' => 'login', 'uses' => 'UserController@login']);
     $router->post('logout', ['middleware' => 'auth', 'uses' => 'UserController@logout']);
     $router->post('connect', ['middleware' => 'stacks', 'uses' => 'UserController@connectWallet']);
-    $router->post('deploy', ['middleware' => 'stacks', 'uses' => 'UserController@deployContract']);
+    $router->post('deploy', ['middleware' => ['stacks', 'deploy'], 'uses' => 'UserController@deployContract']);
+    $router->get('deposit-address', ['uses' => 'UserController@getDepositAddress']);
 });
 
 $router->get('/{any:.*}', function () use ($router) {

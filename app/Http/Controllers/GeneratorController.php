@@ -47,13 +47,19 @@ class GeneratorController extends Controller
 
         try {
             $contract = static::createContract($arguments);
+            $contractName = $request->attributes->get('contractName', $arguments['name'] . $arguments['removeWatermark'] ? '' : '-tokenfactory');
         } catch (\Exception $e) {
             Log::debug($e);
             return BasicResponse::send('There was an error when trying to create a contract.', BasicResponse::STATUS_ERROR, 500);
         }
 
-        return response()->make($contract, 200, [
-            'Content-Type' => 'text/plain',
+        $data = [
+            'name' => $contractName,
+            'body' => $contract,
+        ];
+
+        return response()->json($data, 200, [
+            'Content-Type' => 'application/json',
         ]);
     }
 
@@ -100,6 +106,10 @@ class GeneratorController extends Controller
     public static function createContract(array $arguments): string
     {
         $template = ParserHelper::getTemplate(ParserHelper::getFilenameFromType(ContractType::TOKEN));
-        return ParserHelper::parse($template, $arguments);
+        $parsed = trim(ParserHelper::parse($template, $arguments));
+        while (str_contains($parsed, "\n\n\n")) {
+            $parsed = str_replace("\n\n\n", "\n\n", $parsed);
+        }
+        return $parsed;
     }
 }
