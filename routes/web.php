@@ -18,7 +18,7 @@ $router->group(['middleware' => 'cors', 'prefix' => 'api'], function () use ($ro
     $router->get('/', function () use ($router) {
         return $router->app->version();
     });
-    $router->options('{any:.*}', ['middleware' => 'cors', 'uses' => 'TemplateController@options']);
+    $router->options('{any:.*}', ['uses' => 'TemplateController@options']);
 
     $router->group(['prefix' => 'generate'], function () use ($router) {
         $router->post('/', ['uses' => 'GeneratorController@generate']);

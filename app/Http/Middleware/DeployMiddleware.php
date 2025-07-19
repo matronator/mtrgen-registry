@@ -30,10 +30,13 @@ class DeployMiddleware
 
         $arguments['serviceAddress'] = $serviceAddress;
         $arguments['deployCost'] = $this->calculateDeployCost($arguments);
+        $arguments['chain'] = $chain;
 
         if (!$arguments['removeWatermark']) {
+            $request->attributes->set('originalName', $arguments['name'] . ' by TokenFactory');
             $request->attributes->set('contractName', ParserHelper::parse("<% name|kebabCase %>-tokenfactory", $arguments));
         } else {
+            $request->attributes->set('originalName', $arguments['name']);
             $request->attributes->set('contractName', ParserHelper::parse("<% name|kebabCase %>", $arguments));
         }
 

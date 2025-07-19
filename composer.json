@@ -6,7 +6,9 @@
     "type": "project",
     "require": {
         "php": "^8.0",
+        "appwrite/appwrite": "^15.0",
         "barryvdh/laravel-ide-helper": "^2.12",
+        "flipbox/lumen-generator": "^9.3",
         "fruitcake/laravel-cors": "^2.0",
         "laravel/lumen-framework": "^9.1",
         "league/flysystem": "^2.3",
@@ -14,6 +16,7 @@
         "matronator/mtrgen": "^2.1",
         "matronator/parsem": "^3.2"
     },
+    "prefer-stable": true,
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
         "mockery/mockery": "^1.4.4",
