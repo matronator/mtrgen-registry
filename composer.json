@@ -7,11 +7,11 @@
     "require": {
         "php": "^8.0",
         "appwrite/appwrite": "^15.0",
-        "barryvdh/laravel-ide-helper": "^2.12",
+        "barryvdh/laravel-ide-helper": "^3.0",
         "flipbox/lumen-generator": "^9.3",
-        "fruitcake/laravel-cors": "^2.0",
-        "laravel/lumen-framework": "^9.1",
-        "league/flysystem": "^2.3",
+        "fruitcake/laravel-cors": "^3.0",
+        "laravel/lumen-framework": "^11.0",
+        "league/flysystem": "^3.0",
         "matronator/c32check": "dev-main",
         "matronator/mtrgen": "^2.1",
         "matronator/parsem": "^3.2"
@@ -20,7 +20,7 @@
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
         "mockery/mockery": "^1.4.4",
-        "phpunit/phpunit": "^9.5.10"
+        "phpunit/phpunit": "^12.0.0"
     },
     "autoload": {
         "psr-4": {
