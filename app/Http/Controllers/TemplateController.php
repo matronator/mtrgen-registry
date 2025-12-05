@@ -21,7 +21,7 @@ class TemplateController extends Controller
     {
         $request->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, HEAD');
         $request->header('Access-Control-Allow-Headers', 'Authorization, Content-Type, Accept, Origin, User-Agent, DNT, Cache-Control, X-Mx-ReqToken, Keep-Alive, X-Requested-With, If-Modified-Since');
-        $request->header('Access-Control-Allow-Origin', 'https://mtrgen.com');
+        $request->header('Access-Control-Allow-Origin', 'https://matronator.cz');
 
         return response()->json(['status' => 'success']);
     }
@@ -79,7 +79,7 @@ class TemplateController extends Controller
         $template = Template::query()->where('vendor', '=', $vendor)->firstWhere('name', '=', $name);
         if (!$template)
             return response()->json(['status' => 'error', 'message' => 'No template with this identifier.'], 404);
-        
+
         if ($template->type === Template::TYPE_TEMPLATE) {
             return $this->checkUserPrivileges($request, $vendor, response()->json($this->templateDetails($template)));
         } else {
@@ -228,7 +228,7 @@ class TemplateController extends Controller
         $template = Template::query()->where('vendor', '=', $vendor)->firstWhere('name', '=', $name);
         if (!$template)
             return response()->json(['status' => 'error', 'message' => 'No template with this identifier.'], 404);
-        
+
         $private = request('private', true);
         $template->private = $private;
         $template->save();
@@ -345,9 +345,6 @@ class TemplateController extends Controller
         $contents = request('contents');
         $description = request('description') ?? null;
 
-        if (!Parser::isValid($filename, $contents))
-            return response()->json(['status' => 'error', 'message' => 'Invalid template.'], 400);
-
         $user = $request->attributes->get('user');
 
         $this->saveTemplate($user, $name, $filename, $isPrivate, $description, $contents);
@@ -449,7 +446,7 @@ class TemplateController extends Controller
         } catch (\Exception $e) {
             $generated = $e->getMessage();
         }
-        
+
         $template->setAttribute('preview', $generated);
         return $template;
     }
