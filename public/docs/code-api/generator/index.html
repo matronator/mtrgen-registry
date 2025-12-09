@@ -14,9 +14,10 @@
   <style id="jtd-nav-activation">
   
 
+    .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li:not(:nth-child(3)) > a,
-    .site-nav > ul.nav-list:first-child > li > ul > li a {
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(1)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
 
@@ -25,12 +26,14 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(3) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(5) > ul > li:nth-child(1) > a {
       font-weight: 600;
       text-decoration: none;
-    }.site-nav > ul.nav-list:first-child > li:nth-child(3) > button svg {
+    }.site-nav > ul.nav-list:first-child > li:nth-child(5) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(5) > ul > li:nth-child(1) > button svg {
       transform: rotate(-90deg);
-    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(3) > ul.nav-list {
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(5) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(5) > ul.nav-list > li.nav-list-item:nth-child(1) > ul.nav-list {
       display: block;
     }
   </style>
@@ -50,9 +53,9 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Usage | MTRGen Docs</title>
+<title>Generator | MTRGen Docs</title>
 <meta name="generator" content="Jekyll v4.3.4" />
-<meta property="og:title" content="Usage" />
+<meta property="og:title" content="Generator" />
 <meta name="author" content="Matronator" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Generate files from templates with ease." />
@@ -60,9 +63,9 @@
 <meta property="og:site_name" content="MTRGen Docs" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Usage" />
+<meta property="twitter:title" content="Generator" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Matronator","url":"https://matronator.cz"},"description":"Generate files from templates with ease.","headline":"Usage","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/docs/assets/images/logo-main.png"},"name":"Matronator"},"url":"/docs/usage/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Matronator","url":"https://matronator.cz"},"description":"Generate files from templates with ease.","headline":"Generator","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/docs/assets/images/logo-main.png"},"name":"Matronator"},"url":"/docs/code-api/generator/"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -266,74 +269,68 @@
 </div>
 
     <div class="main-content-wrap">
-      
+      <nav aria-label="Breadcrumb" class="breadcrumb-nav">
+  <ol class="breadcrumb-nav-list">
+    <li class="breadcrumb-nav-list-item"><a href="/docs/code-api/">API</a></li>
+    <li class="breadcrumb-nav-list-item"><span>Generator</span></li>
+  </ol>
+</nav>
+
+
       <div id="main-content" class="main-content">
         <main>
           
-            <h1 id="usage">
+            <h1 id="generator-class">
   
   
-    <a href="#usage" class="anchor-heading" aria-labelledby="usage"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Usage
+    <a href="#generator-class" class="anchor-heading" aria-labelledby="generator-class"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">Generator</code> class
   
   
 </h1>
     
 
+<blockquote class="warning">
+  <p>This page documents the modern <code class="language-plaintext highlighter-rouge">Generator</code> class for parsing templates of any file format. For legacy PHP generation from JSON/YAML/NEON templates, see the <code class="language-plaintext highlighter-rouge">ClassicGenerator</code> class.</p>
+</blockquote>
+
+<p>The <code class="language-plaintext highlighter-rouge">Generator</code> class provides functionality for parsing modern templates (any file format) and generating files. It uses <a href="https://github.com/matronator/parsem">Pars’Em</a> for template parsing and variable substitution.</p>
+
 <ul>
-  <li><a href="#cli-usage">CLI usage</a></li>
-  <li><a href="#usage-in-code">Usage in code</a></li>
+  <li><a href="#important-classes">Important Classes</a>
+    <ul>
+      <li><a href="#genericfileobject">GenericFileObject</a></li>
+      <li><a href="#templateheader">TemplateHeader</a></li>
+    </ul>
+  </li>
+  <li><a href="#constants">Constants</a></li>
+  <li><a href="#methods">Methods</a>
+    <ul>
+      <li><a href="#parseanyfilestring-path-array-arguments--bool-usec commentsyntax--false-genericfileobject"><code class="language-plaintext highlighter-rouge">parseAnyFile</code></a></li>
+      <li><a href="#writefilesgenericfileobject--genericfileobject-files-void"><code class="language-plaintext highlighter-rouge">writeFiles</code></a></li>
+      <li><a href="#getnamestring-content--null-string-path--null-string"><code class="language-plaintext highlighter-rouge">getName</code></a></li>
+      <li><a href="#gettemplateheaderstring-content-templateheader"><code class="language-plaintext highlighter-rouge">getTemplateHeader</code></a></li>
+      <li><a href="#removeheaderstring-content-string"><code class="language-plaintext highlighter-rouge">removeHeader</code></a></li>
+    </ul>
+  </li>
 </ul>
-<h2 id="cli-usage">
+<h2 id="important-classes">
   
   
-    <a href="#cli-usage" class="anchor-heading" aria-labelledby="cli-usage"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> CLI usage
+    <a href="#important-classes" class="anchor-heading" aria-labelledby="important-classes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Important Classes
   
   
 </h2>
     
-
-<p>Now when the parser reads the template, it finds these variables and use them as arguments for the CLI tool during the generation process.</p>
-
-<p>You can then assign any value you want to these parameters during generation. The tool will automatically ask you to provide values for the arguments if you don’t provide any in the initial command.</p>
-
-<p><img src="https://user-images.githubusercontent.com/5470780/188733063-6018db5d-f8ef-4ca7-9bf0-b5ed07e45fa0.png" alt="Terminal output" /></p>
-
-<p>But if you know what parameters the template needs, you can pass them as an argument to the <code class="language-plaintext highlighter-rouge">generate</code> command:</p>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>vendor/bin/mtrgen generate <span class="nt">--path</span><span class="o">=</span>my.template.yaml <span class="nv">name</span><span class="o">=</span>Hello <span class="nv">anotherArg</span><span class="o">=</span>app/entity/test <span class="nv">numberArg</span><span class="o">=</span>42
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-<h2 id="usage-in-code">
+<h3 id="genericfileobject">
   
   
-    <a href="#usage-in-code" class="anchor-heading" aria-labelledby="usage-in-code"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Usage in code
+    <a href="#genericfileobject" class="anchor-heading" aria-labelledby="genericfileobject"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> GenericFileObject
   
   
-</h2>
+</h3>
     
 
-<p>You can also use the tool in your code. There are several classes that you are most likely to use:</p>
-
-<ul>
-  <li><a href="./../code-api/generator.md"><code class="language-plaintext highlighter-rouge">Matronator\Mtrgen\Template\Generator</code></a> - This class is used for parsing modern templates (any file format) into file objects.</li>
-  <li><code class="language-plaintext highlighter-rouge">Matronator\Mtrgen\Template\ClassicGenerator</code> - This class is used for parsing legacy templates (JSON/YAML/NEON) that generate PHP files.</li>
-  <li><code class="language-plaintext highlighter-rouge">Matronator\Mtrgen\ClassicFileGenerator</code> - This class is used for writing legacy PHP file objects to actual files.</li>
-  <li><code class="language-plaintext highlighter-rouge">Matronator\Mtrgen\Registry\Profile</code> - This class handles everything related to user profiles.</li>
-  <li><code class="language-plaintext highlighter-rouge">Matronator\Mtrgen\Registry\Connection</code> - This is the main class for communicating with the online template registry’s API.</li>
-  <li><a href="./../code-api/storage.md"><code class="language-plaintext highlighter-rouge">Matronator\Mtrgen\Store\Storage</code></a> - This handles saving, loading and removing templates and bundles from the local store.</li>
-</ul>
-
-<p>There are two main file object classes:</p>
-<h4 id="genericfileobject-modern-templates">
-  
-  
-    <a href="#genericfileobject-modern-templates" class="anchor-heading" aria-labelledby="genericfileobject-modern-templates"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">GenericFileObject</code> (Modern Templates)
-  
-  
-</h4>
-    
-
-<p>For modern templates (any file format), the <code class="language-plaintext highlighter-rouge">GenericFileObject</code> class serves as the main data structure:</p>
+<p><code class="language-plaintext highlighter-rouge">Matronator\Mtrgen\GenericFileObject</code> is the main data structure for parsed modern templates. It contains all the information about the file that is needed for writing it to the disk.</p>
 
 <div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -354,8 +351,8 @@
 <span class="kd">class</span> <span class="nc">GenericFileObject</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="kt">string</span> <span class="nv">$contents</span><span class="p">;</span>  <span class="c1">// The file contents as a string</span>
-    <span class="k">public</span> <span class="kt">string</span> <span class="nv">$filename</span><span class="p">;</span>   <span class="c1">// The output filename (including extension)</span>
-    <span class="k">public</span> <span class="kt">string</span> <span class="nv">$directory</span><span class="p">;</span>  <span class="c1">// The output directory path</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="nv">$filename</span><span class="p">;</span>  <span class="c1">// The output filename (including extension)</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="nv">$directory</span><span class="p">;</span> <span class="c1">// The output directory path</span>
 
     <span class="k">public</span> <span class="k">function</span> <span class="n">__construct</span><span class="p">(</span><span class="kt">string</span> <span class="nv">$directory</span><span class="p">,</span> <span class="kt">string</span> <span class="nv">$filename</span><span class="p">,</span> <span class="kt">string</span> <span class="nv">$contents</span><span class="p">)</span> <span class="p">{</span>
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">filename</span> <span class="o">=</span> <span class="nv">$filename</span><span class="p">;</span>
@@ -364,108 +361,16 @@
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
-<h4 id="phpfileobject-legacy-templates">
+<h3 id="templateheader">
   
   
-    <a href="#phpfileobject-legacy-templates" class="anchor-heading" aria-labelledby="phpfileobject-legacy-templates"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">PhpFileObject</code> (Legacy Templates)
-  
-  
-</h4>
-    
-
-<p>For legacy templates that generate PHP files, the <code class="language-plaintext highlighter-rouge">PhpFileObject</code> class is used:</p>
-
-<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-</pre></td><td class="rouge-code"><pre><span class="k">declare</span><span class="p">(</span><span class="n">strict_types</span><span class="o">=</span><span class="mi">1</span><span class="p">);</span>
-
-<span class="kn">namespace</span> <span class="nn">Matronator\Mtrgen</span><span class="p">;</span>
-
-<span class="kn">use</span> <span class="nc">Nette\PhpGenerator\PhpFile</span><span class="p">;</span>
-
-<span class="kd">class</span> <span class="nc">PhpFileObject</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="kt">PhpFile</span> <span class="nv">$contents</span><span class="p">;</span>
-    <span class="k">public</span> <span class="kt">string</span> <span class="nv">$filename</span><span class="p">;</span>
-    <span class="k">public</span> <span class="kt">string</span> <span class="nv">$directory</span><span class="p">;</span>
-    <span class="k">public</span> <span class="kt">?string</span> <span class="nv">$entity</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
-
-    <span class="k">public</span> <span class="k">function</span> <span class="n">__construct</span><span class="p">(</span><span class="kt">string</span> <span class="nv">$directory</span><span class="p">,</span> <span class="kt">string</span> <span class="nv">$filename</span><span class="p">,</span> <span class="kt">PhpFile</span> <span class="nv">$contents</span><span class="p">,</span> <span class="kt">?string</span> <span class="nv">$entity</span> <span class="o">=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">filename</span> <span class="o">=</span> <span class="nv">$filename</span> <span class="mf">.</span> <span class="s1">'.php'</span><span class="p">;</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">contents</span> <span class="o">=</span> <span class="nv">$contents</span><span class="p">;</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">directory</span> <span class="o">=</span> <span class="nv">$directory</span><span class="p">;</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">entity</span> <span class="o">=</span> <span class="nv">$entity</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-<h3 id="parsing-templates">
-  
-  
-    <a href="#parsing-templates" class="anchor-heading" aria-labelledby="parsing-templates"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Parsing templates
+    <a href="#templateheader" class="anchor-heading" aria-labelledby="templateheader"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> TemplateHeader
   
   
 </h3>
     
-<h4 id="modern-templates-any-file-format">
-  
-  
-    <a href="#modern-templates-any-file-format" class="anchor-heading" aria-labelledby="modern-templates-any-file-format"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Modern Templates (Any File Format)
-  
-  
-</h4>
-    
 
-<p>For modern templates, use the <code class="language-plaintext highlighter-rouge">Generator::parseAnyFile()</code> method:</p>
-
-<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-</pre></td><td class="rouge-code"><pre><span class="kn">use</span> <span class="nc">Matronator\Mtrgen\Template\Generator</span><span class="p">;</span>
-
-<span class="c1">// Parse a template file</span>
-<span class="nv">$file</span> <span class="o">=</span> <span class="nc">Generator</span><span class="o">::</span><span class="nf">parseAnyFile</span><span class="p">(</span><span class="s1">'path/to/template.js.mtr'</span><span class="p">,</span> <span class="p">[</span>
-    <span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="s1">'MyComponent'</span><span class="p">,</span>
-    <span class="s1">'event'</span> <span class="o">=&gt;</span> <span class="s1">'click'</span>
-<span class="p">]);</span>
-
-<span class="c1">// Write the file to disk</span>
-<span class="nc">Generator</span><span class="o">::</span><span class="nf">writeFiles</span><span class="p">(</span><span class="nv">$file</span><span class="p">);</span>
-</pre></td></tr></tbody></table></div></code></pre></div></div>
-<h4 id="legacy-templates-php-generation">
-  
-  
-    <a href="#legacy-templates-php-generation" class="anchor-heading" aria-labelledby="legacy-templates-php-generation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Legacy Templates (PHP Generation)
-  
-  
-</h4>
-    
-
-<p>For legacy JSON/YAML/NEON templates that generate PHP files, use the <code class="language-plaintext highlighter-rouge">ClassicGenerator</code> class:</p>
+<p><code class="language-plaintext highlighter-rouge">Matronator\Mtrgen\Template\TemplateHeader</code> represents the metadata header of a template file.</p>
 
 <div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -478,32 +383,155 @@
 9
 10
 11
-</pre></td><td class="rouge-code"><pre><span class="kn">use</span> <span class="nc">Matronator\Mtrgen\Template\ClassicGenerator</span><span class="p">;</span>
-<span class="kn">use</span> <span class="nc">Matronator\Mtrgen\ClassicFileGenerator</span><span class="p">;</span>
+</pre></td><td class="rouge-code"><pre><span class="kn">namespace</span> <span class="nn">Matronator\Mtrgen\Template</span><span class="p">;</span>
 
-<span class="c1">// Parse a legacy template</span>
-<span class="nv">$file</span> <span class="o">=</span> <span class="nc">ClassicGenerator</span><span class="o">::</span><span class="nf">parseFile</span><span class="p">(</span><span class="s1">'path/to/template.yaml'</span><span class="p">,</span> <span class="p">[</span>
-    <span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="s1">'MyEntity'</span><span class="p">,</span>
-    <span class="s1">'namespace'</span> <span class="o">=&gt;</span> <span class="s1">'App\\Entity'</span>
-<span class="p">]);</span>
+<span class="kd">class</span> <span class="nc">TemplateHeader</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="nv">$name</span><span class="p">;</span>     <span class="c1">// Template name (for storage/identification)</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="nv">$filename</span><span class="p">;</span>  <span class="c1">// Output filename (can use template variables)</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="nv">$path</span><span class="p">;</span>     <span class="c1">// Output directory path (can use template variables)</span>
 
-<span class="c1">// Write the PHP file to disk</span>
-<span class="nc">ClassicFileGenerator</span><span class="o">::</span><span class="nf">writeFile</span><span class="p">(</span><span class="nv">$file</span><span class="p">);</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="n">__construct</span><span class="p">(</span><span class="kt">string</span> <span class="nv">$name</span><span class="p">,</span> <span class="kt">string</span> <span class="nv">$filename</span><span class="p">,</span> <span class="kt">string</span> <span class="nv">$path</span><span class="p">);</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="n">fromArray</span><span class="p">(</span><span class="kt">array</span> <span class="nv">$array</span><span class="p">):</span> <span class="kt">static</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
-
-          
-
-          
-            <hr>
-<h2 class="text-delta">Table of contents</h2>
+<h2 id="constants">
+  
+  
+    <a href="#constants" class="anchor-heading" aria-labelledby="constants"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Constants
+  
+  
+</h2>
+    
 
 <ul>
-  
-  <li>
-    <a href="/docs/usage/commands/">CLI Commands</a>
-  </li>
-  
+  <li><code class="language-plaintext highlighter-rouge">HEADER_PATTERN</code>: Regular expression pattern for matching the template header block (<code class="language-plaintext highlighter-rouge">/^--- MTRGEN ---(.+)--- \/MTRGEN ---/ms</code>).</li>
+  <li><code class="language-plaintext highlighter-rouge">COMMENT_PATTERN</code>: Regular expression pattern for matching comment-based template variables (for use with <code class="language-plaintext highlighter-rouge">useCommentSyntax</code> option).</li>
 </ul>
+<h2 id="methods">
+  
+  
+    <a href="#methods" class="anchor-heading" aria-labelledby="methods"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Methods
+  
+  
+</h2>
+    
+<h3 id="parseanyfilestring-path-array-arguments---bool-usecommentsyntax--false-genericfileobject">
+  
+  
+    <a href="#parseanyfilestring-path-array-arguments---bool-usecommentsyntax--false-genericfileobject" class="anchor-heading" aria-labelledby="parseanyfilestring-path-array-arguments---bool-usecommentsyntax--false-genericfileobject"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">parseAnyFile(string $path, array $arguments = [], bool $useCommentSyntax = false): GenericFileObject</code>
+  
+  
+</h3>
+    
+
+<p>Parses a template file of any format and returns a <code class="language-plaintext highlighter-rouge">GenericFileObject</code> ready to be written to disk.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">$path</code>: The path to the template file.</li>
+  <li><code class="language-plaintext highlighter-rouge">$arguments</code>: (optional) An array of arguments to pass to the template variables.</li>
+  <li><code class="language-plaintext highlighter-rouge">$useCommentSyntax</code>: (optional) If <code class="language-plaintext highlighter-rouge">true</code>, uses comment-based syntax (<code class="language-plaintext highlighter-rouge">/*variable*/</code>) instead of <code class="language-plaintext highlighter-rouge">&lt;%variable%&gt;</code> syntax.</li>
+  <li>Returns: A <code class="language-plaintext highlighter-rouge">GenericFileObject</code> representing the parsed file.</li>
+</ul>
+
+<p><strong>Example:</strong></p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="rouge-code"><pre><span class="nv">$file</span> <span class="o">=</span> <span class="nc">Generator</span><span class="o">::</span><span class="nf">parseAnyFile</span><span class="p">(</span><span class="s1">'component.js.mtr'</span><span class="p">,</span> <span class="p">[</span>
+    <span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="s1">'MyComponent'</span><span class="p">,</span>
+    <span class="s1">'event'</span> <span class="o">=&gt;</span> <span class="s1">'click'</span>
+<span class="p">]);</span>
+<span class="c1">// $file-&gt;filename will be "MyComponent.js" (from header)</span>
+<span class="c1">// $file-&gt;directory will be the path from header</span>
+<span class="c1">// $file-&gt;contents will be the parsed template content</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+<h3 id="writefilesgenericfileobjectgenericfileobject-files-void">
+  
+  
+    <a href="#writefilesgenericfileobjectgenericfileobject-files-void" class="anchor-heading" aria-labelledby="writefilesgenericfileobjectgenericfileobject-files-void"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">writeFiles(GenericFileObject|GenericFileObject[] $files): void</code>
+  
+  
+</h3>
+    
+
+<p>Writes one or more parsed file objects to disk. Creates directories if they don’t exist.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">$files</code>: A single <code class="language-plaintext highlighter-rouge">GenericFileObject</code> or an array of <code class="language-plaintext highlighter-rouge">GenericFileObject</code> instances.</li>
+</ul>
+
+<p><strong>Example:</strong></p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre><span class="c1">// Write a single file</span>
+<span class="nc">Generator</span><span class="o">::</span><span class="nf">writeFiles</span><span class="p">(</span><span class="nv">$file</span><span class="p">);</span>
+
+<span class="c1">// Write multiple files</span>
+<span class="nc">Generator</span><span class="o">::</span><span class="nf">writeFiles</span><span class="p">([</span><span class="nv">$file1</span><span class="p">,</span> <span class="nv">$file2</span><span class="p">,</span> <span class="nv">$file3</span><span class="p">]);</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+<h3 id="getnamestring-content--null-string-path--null-string">
+  
+  
+    <a href="#getnamestring-content--null-string-path--null-string" class="anchor-heading" aria-labelledby="getnamestring-content--null-string-path--null-string"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">getName(?string $content = null, ?string $path = null): string</code>
+  
+  
+</h3>
+    
+
+<p>Gets the template name from the header. Either <code class="language-plaintext highlighter-rouge">$content</code> or <code class="language-plaintext highlighter-rouge">$path</code> must be provided.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">$content</code>: (optional) The template file contents.</li>
+  <li><code class="language-plaintext highlighter-rouge">$path</code>: (optional) The path to the template file.</li>
+  <li>Returns: The template name from the header.</li>
+  <li>Throws: <code class="language-plaintext highlighter-rouge">RuntimeException</code> if neither <code class="language-plaintext highlighter-rouge">$content</code> nor <code class="language-plaintext highlighter-rouge">$path</code> is provided, or if the header is missing required fields.</li>
+</ul>
+<h3 id="gettemplateheaderstring-content-templateheader">
+  
+  
+    <a href="#gettemplateheaderstring-content-templateheader" class="anchor-heading" aria-labelledby="gettemplateheaderstring-content-templateheader"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">getTemplateHeader(string $content): TemplateHeader</code>
+  
+  
+</h3>
+    
+
+<p>Extracts and parses the template header from the file content.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">$content</code>: The template file contents (including the header).</li>
+  <li>Returns: A <code class="language-plaintext highlighter-rouge">TemplateHeader</code> object with <code class="language-plaintext highlighter-rouge">name</code>, <code class="language-plaintext highlighter-rouge">filename</code>, and <code class="language-plaintext highlighter-rouge">path</code> properties.</li>
+  <li>Throws: <code class="language-plaintext highlighter-rouge">RuntimeException</code> if the header is missing required properties.</li>
+</ul>
+<h3 id="removeheaderstring-content-string">
+  
+  
+    <a href="#removeheaderstring-content-string" class="anchor-heading" aria-labelledby="removeheaderstring-content-string"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">removeHeader(string $content): string</code>
+  
+  
+</h3>
+    
+
+<p>Removes the template header block from the file content, returning only the template body.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">$content</code>: The template file contents (including the header).</li>
+  <li>Returns: The template content without the header block.</li>
+</ul>
+
+          
+
+          
+            
           
         </main>
         
