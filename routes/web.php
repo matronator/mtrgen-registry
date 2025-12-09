@@ -97,6 +97,6 @@ $router->group(['middleware' => 'cors', 'prefix' => 'api'], function () use ($ro
 });
 
 $router->get('/{any:.*}', function () use ($router) {
-    // return view('index');
-    return $router->app->version();
+    return view('index');
+    // return $router->app->version();
 });
