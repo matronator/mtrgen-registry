@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
 use Matronator\Mtrgen\Template\ClassicGenerator;
+use Matronator\Mtrgen\Template\Generator;
 use Matronator\Parsem\Parser;
 use Nette\PhpGenerator\PsrPrinter;
 
@@ -306,8 +307,6 @@ class TemplateController extends Controller
         $isPrivate = request('private') ?? false;
         $contents = request('contents');
         $description = request('description') ?? null;
-        if (!Parser::isValidBundle($filename, $contents))
-            return response()->json(['status' => 'error', 'message' => 'Invalid bundle.'], 400);
 
         $templates = request('templates');
         if (count($templates) < 2)
@@ -316,9 +315,6 @@ class TemplateController extends Controller
         $user = $request->attributes->get('user');
 
         foreach ($templates as $item) {
-            if (!Parser::isValid($item['filename'], $item['contents']))
-                return response()->json(['status' => 'error', 'message' => 'Bundle contains invalid template/s.'], 400);
-
             $path = self::TEMPLATES_DIR . $user->username . DIRECTORY_SEPARATOR . $item['filename'];
             Storage::put($path, $item['contents']);
         }
@@ -387,16 +383,16 @@ class TemplateController extends Controller
             foreach ($files as $file) {
                 $filename = $file->getClientOriginalName();
                 $contents = $file->getContent();
-                if (!Parser::isValid($filename, $contents))
-                    return response()->json(['status' => 'error', 'message' => 'Bundle contains invalid template/s.'], 400);
+                // if (!Parser::isValid($filename, $contents))
+                //     return response()->json(['status' => 'error', 'message' => 'Bundle contains invalid template/s.'], 400);
 
                 $path = self::TEMPLATES_DIR . $user->username . DIRECTORY_SEPARATOR . $name . DIRECTORY_SEPARATOR . $filename;
                 Storage::put($path, $contents);
 
-                $parsedTemplate = Parser::decodeByExtension($filename, $contents);
+                $templateName = Generator::getName($filename);
 
                 $bundleObject->templates[] = (object) [
-                    'name' => $parsedTemplate->name,
+                    'name' => $templateName,
                     'path' => $name . DIRECTORY_SEPARATOR . $filename,
                 ];
             }
@@ -411,14 +407,14 @@ class TemplateController extends Controller
             $file = $request->file('file');
             $contents = $file->getContent();
 
-            if (!Parser::isValid($file->getClientOriginalName(), $contents))
-                return response()->json(['status' => 'error', 'message' => 'Invalid template.'], 400);
+            // if (!Parser::isValid($file->getClientOriginalName(), $contents))
+            //     return response()->json(['status' => 'error', 'message' => 'Invalid template.'], 400);
 
-            $templateObject = Parser::decodeByExtension($file->getClientOriginalName(), $contents);
+            $templateName = Generator::getName($contents);
 
-            $this->saveTemplate($user, $templateObject->name, $file->getClientOriginalName(), $isPrivate, $description, $contents);
+            $this->saveTemplate($user, $templateName, $file->getClientOriginalName(), $isPrivate, $description, $contents);
 
-            return response()->json(['status' => 'success', 'message' => 'Template ' . strtolower($user->username . '/' . $templateObject->name) . ' published!']);
+            return response()->json(['status' => 'success', 'message' => 'Template ' . strtolower($user->username . '/' . $templateName) . ' published!']);
         }
     }
 
@@ -439,9 +435,8 @@ class TemplateController extends Controller
         }
 
         try {
-            $parsed = ClassicGenerator::parse($template->filename, $contents, $templateVars);
-            $printer = new PsrPrinter;
-            $generated = $printer->printFile($parsed->contents);
+            $parsed = Generator::parseAnyFile($path, $templateVars);
+            $generated = $parsed->contents;
             $template->setAttribute('generatedFilename', $parsed->filename);
         } catch (\Exception $e) {
             $generated = $e->getMessage();
@@ -471,17 +466,15 @@ class TemplateController extends Controller
             foreach ($arguments->arguments as $arg) {
                 $templateVars[$arg] = '__' . strtoupper($arg) . '__';
             }
-            $parsed = ClassicGenerator::parse($file, $content, $templateVars);
-            $printer = new PsrPrinter;
-            $generated = $printer->printFile($parsed->contents);
-
-            $templateObject = Parser::decodeByExtension($file, $content);
+            $parsed = Generator::parseAnyFile($file, $templateVars);
+            $templateName = Generator::getName($file);
+            $generated = $parsed->contents;
 
             $templates[] = (object) [
                 'content' => $content,
                 'preview' => $generated,
                 'generatedFilename' => $parsed->filename,
-                'name' => $templateObject->name,
+                'name' => $templateName,
                 'filename' => basename($file),
             ];
         }
